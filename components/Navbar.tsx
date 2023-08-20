@@ -4,7 +4,9 @@ import React from "react";
 const Navbar = () => {
 	return (
 		<nav className="flex items-center justify-between py-6 container px-8 mx-auto border-b border-b-white/10">
-			<Link href="/">RESTAPI</Link>
+			<Link href="/" className="font-bold text-xl">
+				REST-API
+			</Link>
 			<div className="flex items-center gap-4 text-gray-400">
 				<Link href="/" className="hover:text-white transition-colors">
 					Home
