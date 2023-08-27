@@ -1,6 +1,5 @@
-type TodoType = {
-	userId: number;
-	id: number;
+type TopicType = {
+	_id: string;
 	title: string;
-	completed: boolean;
+	description: string;
 };
