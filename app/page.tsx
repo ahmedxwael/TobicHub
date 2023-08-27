@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Home",
+	description: "The home page for this REST-API application.",
+};
+
 export default function Home() {
 	return (
 		<main className="flex flex-col items-center justify-between py-24">

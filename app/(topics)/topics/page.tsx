@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 };
 
 const TopicsPage = async () => {
-	// const topics = await getTopics();
+	const topics = await getTopics();
 
 	return (
 		<main className="container px-8 mx-auto flex flex-col gap-8 py-10">
 			<h1 className="text-3xl font-bold">Topics</h1>
 
 			<div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-				{/* {.map((topic) => (
+				{topics.map((topic) => (
 					<article
 						key={topic._id}
 						className="p-4 border-2 border-white/10 rounded-xl flex flex-col gap-2"
@@ -37,7 +37,7 @@ const TopicsPage = async () => {
 							</Link>
 						</div>
 					</article>
-				))} */}
+				))}
 			</div>
 		</main>
 	);
