@@ -43,7 +43,7 @@ const Form = ({ type, currentTopic }: Props) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex-col flex gap-6 border-2 p-6 border-white/10 rounded-lg w-[500px] max-w-full mx-auto"
+			className="flex-col flex gap-6 border-2 p-6 border-white/10 rounded-lg max-w-[500px] w-full mx-auto"
 		>
 			<div className="flex flex-col gap-2">
 				<label htmlFor="title">Title</label>
