@@ -22,7 +22,7 @@ export async function editTopic(
 }
 
 export const getTopic = async (id: string) => {
-	const res = await fetch(`${process.env.NEXTAUTH_URL}/api/topics/${id}`);
+	const res = await fetch(`${process.env.BASE_URL}/api/topics/${id}`);
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the topic.");
@@ -32,7 +32,7 @@ export const getTopic = async (id: string) => {
 };
 
 export const getTopics = async (): Promise<TopicType[]> => {
-	const res = await fetch(`${process.env.NEXTAUTH_URL}/api/topics`);
+	const res = await fetch(`${process.env.BASE_URL}/api/topics`);
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the list of topics.");
