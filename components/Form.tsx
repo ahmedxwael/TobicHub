@@ -43,7 +43,7 @@ const Form = ({ type, currentTopic }: Props) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex-col flex gap-6 border-2 p-6 border-white/10 rounded-lg max-w-[500px] w-full mx-auto"
+			className="flex-col flex gap-6 border-2 p-6 border-white/10 rounded-lg w-[500px] max-w-full"
 		>
 			<div className="flex flex-col gap-2">
 				<label htmlFor="title">Title</label>
@@ -62,12 +62,12 @@ const Form = ({ type, currentTopic }: Props) => {
 			</div>
 			<div className="flex flex-col gap-2">
 				<label htmlFor="userId">Description</label>
-				<input
-					className="py-2 px-4 rounded-lg w-full text-black"
-					type="text"
-					name="description"
+				<textarea
 					id="description"
+					name="description"
+					className="py-2 px-4 rounded-lg w-full text-black"
 					placeholder="Enter a description"
+					rows={6}
 					required={true}
 					value={topic.description}
 					onChange={(e) =>

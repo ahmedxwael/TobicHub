@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const CreateTopic = () => {
 	return (
-		<main className="min-h-[calc(100vh-72.8px)] grid place-content-center">
+		<main className="main">
 			<Form type="create" />
 		</main>
 	);

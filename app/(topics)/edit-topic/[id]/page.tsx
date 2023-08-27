@@ -25,7 +25,7 @@ const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
 	const topic = await getTopic(id);
 
 	return (
-		<main className="min-h-[calc(100vh-72.8px)] grid place-content-center">
+		<main className="main">
 			<Form type="edit" currentTopic={topic} />
 		</main>
 	);
