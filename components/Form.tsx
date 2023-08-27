@@ -40,6 +40,16 @@ const Form = ({ type, currentTopic }: Props) => {
 			throw new Error("Something went wrong");
 		}
 	};
+
+	const handleCancelling = () => {
+		const isConfirmed = confirm("Are you sure you want to cancel?");
+
+		if (isConfirmed) {
+			router.push("/topics");
+		}
+		return;
+	};
+
 	return (
 		<form
 			onSubmit={handleSubmit}
@@ -75,12 +85,21 @@ const Form = ({ type, currentTopic }: Props) => {
 					}
 				/>
 			</div>
-			<button
-				disabled={submitting}
-				className="text-black capitalize font-semibold disabled:cursor-not-allowed disabled:opacity-70 rounded-lg py-4 px-6 bg-white"
-			>
-				{submitting ? `${type}ting...` : `${type}`}
-			</button>
+			<div className="flex gap-4">
+				<button
+					type="button"
+					onClick={handleCancelling}
+					className="flex-1 border-2 border-white/10 hover:bg-white/10 transition-colors capitalize font-semibold rounded-lg py-3 px-6"
+				>
+					Cancel
+				</button>
+				<button
+					disabled={submitting}
+					className="flex-1 text-black capitalize font-semibold disabled:cursor-not-allowed transition-colors hover:bg-white/80 disabled:opacity-70 rounded-lg py-3 px-6 bg-white"
+				>
+					{submitting ? `${type}ting...` : `${type}`}
+				</button>
+			</div>
 		</form>
 	);
 };
