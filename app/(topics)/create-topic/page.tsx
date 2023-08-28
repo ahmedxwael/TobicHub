@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 
 const CreateTopic = () => {
 	return (
-		<main className="main">
+		<section className="center">
 			<Form type="create" />
-		</main>
+		</section>
 	);
 };
 

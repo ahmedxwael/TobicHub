@@ -1,5 +1,6 @@
 "use client";
 
+import { TopicType } from "@/types";
 import { addTopic, editTopic } from "@/utils/topicUtils";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
