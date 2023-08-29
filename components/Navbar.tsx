@@ -1,10 +1,12 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 const Navbar = () => {
+	const { data: session } = useSession();
 	const pathname = usePathname();
 
 	const links = [
@@ -39,6 +41,22 @@ const Navbar = () => {
 						);
 					})}
 				</div>
+				{session ? (
+					<Image
+						src={session.user?.image || ""}
+						alt="User image"
+						width={30}
+						height={30}
+						className="rounded-full"
+					/>
+				) : (
+					<Link
+						href="/register"
+						className="bg-white py-2 px-6 rounded-full text-black font-semibold"
+					>
+						Register
+					</Link>
+				)}
 			</nav>
 		</header>
 	);
