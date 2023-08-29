@@ -1,3 +1,5 @@
+import { TopicType } from "@/types";
+
 export async function addTopic(newTopic: Partial<TopicType>) {
 	await fetch(`/api/topics`, {
 		method: "POST",
