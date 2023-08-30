@@ -29,11 +29,11 @@ const Form = ({ type, currentTopic }: Props) => {
 			setSubmitting(true);
 
 			if (type === "create") {
-				addTopic(topic);
+				await addTopic(topic);
 			}
 
 			if (type === "edit") {
-				editTopic(currentTopic?._id!, topic);
+				await editTopic(currentTopic?._id!, topic);
 			}
 
 			setSubmitting(false);
@@ -91,15 +91,16 @@ const Form = ({ type, currentTopic }: Props) => {
 			</div>
 			<div className="flex gap-4">
 				<button
+					disabled={submitting}
 					type="button"
 					onClick={handleCancelling}
-					className="flex-1 border-2 border-white/10 hover:bg-white/10 transition-colors capitalize font-semibold rounded-lg py-3 px-6"
+					className="flex-1 capitalize btn btn-alt"
 				>
 					Cancel
 				</button>
 				<button
 					disabled={submitting}
-					className="flex-1 text-black capitalize font-semibold disabled:cursor-not-allowed transition-colors hover:bg-white/80 disabled:opacity-70 rounded-lg py-3 px-6 bg-white"
+					className="flex-1 capitalize btn btn-primary"
 				>
 					{submitting ? `${type}ting...` : `${type}`}
 				</button>

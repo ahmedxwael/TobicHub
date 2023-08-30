@@ -2,7 +2,7 @@ import TopicCard from "@/components/topics/topic-card";
 import { getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
 
-export const revalidate = 86400;
+export const revalidate = 0;
 
 export const metadata: Metadata = {
 	title: "Topics",

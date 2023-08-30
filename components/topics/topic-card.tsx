@@ -19,6 +19,7 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 			await fetch(`/api/topics?id=${topic._id}`, {
 				method: "DELETE",
 			});
+
 			router.refresh();
 		}
 	};
@@ -28,8 +29,6 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 			key={topic._id}
 			className="p-4 border-2 border-white/10 rounded-xl flex flex-col gap-4 break-inside-avoid"
 		>
-			{/* convert it to a link to direct users to the author page. */}
-
 			<Link
 				href={`/profile/${topic.creator._id}`}
 				className="flex items-center gap-4 w-fit"

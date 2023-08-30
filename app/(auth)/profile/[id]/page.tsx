@@ -1,8 +1,41 @@
 import TopicCard from "@/components/topics/topic-card";
+import { ParamsType } from "@/types";
 import { getUserTopics } from "@/utils/topicUtils";
+import { getUser, getUsers } from "@/utils/user-utils";
+import { Metadata } from "next";
 import React from "react";
 
-const Profile = async ({ params: { id } }: { params: { id: string } }) => {
+export const revalidate = 0;
+
+export const generateMetadata = async ({
+	params: { id },
+}: ParamsType): Promise<Metadata> => {
+	const user = await getUser(id);
+
+	if (!user) {
+		return {
+			title: "Unknown user",
+			description: `Unknown profile page.`,
+		};
+	}
+
+	return {
+		title: user?.name,
+		description: `${user?.name} profile page.`,
+	};
+};
+
+export const generateStaticParams = async () => {
+	const users = await getUsers();
+
+	if (!users) {
+		return [];
+	}
+
+	return users.map((user) => ({ id: user._id }));
+};
+
+const Profile = async ({ params: { id } }: ParamsType) => {
 	const topics = await getUserTopics(id);
 
 	return (

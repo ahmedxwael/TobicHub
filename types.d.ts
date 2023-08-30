@@ -1,5 +1,9 @@
 import { ReactNode } from "react";
 
+type ParamsType = {
+	params: { id: string };
+};
+
 type CreatorType = {
 	_id: string;
 	name: string;
