@@ -33,7 +33,7 @@ const ProvidersList = ({ providers }: Props) => {
 									className="flex-1 btn btn-primary capitalize"
 									onClick={() =>
 										signIn(provider.id, {
-											callbackUrl: process.env.NEXTAUTH_URL,
+											callbackUrl: process.env.BASE_URL!,
 										})
 									}
 								>

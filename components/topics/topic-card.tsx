@@ -32,7 +32,7 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 
 			<Link
 				href={`/profile/${topic.creator._id}`}
-				className="flex items-center gap-4"
+				className="flex items-center gap-4 w-fit"
 			>
 				<Image
 					src={topic.creator.image}
@@ -51,7 +51,7 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 			</div>
 
 			{session?.user?.id === topic.creator._id &&
-			pathname === `/profile/${session.user.id}` ? (
+			pathname === `/profile/${session?.user?.id}` ? (
 				<div className="flex gap-2 items-center justify-end mt-auto">
 					<button className="btn-small btn-alt" onClick={deleteTopic}>
 						Delete
