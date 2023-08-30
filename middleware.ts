@@ -5,9 +5,7 @@ export const middleware = async (req: NextRequest) => {
 	const allCookies = req.cookies.getAll();
 
 	const isProtected =
-		pathname.startsWith("/profile") ||
-		pathname.startsWith("/create-topic") ||
-		pathname.startsWith("/edit-topic");
+		pathname.startsWith("/create-topic") || pathname.startsWith("/edit-topic");
 
 	const authorized = allCookies.some((cookie) =>
 		cookie.name.endsWith(".session-token")
