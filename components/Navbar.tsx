@@ -6,13 +6,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
-	const { data: session } = useSession();
+	const { data: session }: any = useSession();
 	const pathname = usePathname();
 
 	const links = [
 		{ href: "/", name: "Home" },
 		{ href: "/topics", name: "Topics" },
-		{ href: "/create-topic", name: "Create Topic" },
+		// { href: "/create-topic", name: "Create Topic" },
 	];
 
 	return (
@@ -52,13 +52,18 @@ const Navbar = () => {
 						>
 							Sign out
 						</button>
-						<Image
-							src={session.user?.image || ""}
-							alt="User image"
-							width={40}
-							height={40}
-							className="rounded-full"
-						/>
+						<Link
+							href={`/profile/${session.user?.id}`}
+							className="inline-block"
+						>
+							<Image
+								src={session.user?.image || ""}
+								alt="User image"
+								width={40}
+								height={40}
+								className="rounded-full"
+							/>
+						</Link>
 					</div>
 				) : (
 					<Link

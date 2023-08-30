@@ -3,6 +3,7 @@
 import { TopicType } from "@/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const TopicCard = ({ topic }: { topic: TopicType }) => {
@@ -25,11 +26,14 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 	return (
 		<article
 			key={topic._id}
-			className="p-4 border-2 border-white/10 rounded-xl flex flex-col gap-2 break-inside-avoid"
+			className="p-4 border-2 border-white/10 rounded-xl flex flex-col gap-4 break-inside-avoid"
 		>
 			{/* convert it to a link to direct users to the author page. */}
 
-			<div className="flex items-center gap-4">
+			<Link
+				href={`/profile/${topic.creator._id}`}
+				className="flex items-center gap-4"
+			>
 				<Image
 					src={topic.creator.image}
 					alt="user image"
@@ -38,11 +42,16 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 					className="rounded-full "
 				/>
 				<h2 className="font-medium text-sm">{topic.creator.name}</h2>
+			</Link>
+			<div className="flex gap-2 flex-col">
+				<h3 className="font-semibold line-clamp-1 text-xl capitalize">
+					{topic.title}
+				</h3>
+				<p className="text-neutral-400 leading-6">{topic.description}</p>
 			</div>
-			<h3 className="font-semibold line-clamp-1 text-lg">{topic.title}</h3>
-			<p className="text-neutral-400 text-sm leading-6">{topic.description}</p>
 
-			{session?.user?.id === topic.creator._id && pathname === "/profile" ? (
+			{session?.user?.id === topic.creator._id &&
+			pathname === `/profile/${session.user.id}` ? (
 				<div className="flex gap-2 items-center justify-end mt-auto">
 					<button className="btn-small btn-alt" onClick={deleteTopic}>
 						Delete

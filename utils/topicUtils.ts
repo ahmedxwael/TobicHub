@@ -42,3 +42,13 @@ export const getTopics = async (): Promise<TopicType[]> => {
 
 	return res.json();
 };
+
+export const getUserTopics = async (id: string): Promise<TopicType[]> => {
+	const res = await fetch(`${process.env.BASE_URL}/api/topics/user?id=${id}`);
+
+	if (!res.ok) {
+		throw new Error("Could not retrieve the list of topics.");
+	}
+
+	return res.json();
+};
