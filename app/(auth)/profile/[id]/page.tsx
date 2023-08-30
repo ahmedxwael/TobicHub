@@ -7,33 +7,33 @@ import React from "react";
 
 export const revalidate = 0;
 
-export const generateMetadata = async ({
-	params: { id },
-}: ParamsType): Promise<Metadata> => {
-	const user = await getUser(id);
+// export const generateMetadata = async ({
+// 	params: { id },
+// }: ParamsType): Promise<Metadata> => {
+// 	const user = await getUser(id);
 
-	if (!user) {
-		return {
-			title: "Unknown user",
-			description: `Unknown profile page.`,
-		};
-	}
+// 	if (!user) {
+// 		return {
+// 			title: "Unknown user",
+// 			description: `Unknown profile page.`,
+// 		};
+// 	}
 
-	return {
-		title: user?.name,
-		description: `${user?.name} profile page.`,
-	};
-};
+// 	return {
+// 		title: user?.name,
+// 		description: `${user?.name} profile page.`,
+// 	};
+// };
 
-export const generateStaticParams = async () => {
-	const users = await getUsers();
+// export const generateStaticParams = async () => {
+// 	const users = await getUsers();
 
-	if (!users) {
-		return [];
-	}
+// 	if (!users) {
+// 		return [];
+// 	}
 
-	return users.map((user) => ({ id: user._id }));
-};
+// 	return users.map((user) => ({ id: user._id }));
+// };
 
 const Profile = async ({ params: { id } }: ParamsType) => {
 	const topics = await getUserTopics(id);
@@ -41,12 +41,15 @@ const Profile = async ({ params: { id } }: ParamsType) => {
 	return (
 		<section className="container mx-auto flex flex-col gap-8">
 			<h1 className="text-3xl font-bold">Topics</h1>
-
-			<div className="space-y-6 sm:columns-2 sm:gap-6 lg:columns-3">
-				{topics.map((topic) => (
-					<TopicCard key={topic._id} topic={topic} />
-				))}
-			</div>
+			{topics ? (
+				<div className="space-y-6 sm:columns-2 sm:gap-6 lg:columns-3">
+					{topics.map((topic) => (
+						<TopicCard key={topic._id} topic={topic} />
+					))}
+				</div>
+			) : (
+				<p>No topics to display</p>
+			)}
 		</section>
 	);
 };
