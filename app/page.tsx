@@ -1,17 +1,10 @@
 "use client";
 
-import Button from "@/components/button";
 import FeaturesList from "@/components/features/features-list";
+import JoinUsBtn from "@/components/join-us-btn";
 import SectionHeading from "@/components/section-heading";
-import { useRouter } from "next/navigation";
 
 const Home = () => {
-	const router = useRouter();
-
-	const clickHandler = () => {
-		router.push("/register");
-	};
-
 	return (
 		<>
 			<section className="text-center">
@@ -31,9 +24,7 @@ const Home = () => {
 			<section className="mt-20 text-center">
 				<h2 className="text-xl font-bold mb-4">Ready to get started?</h2>
 
-				<Button type="primary" handler={clickHandler}>
-					Join us now
-				</Button>
+				<JoinUsBtn />
 			</section>
 		</>
 	);

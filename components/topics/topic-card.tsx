@@ -4,7 +4,6 @@ import { TopicType } from "@/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
 
 const TopicCard = ({ topic }: { topic: TopicType }) => {
 	const { data: session }: any = useSession();
