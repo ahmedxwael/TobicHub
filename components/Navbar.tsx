@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -34,7 +34,7 @@ const Navbar = () => {
 								href={link.href}
 								className={`${
 									activeLink ? "text-white" : ""
-								} hover:text-white transition-colors`}
+								} hover:text-white transition-colors inline-block`}
 							>
 								{link.name}
 							</Link>
@@ -42,19 +42,30 @@ const Navbar = () => {
 					})}
 				</div>
 				{session ? (
-					<Image
-						src={session.user?.image || ""}
-						alt="User image"
-						width={30}
-						height={30}
-						className="rounded-full"
-					/>
+					<div className="flex items-center gap-4">
+						<button
+							className="btn py-2.5 btn-alt rounded-full"
+							onClick={() => {
+								console.log(session.expires);
+								signOut({ callbackUrl: process.env.NEXTAUTH_URL! });
+							}}
+						>
+							Sign out
+						</button>
+						<Image
+							src={session.user?.image || ""}
+							alt="User image"
+							width={40}
+							height={40}
+							className="rounded-full"
+						/>
+					</div>
 				) : (
 					<Link
 						href="/register"
 						className="bg-white py-2 px-6 rounded-full text-black font-semibold"
 					>
-						Register
+						Sign in
 					</Link>
 				)}
 			</nav>

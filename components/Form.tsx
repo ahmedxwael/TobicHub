@@ -2,6 +2,7 @@
 
 import { TopicType } from "@/types";
 import { addTopic, editTopic } from "@/utils/topicUtils";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -11,11 +12,12 @@ type Props = {
 };
 
 const Form = ({ type, currentTopic }: Props) => {
+	const { data: session }: any = useSession();
 	const router = useRouter();
 
 	const intialTopicValue =
 		type === "create"
-			? { title: "", description: "" }
+			? { title: "", description: "", creator: session?.user.id }
 			: (currentTopic as TopicType);
 
 	const [topic, setTopic] = useState<Partial<TopicType>>(intialTopicValue);
@@ -59,6 +61,7 @@ const Form = ({ type, currentTopic }: Props) => {
 			<div className="flex flex-col gap-2">
 				<label htmlFor="title">Title</label>
 				<input
+					autoFocus={true}
 					type="text"
 					name="title"
 					id="title"

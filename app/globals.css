@@ -21,3 +21,18 @@ body {
 .center {
 	@apply flex items-center justify-center;
 }
+
+@layer components {
+	.btn {
+		@apply rounded-xl py-3 px-6 text-sm font-semibold;
+	}
+	.btn-primary {
+		@apply bg-white text-black hover:bg-white/80 transition-colors disabled:hover:bg-white/40 disabled:bg-opacity-40 disabled:cursor-not-allowed;
+	}
+	.btn-alt {
+		@apply hover:bg-neutral-900 border-2 border-white/20 transition-colors disabled:bg-opacity-40 disabled:text-white/40 disabled:hover:bg-black/40 disabled:cursor-not-allowed;
+	}
+	.btn-small {
+		@apply rounded-lg py-1.5 px-2.5;
+	}
+}

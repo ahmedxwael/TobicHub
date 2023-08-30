@@ -1,28 +1,20 @@
-"use client";
+import React, { ReactNode, forwardRef } from "react";
 
-import { useRouter } from "next/navigation";
+type Props = {
+	type: "primary" | "alt";
+	children: ReactNode;
+	handler: () => void;
+	disabled?: boolean;
+};
 
-const Button = ({ id }: { id: string }) => {
-	const router = useRouter();
-
-	const deleteTopic = async () => {
-		const isConfirmed = confirm("Are you sure you want to delete this topic?");
-
-		if (isConfirmed) {
-			await fetch(`/api/topics?id=${id}`, {
-				method: "DELETE",
-			});
-
-			router.refresh();
-		}
-	};
-
+const Button = ({ type, children, disabled, handler }: Props) => {
 	return (
 		<button
-			className="rounded-lg py-1.5 px-2.5 text-sm font-medium hover:bg-gray-800 border border-white/20 transition-colors"
-			onClick={deleteTopic}
+			disabled={disabled}
+			onClick={handler}
+			className={`${type === "primary" ? "btn-primary" : "btn-alt"} btn`}
 		>
-			Delete
+			{children}
 		</button>
 	);
 };

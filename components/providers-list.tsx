@@ -4,7 +4,6 @@ import {
 	ClientSafeProvider,
 	LiteralUnion,
 	signIn,
-	signOut,
 	useSession,
 } from "next-auth/react";
 
@@ -18,27 +17,32 @@ const ProvidersList = ({ providers }: Props) => {
 	return (
 		<>
 			{session ? (
-				<div className="flex flex-col items-center gap-4">
-					<h1>Welcome {session.user?.name}</h1>
-					<button
-						className="capitalize font-semibold border-2 border-white/10 disabled:cursor-not-allowed transition-colors hover:bg-white/10 disabled:opacity-70 rounded-lg py-3 px-6"
-						onClick={() => signOut()}
-					>
-						Sign out
-					</button>
-				</div>
-			) : providers ? (
-				Object.values(providers).map((provider) => (
-					<button
-						key={provider.id}
-						type="button"
-						className="flex-1 border-2 border-white/10 hover:bg-white/80 bg-white text-black transition-colors capitalize font-semibold rounded-lg py-3 px-6"
-						onClick={() => signIn(provider.id)}
-					>
-						{provider.name}
-					</button>
-				))
-			) : null}
+				<h1 className="text-center font-bold text-2xl">
+					Welcome {session.user?.name}
+				</h1>
+			) : (
+				<form className="flex-col flex gap-6 border-2 p-6 border-white/10 rounded-lg w-[500px] max-w-full">
+					<h1 className="capitalize text-center font-bold text-2xl">
+						Sign in to TopicHub
+					</h1>
+					{providers
+						? Object.values(providers).map((provider) => (
+								<button
+									key={provider.id}
+									type="button"
+									className="flex-1 btn btn-primary capitalize"
+									onClick={() =>
+										signIn(provider.id, {
+											callbackUrl: process.env.NEXTAUTH_URL,
+										})
+									}
+								>
+									{provider.name}
+								</button>
+						  ))
+						: null}
+				</form>
+			)}
 		</>
 	);
 };

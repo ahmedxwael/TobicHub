@@ -16,9 +16,10 @@ const handler = NextAuth({
 		}),
 	],
 	callbacks: {
-		session: ({ session, token }: any) => {
-			session.accessToken = token.accessToken;
-			session.user.id = token.id;
+		async session({ session, token }: any) {
+			const userSession = await User.findOne({ email: session.user?.email });
+			// session.accessToken = token.accessToken;
+			session.user.id = userSession._id.toString();
 
 			return session;
 		},
@@ -36,7 +37,7 @@ const handler = NextAuth({
 					});
 				}
 
-				return user;
+				return true;
 			} catch (error) {
 				return false;
 			}

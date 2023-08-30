@@ -6,7 +6,7 @@ export const GET = async () => {
 	try {
 		await connectToDB();
 
-		const topics = await Topic.find();
+		const topics = await Topic.find({}).populate("creator").sort({ _id: -1 });
 
 		return NextResponse.json(topics, { status: 200 });
 	} catch (error: any) {

@@ -1,7 +1,15 @@
 import { ReactNode } from "react";
 
+type CreatorType = {
+	_id: string;
+	name: string;
+	image: string;
+	email: string;
+};
+
 type TopicType = {
 	_id: string;
+	creator: CreatorType;
 	title: string;
 	description: string;
 };

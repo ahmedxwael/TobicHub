@@ -9,6 +9,10 @@ const TopicSchema = new Schema({
 		type: String,
 		required: [true, "Description is required"],
 	},
+	creator: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+	},
 });
 
 export const Topic = models.Topic || model("Topic", TopicSchema);

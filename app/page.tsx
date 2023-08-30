@@ -1,13 +1,17 @@
+"use client";
+
+import Button from "@/components/button";
 import FeaturesList from "@/components/features/features-list";
 import SectionHeading from "@/components/section-heading";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-	title: "Home",
-	description: "The home page for this TopicHub application.",
-};
+import { useRouter } from "next/navigation";
 
 const Home = () => {
+	const router = useRouter();
+
+	const clickHandler = () => {
+		router.push("/register");
+	};
+
 	return (
 		<>
 			<section className="text-center">
@@ -25,14 +29,11 @@ const Home = () => {
 			</section>
 
 			<section className="mt-20 text-center">
-				<h2 className="text-xl font-bold">Ready to get started?</h2>
-				<button
-					disabled={true}
-					className="mt-6 inline-block px-6 py-3 bg-white bg-opacity-40 text-black disabled:cursor-not-allowed transition-colors rounded-xl font-semibold"
-				>
-					{/* Create an Account */}
-					Comming soon
-				</button>
+				<h2 className="text-xl font-bold mb-4">Ready to get started?</h2>
+
+				<Button type="primary" handler={clickHandler}>
+					Join us now
+				</Button>
 			</section>
 		</>
 	);
