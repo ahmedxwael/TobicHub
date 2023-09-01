@@ -35,7 +35,7 @@ export const getTopic = async (id: string) => {
 
 export const getTopics = async (): Promise<TopicType[]> => {
 	const res = await fetch(`${process.env.BASE_URL}/api/topics`, {
-		next: { tags: ["topics"] },
+		cache: "no-store",
 	});
 
 	if (!res.ok) {
@@ -47,7 +47,7 @@ export const getTopics = async (): Promise<TopicType[]> => {
 
 export const getUserTopics = async (id: string): Promise<TopicType[]> => {
 	const res = await fetch(`${process.env.BASE_URL}/api/topics/user?id=${id}`, {
-		next: { tags: ["topics"] },
+		cache: "no-store",
 	});
 
 	if (!res.ok) {
