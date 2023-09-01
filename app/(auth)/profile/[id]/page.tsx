@@ -1,5 +1,5 @@
 import TopicCard from "@/components/topics/topic-card";
-import { ParamsType } from "@/types";
+import { ParamsType, TopicType } from "@/types";
 import { getUserTopics } from "@/utils/topicUtils";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
@@ -36,6 +36,7 @@ export const generateStaticParams = async () => {
 };
 
 const Profile = async ({ params: { id } }: ParamsType) => {
+	// const topics: TopicType[] = [];
 	const topics = await getUserTopics(id);
 
 	return (
