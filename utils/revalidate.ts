@@ -1,5 +1,7 @@
-export const revalidateTag = async (tag: string = "topics") => {
+export const revalidatePath = async (pathes: string[]) => {
+	const pathesString = pathes.join("&path=");
+
 	await fetch(
-		`${process.env.BASE_URL}/api/revalidate?tag=${tag}&secret=${process.env.MY_SECRET_TOKEN}`
+		`${process.env.BASE_URL}/api/revalidate?&secret=${process.env.MY_SECRET_TOKEN}&path=${pathesString}`
 	).then((res) => res.json());
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { TopicType } from "@/types";
-import { revalidateTag } from "@/utils/revalidate";
+import { revalidatePath } from "@/utils/revalidate";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 				method: "DELETE",
 			});
 
-			revalidateTag();
+			revalidatePath(["/topics", `/profile/${session?.user?.id}`]);
 
 			router.refresh();
 		}
