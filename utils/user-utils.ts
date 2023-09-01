@@ -1,20 +1,20 @@
 import { CreatorType } from "@/types";
 
-export const getUsers = async (): Promise<CreatorType[] | undefined> => {
+export const getUsers = async (): Promise<CreatorType[]> => {
 	const res = await fetch(`${process.env.BASE_URL}/api/users`);
 
 	if (!res.ok) {
-		return undefined;
+		throw new Error("Could not fetch users.");
 	}
 
 	return res.json();
 };
 
-export const getUser = async (id: string): Promise<CreatorType | undefined> => {
+export const getUser = async (id: string): Promise<CreatorType> => {
 	const res = await fetch(`${process.env.BASE_URL}/api/users/${id}`);
 
 	if (!res.ok) {
-		return undefined;
+		throw new Error("Could not fetch user.");
 	}
 
 	return res.json();

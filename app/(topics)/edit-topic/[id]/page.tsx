@@ -1,4 +1,5 @@
 import Form from "@/components/Form";
+import { TopicType } from "@/types";
 import { getTopic, getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
 
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 };
 
 export const generateStaticParams = async () => {
-	const topics = await getTopics();
+	// const topics = await getTopics();
+	const topics: TopicType[] = [];
 
 	if (!topics) {
 		return [];
@@ -22,7 +24,8 @@ export const generateStaticParams = async () => {
 };
 
 const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
-	const topic = await getTopic(id);
+	// const topic = await getTopic(id);
+	const topic = undefined;
 
 	return (
 		<main className="center">
