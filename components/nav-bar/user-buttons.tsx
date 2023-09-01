@@ -5,7 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const UserButtons = () => {
+type Props = {
+	closeMenu?: () => void;
+};
+
+const UserButtons = ({ closeMenu }: Props) => {
 	const { data: session }: any = useSession();
 	return (
 		<>
@@ -14,12 +18,19 @@ const UserButtons = () => {
 					<button
 						className="btn py-2.5 btn-alt rounded-full"
 						onClick={() => {
+							if (closeMenu) {
+								closeMenu();
+							}
 							signOut({ callbackUrl: process.env.NEXTAUTH_URL! });
 						}}
 					>
 						Sign out
 					</button>
-					<Link href={`/profile/${session.user?.id}`} className="inline-block">
+					<Link
+						href={`/profile/${session.user?.id}`}
+						onClick={() => closeMenu && closeMenu()}
+						className="inline-block"
+					>
 						<Image
 							src={session.user?.image || ""}
 							alt="User image"
@@ -32,7 +43,8 @@ const UserButtons = () => {
 			) : (
 				<Link
 					href="/register"
-					className="bg-white py-2 px-6 rounded-full text-black font-semibold"
+					onClick={() => closeMenu && closeMenu()}
+					className="bg-white  text-center block py-2 px-6 rounded-full text-black font-semibold"
 				>
 					Sign in
 				</Link>

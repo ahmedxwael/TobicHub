@@ -1,11 +1,21 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import NavLinks from "./nav-links";
+import SideMenu from "./side-menu";
 import UserButtons from "./user-buttons";
 
 const Navbar = () => {
+	const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+
+	const hadleMenuBtnClick = () => {
+		setToggleMenu((currState) => !currState);
+	};
+
 	return (
-		<header className="border-b border-b-white/10">
+		<header className="border-b border-b-white/10 z-10 sticky top-0 bg-black/60 backdrop-blur-md">
 			<nav className="flex items-center gap-4 justify-between py-6 container px-8 mx-auto">
 				<Link
 					href="/"
@@ -14,9 +24,16 @@ const Navbar = () => {
 				>
 					TopicHub
 				</Link>
-				<NavLinks />
-				<UserButtons />
-				<button className="text-xl sm:hidden">
+				<div className="w-[calc(50%+94px)] hidden md:flex items-center justify-between">
+					<div className="flex items-center gap-4 text-white/50">
+						<NavLinks />
+					</div>
+					<UserButtons />
+				</div>
+
+				{toggleMenu ? <SideMenu menuHandler={hadleMenuBtnClick} /> : null}
+
+				<button onClick={hadleMenuBtnClick} className="text-xl md:hidden">
 					<HiMenuAlt3 />
 				</button>
 			</nav>
