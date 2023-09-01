@@ -1,5 +1,4 @@
 import { TopicType } from "@/types";
-import { revalidatePath } from "./revalidate";
 
 export async function addTopic(newTopic: Partial<TopicType>) {
 	await fetch(`/api/topics`, {
@@ -9,8 +8,6 @@ export async function addTopic(newTopic: Partial<TopicType>) {
 		},
 		body: JSON.stringify(newTopic),
 	}).then((res) => res.json());
-
-	revalidatePath(["/topics", `/profile/${newTopic.creator}`]);
 }
 
 export async function editTopic(
@@ -24,8 +21,6 @@ export async function editTopic(
 		},
 		body: JSON.stringify(updatedTopic),
 	}).then((res) => res.json());
-
-	revalidatePath(["/topics", `/profile/${updatedTopic.creator?._id}`]);
 }
 
 export const getTopic = async (id: string) => {

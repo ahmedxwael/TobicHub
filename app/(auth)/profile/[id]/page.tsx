@@ -5,7 +5,7 @@ import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
 import React from "react";
 
-export const revalidate = 86400;
+export const revalidate = 0;
 
 export const generateMetadata = async ({
 	params: { id },
@@ -20,7 +20,7 @@ export const generateMetadata = async ({
 	}
 
 	return {
-		title: user?.name,
+		title: `TobicHub | ${user?.name}`,
 		description: `${user?.name} profile page.`,
 	};
 };
