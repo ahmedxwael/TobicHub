@@ -1,5 +1,4 @@
 import Form from "@/components/Form";
-import { TopicType } from "@/types";
 import { getTopic, getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
 
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
 
 export const generateStaticParams = async () => {
 	const topics = await getTopics();
-	// const topics: TopicType[] = [];
 
 	if (!topics) {
 		return [];

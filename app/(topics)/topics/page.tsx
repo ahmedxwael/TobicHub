@@ -1,5 +1,4 @@
 import TopicCard from "@/components/topics/topic-card";
-import { TopicType } from "@/types";
 import { getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
 
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
 };
 
 const TopicsPage = async () => {
-	// const topics: TopicType[] = [];
 	const topics = await getTopics();
 
 	return (
