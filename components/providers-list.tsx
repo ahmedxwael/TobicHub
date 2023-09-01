@@ -30,7 +30,9 @@ const ProvidersList = ({ providers }: Props) => {
 								<button
 									key={provider.id}
 									type="button"
-									className="flex-1 btn btn-primary capitalize"
+									className={`flex-1 btn ${
+										provider.name === "Google" ? "btn-primary" : "btn-alt"
+									} capitalize`}
 									onClick={() =>
 										signIn(provider.id, {
 											callbackUrl: process.env.BASE_URL!,
