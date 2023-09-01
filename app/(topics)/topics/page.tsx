@@ -3,7 +3,7 @@ import { TopicType } from "@/types";
 import { getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
 
-// export const revalidate = 0;
+export const revalidate = 1;
 
 export const metadata: Metadata = {
 	title: "Topics",
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 const TopicsPage = async () => {
-	const topics: TopicType[] = [];
-	// const topics = await getTopics();
+	// const topics: TopicType[] = [];
+	const topics = await getTopics();
 
 	return (
 		<section className="container mx-auto flex flex-col gap-8">

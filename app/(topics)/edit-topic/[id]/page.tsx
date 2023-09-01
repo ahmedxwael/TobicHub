@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 };
 
 export const generateStaticParams = async () => {
-	// const topics = await getTopics();
-	const topics: TopicType[] = [];
+	const topics = await getTopics();
+	// const topics: TopicType[] = [];
 
 	if (!topics) {
 		return [];
@@ -24,8 +24,7 @@ export const generateStaticParams = async () => {
 };
 
 const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
-	// const topic = await getTopic(id);
-	const topic = undefined;
+	const topic = await getTopic(id);
 
 	return (
 		<main className="center">
