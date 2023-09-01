@@ -36,8 +36,8 @@ export const generateStaticParams = async () => {
 };
 
 const Profile = async ({ params: { id } }: ParamsType) => {
-	const topics: TopicType[] = [];
-	// const topics = await getUserTopics(id);
+	// const topics: TopicType[] = [];
+	const topics = await getUserTopics(id);
 
 	return (
 		<section className="container mx-auto flex flex-col gap-8">
