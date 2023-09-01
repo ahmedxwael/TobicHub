@@ -7,37 +7,37 @@ import React from "react";
 
 export const revalidate = 86400;
 
-// export const generateMetadata = async ({
-// 	params: { id },
-// }: ParamsType): Promise<Metadata> => {
-// 	const user = await getUser(id);
+export const generateMetadata = async ({
+	params: { id },
+}: ParamsType): Promise<Metadata> => {
+	const user = await getUser(id);
 
-// 	if (!user) {
-// 		return {
-// 			title: "Unknown user",
-// 			description: `Unknown profile page.`,
-// 		};
-// 	}
+	if (!user) {
+		return {
+			title: "Unknown user",
+			description: `Unknown profile page.`,
+		};
+	}
 
-// 	return {
-// 		title: user?.name,
-// 		description: `${user?.name} profile page.`,
-// 	};
-// };
+	return {
+		title: user?.name,
+		description: `${user?.name} profile page.`,
+	};
+};
 
-// export const generateStaticParams = async () => {
-// 	const users = await getUsers();
+export const generateStaticParams = async () => {
+	const users = await getUsers();
 
-// 	if (!users) {
-// 		return [];
-// 	}
+	if (!users) {
+		return [];
+	}
 
-// 	return users.map((user) => ({ id: user._id }));
-// };
+	return users.map((user) => ({ id: user._id }));
+};
 
 const Profile = async ({ params: { id } }: ParamsType) => {
-	// const topics: TopicType[] = [];
-	const topics = await getUserTopics(id);
+	const topics: TopicType[] = [];
+	// const topics = await getUserTopics(id);
 
 	return (
 		<section className="container mx-auto flex flex-col gap-8">
