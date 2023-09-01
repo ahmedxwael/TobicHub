@@ -1,18 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import NavLinks from "./nav-links";
 import SideMenu from "./side-menu";
 import UserButtons from "./user-buttons";
 
 const Navbar = () => {
+	const pathname = usePathname();
+
 	const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
 	const hadleMenuBtnClick = () => {
 		setToggleMenu((currState) => !currState);
 	};
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, left: 0 });
+	}, [pathname]);
 
 	return (
 		<header className="border-b border-b-white/10 sticky top-0 z-10 bg-black">
