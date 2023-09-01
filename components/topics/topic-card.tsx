@@ -1,6 +1,7 @@
 "use client";
 
 import { TopicType } from "@/types";
+import { revalidateTag } from "@/utils/revalidate";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,6 +20,8 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 			await fetch(`/api/topics?id=${topic._id}`, {
 				method: "DELETE",
 			});
+
+			revalidateTag();
 
 			router.refresh();
 		}

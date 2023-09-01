@@ -1,4 +1,5 @@
 import { TopicType } from "@/types";
+import { revalidateTag } from "./revalidate";
 
 export async function addTopic(newTopic: Partial<TopicType>) {
 	await fetch(`/api/topics`, {
@@ -8,6 +9,8 @@ export async function addTopic(newTopic: Partial<TopicType>) {
 		},
 		body: JSON.stringify(newTopic),
 	}).then((res) => res.json());
+
+	revalidateTag();
 }
 
 export async function editTopic(
@@ -21,6 +24,8 @@ export async function editTopic(
 		},
 		body: JSON.stringify(updatedTopic),
 	}).then((res) => res.json());
+
+	revalidateTag();
 }
 
 export const getTopic = async (id: string) => {
@@ -34,7 +39,9 @@ export const getTopic = async (id: string) => {
 };
 
 export const getTopics = async (): Promise<TopicType[]> => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics`);
+	const res = await fetch(`${process.env.BASE_URL}/api/topics`, {
+		next: { tags: ["topics"] },
+	});
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the list of topics.");
@@ -44,7 +51,9 @@ export const getTopics = async (): Promise<TopicType[]> => {
 };
 
 export const getUserTopics = async (id: string): Promise<TopicType[]> => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics/user?id=${id}`);
+	const res = await fetch(`${process.env.BASE_URL}/api/topics/user?id=${id}`, {
+		next: { tags: ["topics"] },
+	});
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the list of topics.");

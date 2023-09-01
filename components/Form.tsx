@@ -44,15 +44,6 @@ const Form = ({ type, currentTopic }: Props) => {
 		}
 	};
 
-	const handleCancelling = () => {
-		const isConfirmed = confirm("Are you sure you want to cancel?");
-
-		if (isConfirmed) {
-			router.push("/topics");
-		}
-		return;
-	};
-
 	return (
 		<form
 			onSubmit={handleSubmit}
@@ -93,7 +84,7 @@ const Form = ({ type, currentTopic }: Props) => {
 				<button
 					disabled={submitting}
 					type="button"
-					onClick={handleCancelling}
+					onClick={() => router.push("/topics")}
 					className="flex-1 capitalize btn btn-alt"
 				>
 					Cancel
