@@ -15,7 +15,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<header className="border-b border-b-white/10 z-10 sticky top-0 bg-black/60 backdrop-blur-md">
+		<header className="border-b border-b-white/10 sticky top-0 z-10 bg-black">
 			<nav className="flex items-center gap-4 justify-between py-6 container px-8 mx-auto">
 				<Link
 					href="/"
@@ -24,6 +24,7 @@ const Navbar = () => {
 				>
 					TopicHub
 				</Link>
+
 				<div className="w-[calc(50%+94px)] hidden md:flex items-center justify-between">
 					<div className="flex items-center gap-4 text-white/50">
 						<NavLinks />

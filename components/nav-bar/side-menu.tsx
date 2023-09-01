@@ -9,7 +9,7 @@ type Props = {
 
 const SideMenu = ({ menuHandler }: Props) => {
 	return (
-		<div className="fixed top-0 right-0 w-full h-full bg-black/70 flex z-10">
+		<div className="fixed top-0 left-0 w-full h-full bg-black/70 flex z-10">
 			<aside className="w-[350px] max-w-full ml-auto flex flex-col gap-6 bg-black border-l-2 border-white/10 p-6">
 				<div className="flex items-center gap-4 justify-between border-b-2 border-white/10 pb-6">
 					<p className="font-bold text-xl">TobicHub</p>
