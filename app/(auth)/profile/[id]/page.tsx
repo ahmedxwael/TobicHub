@@ -1,10 +1,11 @@
-import TopicCard from "@/components/topics/topic-card";
+import ComponentLoader from "@/components/component-loader";
+import { ProfileCard } from "@/components/profile-card";
 import TopicsSection from "@/components/topics/topics-section";
 import { ParamsType } from "@/types";
 import { getUserTopics } from "@/utils/topicUtils";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 
 export const revalidate = 1;
 
@@ -37,12 +38,17 @@ export const generateStaticParams = async () => {
 };
 
 const Profile = async ({ params: { id } }: ParamsType) => {
+	const user = await getUser(id);
 	const topics = await getUserTopics(id);
+	const topicsNumber = topics.length;
 
 	return (
-		<section className="flex flex-col gap-10">
-			<div className="flex flex-col gap-6">
-				<TopicsSection topics={topics} />
+		<section className="flex flex-col gap-12">
+			<ProfileCard topicsNumber={topicsNumber} user={user} />
+			<div className="flex flex-col gap-12">
+				<Suspense fallback={<ComponentLoader />}>
+					<TopicsSection topics={topics} />
+				</Suspense>
 			</div>
 		</section>
 	);

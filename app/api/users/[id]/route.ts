@@ -9,7 +9,7 @@ export const GET = async (
 	try {
 		await connectToDB();
 
-		const user = await User.findById(id);
+		const user = await User.findById(id, { email: 0 });
 
 		return NextResponse.json(user, { status: 200 });
 	} catch (error: any) {

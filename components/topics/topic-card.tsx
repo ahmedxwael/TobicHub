@@ -42,9 +42,9 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 				<Image
 					src={topic.creator.image}
 					alt="user image"
-					width={30}
-					height={30}
-					className="rounded-full "
+					width={35}
+					height={35}
+					className="rounded-full border-2 border-white/10"
 				/>
 				<h2 className="font-medium text-sm">{topic.creator.name}</h2>
 			</Link>
