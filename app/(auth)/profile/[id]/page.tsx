@@ -47,7 +47,7 @@ const Profile = async ({ params: { id } }: ParamsType) => {
 			<ProfileCard topicsNumber={topicsNumber} user={user} />
 			<div className="flex flex-col gap-12">
 				<Suspense fallback={<ComponentLoader />}>
-					<TopicsSection topics={topics} />
+					<TopicsSection topics={topics} title="topics" />
 				</Suspense>
 			</div>
 		</section>

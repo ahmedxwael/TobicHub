@@ -18,6 +18,10 @@ body {
 		rgb(var(--background-start-rgb));
 }
 
+img {
+	@apply border-2 border-white/[0.02];
+}
+
 .center {
 	@apply flex items-center justify-center;
 }

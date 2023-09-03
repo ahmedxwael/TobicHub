@@ -16,7 +16,7 @@ const TopicsPage = async () => {
 
 	return (
 		<section className="flex flex-col gap-10">
-			<TopicsSection topics={topics} />
+			<TopicsSection topics={topics} title="all topics" />
 		</section>
 	);
 };

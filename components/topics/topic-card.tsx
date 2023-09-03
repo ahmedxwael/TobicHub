@@ -5,7 +5,8 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { memo } from "react";
+import { memo, useState } from "react";
+import { BsThreeDots } from "react-icons/bs";
 
 const TopicCard = ({ topic }: { topic: TopicType }) => {
 	const { data: session }: any = useSession();
@@ -18,7 +19,14 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 		(user?.id === topic.creator._id && pathname === `/profile/${user?.id}`) ||
 		user?.admin;
 
+	const [toggleControlMenu, setToggleControlMenu] = useState<boolean>(false);
+
+	const handleControlMenu = () => {
+		setToggleControlMenu((currState) => !currState);
+	};
+
 	const deleteTopic = async () => {
+		handleControlMenu();
 		const isConfirmed = confirm("Are you sure you want to delete this topic?");
 
 		if (isConfirmed) {
@@ -35,39 +43,53 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 			key={topic._id}
 			className="p-4 border-2 border-white/10 rounded-xl flex flex-col gap-4 break-inside-avoid"
 		>
-			<Link
-				href={`/profile/${topic.creator._id}`}
-				className="flex items-center gap-4 w-fit"
-			>
-				<Image
-					src={topic.creator.image}
-					alt="user image"
-					width={35}
-					height={35}
-					className="rounded-full border-2 border-white/10"
-				/>
-				<h2 className="font-medium text-sm">{topic.creator.name}</h2>
-			</Link>
+			<div className="flex justify-between gap-4 items-center">
+				<Link
+					href={`/profile/${topic.creator._id}`}
+					className="flex items-center gap-4 w-fit"
+				>
+					<Image
+						src={topic.creator.image}
+						alt="user image"
+						width={35}
+						height={35}
+						className="rounded-full border-2 border-white/10"
+					/>
+					<h2 className="font-medium text-sm">{topic.creator.name}</h2>
+				</Link>
+				{hasControl ? (
+					<div className="flex gap-2 items-center relative">
+						<button onClick={handleControlMenu} className="text-xl">
+							<BsThreeDots />
+						</button>
+						{toggleControlMenu ? (
+							<div className="absolute top-0 right-6 rounded-xl py-3 px-4 tracking-wide text-white/60 text-sm flex flex-col gap-2 bg-neutral-800 text-start">
+								<button
+									className="hover:text-white transition-colors"
+									onClick={deleteTopic}
+								>
+									Delete
+								</button>
+								<button
+									onClick={() => {
+										handleControlMenu();
+										router.push(`/edit-topic/${topic._id}`);
+									}}
+									className="hover:text-white transition-colors"
+								>
+									Edit
+								</button>
+							</div>
+						) : null}
+					</div>
+				) : null}
+			</div>
 			<div className="flex gap-2 flex-col">
 				<h3 className="font-semibold line-clamp-1 text-xl capitalize">
 					{topic.title}
 				</h3>
 				<p className="text-neutral-400 leading-6">{topic.description}</p>
 			</div>
-
-			{hasControl ? (
-				<div className="flex gap-2 items-center justify-end mt-auto">
-					<button className="btn-small btn-alt" onClick={deleteTopic}>
-						Delete
-					</button>
-					<button
-						onClick={() => router.push(`/edit-topic/${topic._id}`)}
-						className="btn-small btn-primary"
-					>
-						Edit
-					</button>
-				</div>
-			) : null}
 		</article>
 	);
 };
