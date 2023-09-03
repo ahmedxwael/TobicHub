@@ -9,7 +9,9 @@ export const GET = async (
 	try {
 		await connectToDB();
 
-		const [topic] = await Topic.find({ _id: id }).populate("creator");
+		const [topic] = await Topic.find({ _id: id }).populate("creator", {
+			email: 0,
+		});
 
 		return NextResponse.json(topic, { status: 200 });
 	} catch (error: any) {

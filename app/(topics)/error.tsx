@@ -20,7 +20,7 @@ export default function Error({
 					className="btn btn-alt"
 					onClick={() => {
 						reset();
-						router.refresh();
+						location.reload();
 					}}
 				>
 					Try again

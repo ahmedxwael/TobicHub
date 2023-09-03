@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function Footer() {
 	const year = new Date().getFullYear();
 
@@ -7,12 +5,13 @@ export default function Footer() {
 		<footer className="mb-20 px-4 text-center text-white/50 max-w-[30rem] sm:max-w-[50rem] mx-auto">
 			<small className="mb-2 block text-xs">
 				&copy; {year} Created by{" "}
-				<Link
+				<a
 					href="https://github.com/JAHMD"
+					target="_blank"
 					className="font-semibold text-white/60"
 				>
 					Ahmed Wael
-				</Link>
+				</a>
 				.
 			</small>
 			<p className="text-xs leading-6">

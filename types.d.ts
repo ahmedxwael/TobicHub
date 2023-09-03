@@ -4,16 +4,16 @@ type ParamsType = {
 	params: { id: string };
 };
 
-type CreatorType = {
+type PubCreatorType = {
 	_id: string;
 	name: string;
 	image: string;
-	email: string;
+	admin?: boolean;
 };
 
 type TopicType = {
 	_id: string;
-	creator: CreatorType;
+	creator: PubCreatorType;
 	title: string;
 	description: string;
 };

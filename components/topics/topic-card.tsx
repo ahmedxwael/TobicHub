@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-const TopicCard = ({ topic }: { topic: TopicType }) => {
+const TopicCard = ({ topic }: { topic: Omit<TopicType, "craetor"> }) => {
 	const { data: session }: any = useSession();
 
 	const pathname = usePathname();
