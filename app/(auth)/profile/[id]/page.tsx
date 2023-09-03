@@ -1,4 +1,5 @@
 import TopicCard from "@/components/topics/topic-card";
+import TopicsSection from "@/components/topics/topics-section";
 import { ParamsType } from "@/types";
 import { getUserTopics } from "@/utils/topicUtils";
 import { getUser, getUsers } from "@/utils/user-utils";
@@ -39,17 +40,10 @@ const Profile = async ({ params: { id } }: ParamsType) => {
 	const topics = await getUserTopics(id);
 
 	return (
-		<section className="container mx-auto flex flex-col gap-8">
-			<h1 className="text-3xl font-bold">Topics</h1>
-			{topics ? (
-				<div className="space-y-6 sm:columns-2 sm:gap-6 lg:columns-3">
-					{topics.map((topic) => (
-						<TopicCard key={topic._id} topic={topic} />
-					))}
-				</div>
-			) : (
-				<p>No topics to display</p>
-			)}
+		<section className="flex flex-col gap-10">
+			<div className="flex flex-col gap-6">
+				<TopicsSection topics={topics} />
+			</div>
 		</section>
 	);
 };

@@ -23,7 +23,7 @@ export default function RootLayout({ children, session }: Props) {
 			<body className={inter.className}>
 				<Provider session={session}>
 					<Navbar />
-					<main className="min-h-[calc(100vh-117px)] sm:min-h-[calc(100vh-76.8px)] px-8 py-24">
+					<main className="container mx-auto min-h-[calc(100vh-117px)] sm:min-h-[calc(100vh-76.8px)] px-8 py-24">
 						{children}
 					</main>
 					<Footer />

@@ -16,7 +16,7 @@ const UserButtons = ({ closeMenu }: Props) => {
 			{session ? (
 				<div className="flex items-center gap-4">
 					<button
-						className="btn py-2.5 btn-alt rounded-full"
+						className="btn py-2.5 btn-alt rounded-full flex-1"
 						onClick={() => {
 							if (closeMenu) {
 								closeMenu();
@@ -44,7 +44,7 @@ const UserButtons = ({ closeMenu }: Props) => {
 				<Link
 					href="/register"
 					onClick={() => closeMenu && closeMenu()}
-					className="bg-white  text-center block py-2 px-6 rounded-full text-black font-semibold"
+					className="btn btn-primary text-center block py-2.5 px-6 rounded-full"
 				>
 					Sign in
 				</Link>

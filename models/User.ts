@@ -13,6 +13,9 @@ const UserSchema = new Schema({
 	image: {
 		type: String,
 	},
+	admin: {
+		type: Boolean,
+	},
 });
 
 export const User = models.User || model("User", UserSchema);

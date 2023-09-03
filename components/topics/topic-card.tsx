@@ -5,12 +5,18 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { memo } from "react";
 
-const TopicCard = ({ topic }: { topic: Omit<TopicType, "craetor"> }) => {
+const TopicCard = ({ topic }: { topic: TopicType }) => {
 	const { data: session }: any = useSession();
+	const user = session?.user;
 
 	const pathname = usePathname();
 	const router = useRouter();
+
+	const hasControl =
+		(user?.id === topic.creator._id && pathname === `/profile/${user?.id}`) ||
+		user?.admin;
 
 	const deleteTopic = async () => {
 		const isConfirmed = confirm("Are you sure you want to delete this topic?");
@@ -49,8 +55,7 @@ const TopicCard = ({ topic }: { topic: Omit<TopicType, "craetor"> }) => {
 				<p className="text-neutral-400 leading-6">{topic.description}</p>
 			</div>
 
-			{session?.user?.id === topic.creator._id &&
-			pathname === `/profile/${session?.user?.id}` ? (
+			{hasControl ? (
 				<div className="flex gap-2 items-center justify-end mt-auto">
 					<button className="btn-small btn-alt" onClick={deleteTopic}>
 						Delete
@@ -67,4 +72,4 @@ const TopicCard = ({ topic }: { topic: Omit<TopicType, "craetor"> }) => {
 	);
 };
 
-export default TopicCard;
+export default memo(TopicCard);

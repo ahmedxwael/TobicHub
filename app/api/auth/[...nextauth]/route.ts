@@ -1,4 +1,5 @@
 import { User } from "@/models/User";
+import { PubCreatorType } from "@/types";
 import { connectToDB } from "@/utils/db";
 import NextAuth from "next-auth/next";
 import GitHubProvider from "next-auth/providers/github";
@@ -18,8 +19,8 @@ const handler = NextAuth({
 	callbacks: {
 		async session({ session, token }: any) {
 			const userSession = await User.findOne({ email: session.user?.email });
-			// session.accessToken = token.accessToken;
 			session.user.id = userSession._id.toString();
+			session.user.admin = userSession.admin;
 
 			return session;
 		},
