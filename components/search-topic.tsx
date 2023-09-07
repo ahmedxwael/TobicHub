@@ -16,11 +16,11 @@ const SearchTopic = () => {
 	};
 
 	return (
-		<form className="relative" onSubmit={handleSubmit}>
+		<form className="relative max-w-full" onSubmit={handleSubmit}>
 			<input
 				type="text"
 				placeholder="Search for a spesific topic"
-				className="py-3 px-6 rounded-xl placeholder:text-sm text-black"
+				className="py-3 px-6 rounded-xl placeholder:text-sm text-black w-full"
 				required={true}
 				value={queryString}
 				onChange={(e) => setQueryString(e.target.value)}
