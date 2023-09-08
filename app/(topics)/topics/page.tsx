@@ -1,9 +1,8 @@
-import TopicCard from "@/components/topics/topic-card";
 import TopicsSection from "@/components/topics/topics-section";
 import { getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
 
-export const revalidate = 1;
+export const revalidate = 0;
 
 export const metadata: Metadata = {
 	title: "Topics",
@@ -13,10 +12,11 @@ export const metadata: Metadata = {
 
 const TopicsPage = async () => {
 	const topics = await getTopics();
+	// const topics: TopicType[] = [];
 
 	return (
 		<section className="flex flex-col gap-10">
-			<TopicsSection topics={topics} title="all topics" />
+			<TopicsSection topics={topics || []} title="all topics" />
 		</section>
 	);
 };

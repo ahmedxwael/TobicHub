@@ -1,16 +1,19 @@
 import TopicsSection from "@/components/topics/topics-section";
+import { getSearchTopics } from "@/utils/topicUtils";
 import React from "react";
+
+export const revalidate = 0;
 
 type Props = {
 	searchParams: { q: string };
 };
 
 const SearchPage = async ({ searchParams: { q } }: Props) => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics/search?q=${q}`);
-	const topics = await res.json();
+	const topics = await getSearchTopics(q);
+
 	return (
 		<section className="flex flex-col gap-8">
-			<TopicsSection topics={topics} title={`Results for ${q}`} />
+			<TopicsSection topics={topics || []} title={`Results for ${q}`} />
 		</section>
 	);
 };

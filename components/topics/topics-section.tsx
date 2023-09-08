@@ -1,6 +1,6 @@
-import TopicCard from "@/components/topics/topic-card";
 import { TopicType } from "@/types";
 import SearchTopic from "../search-topic";
+import TopicsList from "./topics-list";
 
 type Props = { topics: TopicType[]; title: string };
 
@@ -18,11 +18,7 @@ const TopicsSection = async ({ topics, title }: Props) => {
 					There is no topics to show
 				</p>
 			) : (
-				<div className="space-y-6 sm:columns-2 sm:gap-6 lg:columns-3">
-					{topics.map((topic) => (
-						<TopicCard key={topic._id} topic={topic} />
-					))}
-				</div>
+				<TopicsList topics={topics} />
 			)}
 		</>
 	);

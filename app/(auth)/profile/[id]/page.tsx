@@ -1,13 +1,13 @@
 import ComponentLoader from "@/components/component-loader";
 import { ProfileCard } from "@/components/profile-card";
-import TopicsSection from "@/components/topics/topics-section";
+import TopicsList from "@/components/topics/topics-list";
 import { ParamsType } from "@/types";
 import { getUserTopics } from "@/utils/topicUtils";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
 
-export const revalidate = 1;
+export const revalidate = 0;
 
 export const generateMetadata = async ({
 	params: { id },
@@ -46,8 +46,11 @@ const Profile = async ({ params: { id } }: ParamsType) => {
 		<section className="flex flex-col gap-12">
 			<ProfileCard topicsNumber={topicsNumber} user={user} />
 			<div className="flex flex-col gap-12">
+				<h1 className="text-2xl pb-2 first-letter:uppercase tracking-wider font-bold border-b-2 w-fit">
+					Topics
+				</h1>
 				<Suspense fallback={<ComponentLoader />}>
-					<TopicsSection topics={topics} title="topics" />
+					<TopicsList topics={topics} />
 				</Suspense>
 			</div>
 		</section>

@@ -1,24 +1,24 @@
 import { ReactNode } from "react";
 
-type ParamsType = {
+export type ParamsType = {
 	params: { id: string };
 };
 
-type PubCreatorType = {
+export type PubCreatorType = {
 	_id: string;
 	name: string;
 	image: string;
 	admin?: boolean;
 };
 
-type TopicType = {
+export type TopicType = {
 	_id: string;
 	creator: PubCreatorType;
 	title: string;
 	description: string;
 };
 
-type FeatureType = {
+export type FeatureType = {
 	id: number;
 	icon: ReactNode;
 	title: string;

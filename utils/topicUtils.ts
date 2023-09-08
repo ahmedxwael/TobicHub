@@ -52,3 +52,15 @@ export const getUserTopics = async (id: string): Promise<TopicType[]> => {
 
 	return res.json();
 };
+
+export const getSearchTopics = async (query: string): Promise<TopicType[]> => {
+	const res = await fetch(
+		`${process.env.BASE_URL}/api/topics/search?q=${query}`
+	);
+
+	if (!res.ok) {
+		throw new Error("Could not retrieve the list of topics.");
+	}
+
+	return res.json();
+};
