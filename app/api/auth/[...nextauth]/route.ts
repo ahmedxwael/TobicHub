@@ -1,12 +1,11 @@
 import { User } from "@/models/User";
 import { PubCreatorType } from "@/types";
 import { connectToDB } from "@/utils/db";
-import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions: NextAuthOptions = {
+const handler = NextAuth({
 	providers: [
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -45,8 +44,6 @@ export const authOptions: NextAuthOptions = {
 			}
 		},
 	},
-};
-
-const handler = NextAuth(authOptions);
+});
 
 export { handler as GET, handler as POST };
