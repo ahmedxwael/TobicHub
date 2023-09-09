@@ -24,7 +24,9 @@ export async function editTopic(
 }
 
 export const getTopic = async (id: string) => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics/${id}`);
+	const res = await fetch(`${process.env.BASE_URL}/api/topics/${id}`, {
+		next: { tags: ["topics"] },
+	});
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the topic.");
@@ -34,7 +36,9 @@ export const getTopic = async (id: string) => {
 };
 
 export const getTopics = async (): Promise<TopicType[]> => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics`);
+	const res = await fetch(`${process.env.BASE_URL}/api/topics`, {
+		next: { tags: ["topics"] },
+	});
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the list of topics.");
@@ -44,7 +48,9 @@ export const getTopics = async (): Promise<TopicType[]> => {
 };
 
 export const getUserTopics = async (id: string): Promise<TopicType[]> => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics/user?id=${id}`);
+	const res = await fetch(`${process.env.BASE_URL}/api/topics/user?id=${id}`, {
+		next: { tags: ["topics"] },
+	});
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the list of topics.");
@@ -55,7 +61,8 @@ export const getUserTopics = async (id: string): Promise<TopicType[]> => {
 
 export const getSearchTopics = async (query: string): Promise<TopicType[]> => {
 	const res = await fetch(
-		`${process.env.BASE_URL}/api/topics/search?q=${query}`
+		`${process.env.BASE_URL}/api/topics/search?q=${query}`,
+		{ next: { tags: ["topics"] } }
 	);
 
 	if (!res.ok) {

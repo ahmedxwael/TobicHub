@@ -2,7 +2,7 @@ import TopicsSection from "@/components/topics/topics-section";
 import { getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export const metadata: Metadata = {
 	title: "Topics",

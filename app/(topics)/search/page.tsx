@@ -2,7 +2,7 @@ import TopicsSection from "@/components/topics/topics-section";
 import { getSearchTopics } from "@/utils/topicUtils";
 import React from "react";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 type Props = {
 	searchParams: { q: string };

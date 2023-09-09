@@ -7,7 +7,7 @@ import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export const generateMetadata = async ({
 	params: { id },

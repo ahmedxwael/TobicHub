@@ -1,23 +1,20 @@
 "use client";
 
-import { TopicType } from "@/types";
+import { PubCreatorType, TopicType } from "@/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
 const TopicCard = ({ topic }: { topic: TopicType }) => {
-	const { data: session }: any = useSession();
-	const user = session?.user;
+	const { data: session } = useSession();
+	const user = session?.user as { id: string } & Omit<PubCreatorType, "_id">;
 
-	const pathname = usePathname();
 	const router = useRouter();
 
-	const hasControl =
-		(user?.id === topic.creator._id && pathname === `/profile/${user?.id}`) ||
-		user?.admin;
+	const hasControl = user && (user?.id === topic.creator._id || user?.admin);
 
 	const [toggleControlMenu, setToggleControlMenu] = useState<boolean>(false);
 
@@ -30,7 +27,7 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 		const isConfirmed = confirm("Are you sure you want to delete this topic?");
 
 		if (isConfirmed) {
-			await fetch(`/api/topics?id=${topic._id}`, {
+			await fetch(`/api/topics/${topic._id}`, {
 				method: "DELETE",
 			});
 

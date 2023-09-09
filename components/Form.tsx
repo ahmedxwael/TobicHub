@@ -17,7 +17,7 @@ const Form = ({ type, currentTopic }: Props) => {
 
 	const intialTopicValue =
 		type === "create"
-			? { title: "", description: "", creator: session?.user.id }
+			? { title: "", description: "", creator: session?.user?.id }
 			: (currentTopic as TopicType);
 
 	const [topic, setTopic] = useState<Partial<TopicType>>(intialTopicValue);
@@ -39,8 +39,8 @@ const Form = ({ type, currentTopic }: Props) => {
 			setSubmitting(false);
 			router.refresh();
 			router.push(`/profile/${session?.user?.id}`);
-		} catch (error) {
-			throw new Error("Something went wrong");
+		} catch (error: any) {
+			throw new Error("Something went wrong\n" + error.message);
 		}
 	};
 

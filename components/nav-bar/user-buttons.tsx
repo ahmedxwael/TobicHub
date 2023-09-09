@@ -27,12 +27,12 @@ const UserButtons = ({ closeMenu }: Props) => {
 						Sign out
 					</button>
 					<Link
-						href={`/profile/${session.user?.id}`}
+						href={`/profile/${session?.user?.id}`}
 						onClick={() => closeMenu && closeMenu()}
 						className="inline-block"
 					>
 						<Image
-							src={session.user?.image || ""}
+							src={session?.user?.image || ""}
 							alt="User image"
 							width={40}
 							height={40}
