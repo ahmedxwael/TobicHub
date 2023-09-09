@@ -1,6 +1,6 @@
 import { Topic } from "@/models/Topic";
 import { connectToDB } from "@/utils/db";
-import { revalidateTagedPages } from "@/utils/revalidate-tag";
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
@@ -32,7 +32,8 @@ export const PATCH = async (
 			description,
 		});
 
-		revalidateTagedPages("topics");
+		revalidateTag("topics");
+
 		return NextResponse.json(topic, { status: 200 });
 	} catch (error: any) {
 		return NextResponse.json({ error }, { status: 500 });
@@ -47,7 +48,7 @@ export const DELETE = async (
 		await connectToDB();
 
 		await Topic.findByIdAndDelete(id);
-		revalidateTagedPages("topics");
+		revalidateTag("topics");
 
 		return NextResponse.json(
 			{ message: "Deleted successfully!" },

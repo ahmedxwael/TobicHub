@@ -1,6 +1,6 @@
 import { Topic } from "@/models/Topic";
 import { connectToDB } from "@/utils/db";
-import { revalidateTagedPages } from "@/utils/revalidate-tag";
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -24,15 +24,14 @@ export const POST = async (request: NextRequest) => {
 		await connectToDB();
 
 		await Topic.create(data);
-		revalidateTagedPages("topics");
-
+		revalidateTag("topics");
 		return NextResponse.json(
 			{ message: "Topic created successfuly" },
 			{ status: 201 }
 		);
 	} catch (error: any) {
 		return NextResponse.json(
-			{ error: "Couldn't add the topic" },
+			{ error: "Couldn't add the topic, " + error.message },
 			{ status: 500 }
 		);
 	}
