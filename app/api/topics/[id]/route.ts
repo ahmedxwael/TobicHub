@@ -32,7 +32,7 @@ export const PATCH = async (
 			description,
 		});
 
-		await revalidateTagedPages("topics");
+		revalidateTagedPages("topics");
 		return NextResponse.json(topic, { status: 200 });
 	} catch (error: any) {
 		return NextResponse.json({ error }, { status: 500 });
@@ -47,8 +47,8 @@ export const DELETE = async (
 		await connectToDB();
 
 		await Topic.findByIdAndDelete(id);
+		revalidateTagedPages("topics");
 
-		await revalidateTagedPages("topics");
 		return NextResponse.json(
 			{ message: "Deleted successfully!" },
 			{ status: 200 }

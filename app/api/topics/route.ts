@@ -24,8 +24,8 @@ export const POST = async (request: NextRequest) => {
 		await connectToDB();
 
 		await Topic.create(data);
+		revalidateTagedPages("topics");
 
-		await revalidateTagedPages("topics");
 		return NextResponse.json(
 			{ message: "Topic created successfuly" },
 			{ status: 201 }
