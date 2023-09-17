@@ -7,10 +7,5 @@ export default withAuth({
 });
 
 export const config = {
-	matcher: [
-		"/create-topic",
-		"/edit-topic/:path*",
-		"/register",
-		"/profile/:path*",
-	],
+	matcher: ["/create-topic", "/edit-topic/:path*", "/register"],
 };
