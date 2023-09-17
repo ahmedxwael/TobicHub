@@ -1,6 +1,6 @@
 import Form from "@/components/Form";
 import { Metadata } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const CreateTopic = async () => {
-	const session = await getSession();
+	const session = await getServerSession();
 
 	console.log("session: ", session);
 
