@@ -1,8 +1,6 @@
 import Form from "@/components/Form";
 import { getTopic, getTopics } from "@/utils/topicUtils";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
 	title: "Topics | Edit topic",
@@ -22,12 +20,6 @@ export const generateStaticParams = async () => {
 };
 
 const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
-	const session = await getServerSession();
-
-	if (!session?.user) {
-		redirect("/register");
-	}
-
 	const topic = await getTopic(id);
 
 	return (
