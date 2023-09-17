@@ -1,47 +1,16 @@
-"use client";
-
-import { PubCreatorType, TopicType } from "@/types";
-import { useSession } from "next-auth/react";
+import { TopicType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { memo, useState } from "react";
-import { BsThreeDots } from "react-icons/bs";
+import { memo } from "react";
+import ControlMenu from "../control-menu";
 
 const TopicCard = ({ topic }: { topic: TopicType }) => {
-	const { data: session } = useSession();
-	const user = session?.user as { id: string } & Omit<PubCreatorType, "_id">;
-
 	const updatedAtDate = topic.updatedAt ? new Date(topic.updatedAt) : null;
-
 	const date = updatedAtDate
 		? new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
 				updatedAtDate
 		  )
 		: null;
-
-	const router = useRouter();
-
-	const hasControl = user && (user?.id === topic.creator._id || user?.admin);
-
-	const [toggleControlMenu, setToggleControlMenu] = useState<boolean>(false);
-
-	const handleControlMenu = () => {
-		setToggleControlMenu((currState) => !currState);
-	};
-
-	const deleteTopic = async () => {
-		handleControlMenu();
-		const isConfirmed = confirm("Are you sure you want to delete this topic?");
-
-		if (isConfirmed) {
-			await fetch(`/api/topics/${topic._id}`, {
-				method: "DELETE",
-			});
-
-			router.refresh();
-		}
-	};
 
 	return (
 		<article
@@ -67,32 +36,7 @@ const TopicCard = ({ topic }: { topic: TopicType }) => {
 						) : null}
 					</div>
 				</Link>
-				{hasControl ? (
-					<div className="flex gap-2 items-center relative">
-						<button onClick={handleControlMenu} className="text-xl">
-							<BsThreeDots />
-						</button>
-						{toggleControlMenu ? (
-							<div className="absolute top-0 right-6 rounded-xl py-3 px-4 tracking-wide text-white/60 text-sm flex flex-col gap-2 bg-neutral-800 text-start">
-								<button
-									className="hover:text-white transition-colors"
-									onClick={deleteTopic}
-								>
-									Delete
-								</button>
-								<button
-									onClick={() => {
-										handleControlMenu();
-										router.push(`/edit-topic/${topic._id}`);
-									}}
-									className="hover:text-white transition-colors"
-								>
-									Edit
-								</button>
-							</div>
-						) : null}
-					</div>
-				) : null}
+				<ControlMenu topic={topic} />
 			</div>
 			<div className="flex gap-2 flex-col">
 				<h3 className="font-semibold line-clamp-1 text-xl capitalize">
