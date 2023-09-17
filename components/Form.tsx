@@ -38,7 +38,7 @@ const Form = ({ type, currentTopic }: Props) => {
 
 			setSubmitting(false);
 			router.refresh();
-			router.push(`/profile/${session?.user?.id}`);
+			router.back();
 		} catch (error: any) {
 			throw new Error("Something went wrong\n" + error.message);
 		}

@@ -7,8 +7,6 @@ import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
 
-// export const revalidate = 0;
-
 export const generateMetadata = async ({
 	params: { id },
 }: ParamsType): Promise<Metadata> => {
@@ -27,15 +25,15 @@ export const generateMetadata = async ({
 	};
 };
 
-export const generateStaticParams = async () => {
-	const users = await getUsers();
+// export const generateStaticParams = async () => {
+// 	const users = await getUsers();
 
-	if (!users) {
-		return [];
-	}
+// 	if (!users) {
+// 		return [];
+// 	}
 
-	return users.map((user) => ({ id: user._id }));
-};
+// 	return users.map((user) => ({ id: user._id }));
+// };
 
 const Profile = async ({ params: { id } }: ParamsType) => {
 	const user = await getUser(id);

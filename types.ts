@@ -16,6 +16,7 @@ export type TopicType = {
 	creator: PubCreatorType;
 	title: string;
 	description: string;
+	updatedAt?: string;
 };
 
 export type FeatureType = {
