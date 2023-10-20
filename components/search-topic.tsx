@@ -1,34 +1,79 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { LuSearch } from "react-icons/lu";
+import { Button } from "./ui/button";
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+
+type Inputs = {
+	search: string;
+};
 
 const SearchTopic = () => {
 	const router = useRouter();
-	const [queryString, setQueryString] = useState<string>("");
 
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		const encodedQueryString = encodeURI(queryString);
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Inputs>();
+	const onSubmit: SubmitHandler<Inputs> = ({ search }) => {
+		const encodedQueryString = encodeURI(search);
 
 		router.push(`/search?q=${encodedQueryString}`);
 	};
 
 	return (
-		<form className="relative max-w-full" onSubmit={handleSubmit}>
-			<input
-				type="text"
-				placeholder="Search for a spesific topic"
-				className="py-3 px-6 rounded-xl placeholder:text-sm text-black w-full"
-				required={true}
-				value={queryString}
-				onChange={(e) => setQueryString(e.target.value)}
-			/>
-			<button className="absolute top-1/2 right-4 text-xl -translate-y-1/2 text-black hover:scale-110 transition-transform">
-				<LuSearch />
-			</button>
-		</form>
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button
+					variant="outline"
+					className="text-xl hover:scale-105 transition-transform"
+				>
+					<LuSearch />
+				</Button>
+			</DialogTrigger>
+			<DialogContent className="sm:max-w-[425px]">
+				<DialogHeader>
+					<DialogTitle>Search for topic</DialogTitle>
+				</DialogHeader>
+				<form
+					className="mt-4 flex flex-col gap-y-4"
+					onSubmit={handleSubmit(onSubmit)}
+				>
+					<div className="space-y-3">
+						<label htmlFor="search">Topic</label>
+						<Input
+							id="search"
+							type="text"
+							{...register("search", {
+								required: "You have to write something to search.",
+							})}
+							placeholder="Search for a specific topic"
+							className="mt-3"
+						/>
+					</div>
+					{errors.search && (
+						<span className="inline-block text-red-500 text-sm">
+							{errors.search.message}
+						</span>
+					)}
+					<Button size="lg" className="ml-auto">
+						Search
+					</Button>
+				</form>
+			</DialogContent>
+		</Dialog>
 	);
 };
 

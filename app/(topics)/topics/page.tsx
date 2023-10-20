@@ -15,7 +15,7 @@ const TopicsPage = async () => {
 	// const topics: TopicType[] = [];
 
 	return (
-		<section className="flex flex-col gap-10">
+		<section className="flex flex-col gap-10 w-[800px] max-w-full mx-auto">
 			<TopicsSection topics={topics || []} title="all topics" />
 		</section>
 	);

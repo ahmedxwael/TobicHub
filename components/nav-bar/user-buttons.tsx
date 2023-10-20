@@ -1,9 +1,11 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { buttonVariants } from "../ui/button";
 
 type Props = {
 	closeMenu?: () => void;
@@ -18,9 +20,7 @@ const UserButtons = ({ closeMenu }: Props) => {
 					<button
 						className="btn py-2.5 btn-alt rounded-full flex-1"
 						onClick={() => {
-							if (closeMenu) {
-								closeMenu();
-							}
+							closeMenu?.();
 							signOut({ callbackUrl: process.env.NEXTAUTH_URL! });
 						}}
 					>
@@ -28,7 +28,7 @@ const UserButtons = ({ closeMenu }: Props) => {
 					</button>
 					<Link
 						href={`/profile/${session?.user?.id}`}
-						onClick={() => closeMenu && closeMenu()}
+						onClick={() => closeMenu?.()}
 						className="inline-block"
 					>
 						<Image
@@ -43,8 +43,8 @@ const UserButtons = ({ closeMenu }: Props) => {
 			) : (
 				<Link
 					href="/register"
-					onClick={() => closeMenu && closeMenu()}
-					className="btn btn-primary text-center block py-2.5 px-6 rounded-full"
+					onClick={() => closeMenu?.()}
+					className={cn(buttonVariants({ variant: "default", size: "lg" }))}
 				>
 					Sign in
 				</Link>

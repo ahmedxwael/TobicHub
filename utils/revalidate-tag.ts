@@ -1,4 +1,4 @@
-export const revalidateTagedPages = async (tag: string) => {
+export const revalidateTaggedPages = async (tag: string) => {
 	await fetch(
 		`/api/revalidate?tag=${tag}&secret=${process.env.MY_SECRET_TOKEN}`,
 		{

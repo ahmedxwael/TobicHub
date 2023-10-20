@@ -8,7 +8,7 @@ type Props = {
 
 const TopicsList = ({ topics }: Props) => {
 	return (
-		<div className="space-y-6 sm:columns-2 sm:gap-6 lg:columns-3">
+		<div className="space-y-6 w-[800px] mx-auto max-w-full">
 			{topics.map((topic) => (
 				<TopicCard key={topic._id} topic={topic} />
 			))}

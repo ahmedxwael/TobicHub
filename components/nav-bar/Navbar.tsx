@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
+import { ModeToggle } from "../toggle-mode-button";
 import NavLinks from "./nav-links";
 import SideMenu from "./side-menu";
 import UserButtons from "./user-buttons";
@@ -13,7 +14,7 @@ const Navbar = () => {
 
 	const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
-	const hadleMenuBtnClick = () => {
+	const handleMenuBtnClick = () => {
 		setToggleMenu((currState) => !currState);
 	};
 
@@ -27,7 +28,7 @@ const Navbar = () => {
 				<Link
 					href="/"
 					className="font-bold text-xl"
-					title="Talking about general and usefull stuff"
+					title="Talking about general and useful stuff"
 				>
 					TopicHub
 				</Link>
@@ -36,12 +37,15 @@ const Navbar = () => {
 					<div className="flex items-center gap-4 text-white/50">
 						<NavLinks />
 					</div>
-					<UserButtons />
+					<div className="flex items-center gap-4 shrink-0">
+						<UserButtons />
+						<ModeToggle />
+					</div>
 				</div>
 
-				{toggleMenu ? <SideMenu menuHandler={hadleMenuBtnClick} /> : null}
+				{toggleMenu ? <SideMenu menuHandler={handleMenuBtnClick} /> : null}
 
-				<button onClick={hadleMenuBtnClick} className="text-xl md:hidden">
+				<button onClick={handleMenuBtnClick} className="text-xl md:hidden">
 					<HiMenuAlt3 />
 				</button>
 			</nav>

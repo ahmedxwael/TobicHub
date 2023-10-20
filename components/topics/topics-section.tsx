@@ -7,8 +7,8 @@ type Props = { topics: TopicType[]; title: string };
 const TopicsSection = async ({ topics, title }: Props) => {
 	return (
 		<>
-			<div className="flex sm:justify-between gap-6 items-center flex-wrap justify-center">
-				<h1 className="text-2xl pb-2 first-letter:uppercase tracking-wider font-bold border-b-2 w-fit">
+			<div className="w-full flex sm:justify-between gap-6 items-center flex-wrap justify-center">
+				<h1 className="text-2xl capitalize tracking-wider font-bold w-fit">
 					{title}
 				</h1>
 				<SearchTopic />

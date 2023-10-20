@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Topics | Edit topic",
-	description: "This page contains a form to update an exesting topic.",
+	description: "This page contains a form to update an existing topic.",
 };
 
 export const generateStaticParams = async () => {

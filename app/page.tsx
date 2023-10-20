@@ -2,6 +2,9 @@
 
 import FeaturesList from "@/components/features/features-list";
 import SectionHeading from "@/components/section-heading";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
@@ -28,11 +31,11 @@ const Home = () => {
 			</section>
 
 			<section className="mt-20 text-center">
-				<h2 className="text-xl font-bold mb-4">Ready to get started?</h2>
+				<h2 className="text-xl font-bold mb-6">Ready to get started?</h2>
 
-				<button className="btn btn-primary" onClick={clickHandler}>
+				<Link href="/register" className={cn(buttonVariants({ size: "lg" }))}>
 					Join us now
-				</button>
+				</Link>
 			</section>
 		</>
 	);
