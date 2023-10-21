@@ -1,15 +1,20 @@
 import { TopicType } from "@/types";
-import { getTopics, getUserTopics } from "@/utils/topic-utils";
+import { getSearchTopics, getTopics, getUserTopics } from "@/utils/topic-utils";
 import React from "react";
 import TopicCard from "./topic-card";
 
 type Props = {
 	topics?: TopicType[];
 	userId?: string;
+	query?: string;
 };
 
-const TopicsList = async ({ userId }: Props) => {
-	const topics = userId ? await getUserTopics(userId) : await getTopics();
+const TopicsList = async ({ userId, query }: Props) => {
+	const topics = userId
+		? await getUserTopics(userId)
+		: query
+		? await getSearchTopics(query)
+		: await getTopics();
 
 	if (!topics || topics.length === 0) {
 		return (

@@ -5,9 +5,9 @@ import ComponentLoader from "../component-loader";
 import SearchTopic from "../search-topic";
 import TopicsList from "./topics-list";
 
-type Props = { title: string };
+type Props = { title: string; query?: string };
 
-const TopicsSection = ({ title }: Props) => {
+const TopicsSection = ({ title, query }: Props) => {
 	return (
 		<>
 			<div className="w-full flex justify-between gap-6 items-center flex-wrap">
@@ -18,7 +18,7 @@ const TopicsSection = ({ title }: Props) => {
 			</div>
 
 			<Suspense fallback={<ComponentLoader />}>
-				<TopicsList />
+				<TopicsList query={query} />
 			</Suspense>
 		</>
 	);
