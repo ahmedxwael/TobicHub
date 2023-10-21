@@ -20,7 +20,7 @@ const Home = () => {
 				<h1 className="text-3xl sm:text-5xl font-bold mb-4 leading-normal">
 					Welcome to TopicHub!
 				</h1>
-				<p className="text-white/60 sm:text-lg">
+				<p className="text-muted-foreground sm:text-lg">
 					Empower Your Ideas with Engaging Topics
 				</p>
 			</section>

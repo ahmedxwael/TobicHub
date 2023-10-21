@@ -1,30 +1,26 @@
-"use client";
-
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { ModeToggle } from "../toggle-mode-button";
+import { Button } from "../ui/button";
+import {
+	Sheet,
+	SheetContent,
+	SheetFooter,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "../ui/sheet";
 import NavLinks from "./nav-links";
-import SideMenu from "./side-menu";
 import UserButtons from "./user-buttons";
 
-const Navbar = () => {
-	const pathname = usePathname();
-
-	const [toggleMenu, setToggleMenu] = useState<boolean>(false);
-
-	const handleMenuBtnClick = () => {
-		setToggleMenu((currState) => !currState);
-	};
-
-	useEffect(() => {
-		window.scrollTo({ top: 0, left: 0 });
-	}, [pathname]);
+const Navbar = async () => {
+	const session = await getServerSession(authOptions);
 
 	return (
-		<header className="border-b border-b-white/10 sticky top-0 z-10 bg-black">
-			<nav className="flex items-center gap-4 justify-between py-6 container px-8 mx-auto">
+		<header className="border-b border-b-input sticky top-0 z-10 bg-transparent backdrop-blur-lg">
+			<nav className="flex items-center gap-4 justify-between py-4 container px-8 mx-auto">
 				<Link
 					href="/"
 					className="font-bold text-xl"
@@ -33,21 +29,32 @@ const Navbar = () => {
 					TopicHub
 				</Link>
 
-				<div className="w-[calc(50%+94px)] hidden md:flex items-center justify-between">
-					<div className="flex items-center gap-4 text-white/50">
-						<NavLinks />
-					</div>
-					<div className="flex items-center gap-4 shrink-0">
-						<UserButtons />
-						<ModeToggle />
-					</div>
+				<div className="hidden md:flex items-center gap-4 text-muted-foreground text-sm">
+					<NavLinks />
+				</div>
+				<div className="hidden md:flex items-center gap-4 shrink-0">
+					<ModeToggle />
+					<UserButtons session={session} />
 				</div>
 
-				{toggleMenu ? <SideMenu menuHandler={handleMenuBtnClick} /> : null}
-
-				<button onClick={handleMenuBtnClick} className="text-xl md:hidden">
-					<HiMenuAlt3 />
-				</button>
+				<Sheet>
+					<SheetTrigger asChild>
+						<Button variant="outline" className="md:hidden block">
+							<HiMenuAlt3 />
+						</Button>
+					</SheetTrigger>
+					<SheetContent className="flex flex-col">
+						<SheetHeader>
+							<SheetTitle>TopicHub</SheetTitle>
+						</SheetHeader>
+						<div className="flex flex-col gap-4 text-muted-foreground mt-6">
+							<NavLinks />
+						</div>
+						<SheetFooter className="w-full mt-auto border-t-2 pt-6">
+							<UserButtons session={session} />
+						</SheetFooter>
+					</SheetContent>
+				</Sheet>
 			</nav>
 		</header>
 	);

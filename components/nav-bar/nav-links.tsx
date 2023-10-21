@@ -1,8 +1,10 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { links } from "@/shared/urls";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 type Props = {
 	closeMenu?: () => void;
@@ -11,11 +13,10 @@ type Props = {
 const NavLinks = ({ closeMenu }: Props) => {
 	const pathname = usePathname();
 
-	const links = [
-		{ href: "/", name: "Home" },
-		{ href: "/topics", name: "Topics" },
-		{ href: "/create-topic", name: "Create Topic" },
-	];
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	}, [pathname]);
+
 	return (
 		<>
 			{links.map((link, idx) => {
@@ -24,10 +25,11 @@ const NavLinks = ({ closeMenu }: Props) => {
 					<Link
 						key={idx}
 						href={link.href}
-						onClick={() => closeMenu && closeMenu()}
-						className={`${
-							activeLink ? "text-white" : ""
-						} hover:text-white transition-colors inline-block`}
+						onClick={() => closeMenu?.()}
+						className={cn(
+							activeLink ? "text-black dark:text-white" : "",
+							"hover:text-black dark:hover:text-white transition-colors inline-block font-medium"
+						)}
 					>
 						{link.name}
 					</Link>

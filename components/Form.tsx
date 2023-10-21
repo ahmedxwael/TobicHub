@@ -1,7 +1,7 @@
 "use client";
 
 import { TopicType } from "@/types";
-import { addTopic, editTopic } from "@/utils/topicUtils";
+import { addTopic, editTopic } from "@/utils/topic-utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -15,12 +15,12 @@ const Form = ({ type, currentTopic }: Props) => {
 	const { data: session }: any = useSession();
 	const router = useRouter();
 
-	const intialTopicValue =
+	const initialTopicValue =
 		type === "create"
 			? { title: "", description: "", creator: session?.user?.id }
 			: (currentTopic as TopicType);
 
-	const [topic, setTopic] = useState<Partial<TopicType>>(intialTopicValue);
+	const [topic, setTopic] = useState<Partial<TopicType>>(initialTopicValue);
 	const [submitting, setSubmitting] = useState<boolean>(false);
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -47,7 +47,7 @@ const Form = ({ type, currentTopic }: Props) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex-col flex gap-6 border-2 p-6 border-white/10 rounded-lg w-[500px] max-w-full"
+			className="flex-col flex gap-6 border-2 p-6 rounded-lg w-[500px] max-w-full"
 		>
 			<div className="flex flex-col gap-2">
 				<label htmlFor="title">Title</label>

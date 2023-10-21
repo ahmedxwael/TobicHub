@@ -51,9 +51,14 @@
 	* {
 		@apply border-input;
 	}
-
+	*::selection {
+		@apply bg-primary text-white;
+	}
 	img {
-		@apply border-2 border-white/[0.02];
+		@apply border-2;
+	}
+	section {
+		@apply w-[800px] max-w-full mx-auto;
 	}
 }
 

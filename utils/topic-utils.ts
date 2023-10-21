@@ -7,7 +7,11 @@ export async function addTopic(newTopic: Partial<TopicType>) {
 			"content-type": "application/json",
 		},
 		body: JSON.stringify(newTopic),
-	}).then((res) => res.json());
+	})
+		.then((res) => res.json())
+		.catch(() => {
+			throw new Error("Something went wrong.");
+		});
 }
 
 export async function editTopic(
@@ -20,7 +24,11 @@ export async function editTopic(
 			"content-type": "application/json",
 		},
 		body: JSON.stringify(updatedTopic),
-	}).then((res) => res.json());
+	})
+		.then((res) => res.json())
+		.catch(() => {
+			throw new Error("Something went wrong.");
+		});
 }
 
 export const getTopic = async (id: string) => {
@@ -48,7 +56,8 @@ export const getTopics = async (): Promise<TopicType[]> => {
 };
 
 export const getUserTopics = async (id: string): Promise<TopicType[]> => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics/user?id=${id}`, {
+	const BASE_URL = process.env.BASE_URL ?? process.env.NEXT_PUBLIC_BASE_URL;
+	const res = await fetch(`${BASE_URL}/api/topics/user?id=${id}`, {
 		next: { tags: ["topics"] },
 	});
 

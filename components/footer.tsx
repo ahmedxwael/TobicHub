@@ -2,13 +2,13 @@ export default function Footer() {
 	const year = new Date().getFullYear();
 
 	return (
-		<footer className="mb-20 px-4 text-center text-white/50 max-w-[30rem] sm:max-w-[50rem] mx-auto">
+		<footer className="mb-20 px-4 text-center text-muted-foreground max-w-[30rem] sm:max-w-[50rem] mx-auto">
 			<small className="mb-2 block text-xs">
 				&copy; {year} Created by{" "}
 				<a
 					href="https://github.com/JAHMD"
 					target="_blank"
-					className="font-semibold text-white/60"
+					className="font-semibold text-muted-foreground hover:text-white transition-colors"
 				>
 					Ahmed Wael
 				</a>

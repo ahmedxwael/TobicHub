@@ -1,5 +1,5 @@
 import TopicsSection from "@/components/topics/topics-section";
-import { getSearchTopics } from "@/utils/topicUtils";
+import { getSearchTopics } from "@/utils/topic-utils";
 import React from "react";
 
 // export const revalidate = 0;

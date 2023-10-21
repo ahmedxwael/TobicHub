@@ -1,95 +1,79 @@
 "use client";
 
-import { PubCreatorType, TopicType } from "@/types";
-import { useSession } from "next-auth/react";
+import { TopicType } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
+import CustomAlertDialog from "./custom-alert-dialog";
+import { UserType } from "./nav-bar/user-buttons";
+import { Button } from "./ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 type Props = {
 	topic: TopicType;
+	session: any;
 };
 
-const ControlMenu = ({ topic }: Props) => {
-	const { data: session } = useSession();
+const ControlMenu = ({ topic, session }: Props) => {
+	const user = session?.user as UserType;
+
 	const router = useRouter();
-	const user = session?.user as { id: string } & Omit<PubCreatorType, "_id">;
 
 	const hasControl = user && (user?.id === topic.creator._id || user?.admin);
-	const [toggleControlMenu, setToggleControlMenu] = useState<boolean>(false);
-
-	const menuRef = useRef<HTMLDivElement>(null);
-	const menuBtnRef = useRef<HTMLButtonElement>(null);
-
-	useEffect(() => {
-		const clickHandler = (e: MouseEvent) => {
-			if (
-				e.target === menuBtnRef.current ||
-				menuBtnRef.current?.contains(e.target as Node)
-			) {
-				setToggleControlMenu(true);
-			} else {
-				setToggleControlMenu(false);
-			}
-		};
-		document.addEventListener("click", clickHandler);
-
-		return () => document.removeEventListener("click", clickHandler);
-	}, []);
-
-	const handleControlMenu = () => {
-		setToggleControlMenu((currState) => !currState);
-	};
 
 	const deleteTopic = async () => {
-		handleControlMenu();
-		const isConfirmed = confirm("Are you sure you want to delete this topic?");
+		await fetch(`/api/topics/${topic._id}`, {
+			method: "DELETE",
+		});
 
-		if (isConfirmed) {
-			await fetch(`/api/topics/${topic._id}`, {
-				method: "DELETE",
-			});
-
-			router.refresh();
-		}
+		router.refresh();
 	};
 
 	return (
 		<>
-			{hasControl ? (
-				<div className="flex gap-2 items-center relative">
-					<button
-						ref={menuBtnRef}
-						onClick={handleControlMenu}
-						className="text-xl"
-					>
-						<BsThreeDots />
-					</button>
-					{toggleControlMenu ? (
-						<div
-							ref={menuRef}
-							className="absolute top-0 right-6 rounded-xl py-3 px-4 tracking-wide text-white/60 text-sm flex flex-col gap-2 bg-neutral-800 text-start"
-						>
-							<button
+			{hasControl && (
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button className="w-fit" variant="outline">
+							<BsThreeDots />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end" className="w-max">
+						<DropdownMenuLabel>Options</DropdownMenuLabel>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem asChild>
+							<Button
+								variant="ghost"
+								className="w-full cursor-pointer"
 								onClick={() => {
-									handleControlMenu();
 									router.push(`/edit-topic/${topic._id}`);
 								}}
-								className="w-full hover:text-white transition-colors"
 							>
 								Edit
-							</button>
-							<span className="inline-block w-full h-[1px] bg-white/20" />
-							<button
-								className="w-full hover:text-white transition-colors"
-								onClick={deleteTopic}
-							>
-								Delete
-							</button>
-						</div>
-					) : null}
-				</div>
-			) : null}
+							</Button>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							asChild
+							className="cursor-pointer"
+							onClick={deleteTopic}
+						>
+							<CustomAlertDialog
+								action={deleteTopic}
+								title="Delete"
+								variant="ghost"
+								description="This action cannot be undone. Are you sure that you want to delete this topic?"
+							/>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			)}
 		</>
 	);
 };

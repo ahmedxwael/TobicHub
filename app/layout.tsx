@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/nav-bar/Navbar";
-import Provider from "@/components/provider";
 import { cn } from "@/lib/utils";
+import Provider from "@/providers/provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

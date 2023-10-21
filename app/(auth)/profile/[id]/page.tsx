@@ -1,8 +1,7 @@
 import ComponentLoader from "@/components/component-loader";
-import { ProfileCard } from "@/components/profile-card";
 import TopicsList from "@/components/topics/topics-list";
+import { ProfileCard } from "@/components/user/profile-card";
 import { ParamsType } from "@/types";
-import { getUserTopics } from "@/utils/topicUtils";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
@@ -20,35 +19,31 @@ export const generateMetadata = async ({
 	}
 
 	return {
-		title: `TobicHub | ${user?.name}`,
+		title: `TopicHub | ${user?.name}`,
 		description: `${user?.name} profile page.`,
 	};
 };
 
-// export const generateStaticParams = async () => {
-// 	const users = await getUsers();
+export const generateStaticParams = async () => {
+	const users = await getUsers();
 
-// 	if (!users) {
-// 		return [];
-// 	}
+	if (!users) {
+		return [];
+	}
 
-// 	return users.map((user) => ({ id: user._id }));
-// };
+	return users.map((user) => ({ id: user._id }));
+};
 
 const Profile = async ({ params: { id } }: ParamsType) => {
 	const user = await getUser(id);
-	const topics = await getUserTopics(id);
-	const topicsNumber = topics.length;
 
 	return (
-		<section className="flex flex-col gap-12">
-			<ProfileCard topicsNumber={topicsNumber} user={user} />
+		<section className="flex flex-col gap-20">
+			<ProfileCard user={user} />
 			<div className="flex flex-col gap-12">
-				<h1 className="text-2xl pb-2 first-letter:uppercase tracking-wider font-bold border-b-2 w-fit">
-					Topics
-				</h1>
+				<h1 className="text-2xl tracking-wider font-bold  w-fit">Topics</h1>
 				<Suspense fallback={<ComponentLoader />}>
-					<TopicsList topics={topics} />
+					<TopicsList userId={id} />
 				</Suspense>
 			</div>
 		</section>
