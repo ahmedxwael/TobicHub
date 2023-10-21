@@ -1,7 +1,7 @@
 import { Topic } from "@/models/Topic";
 import { connectToDB } from "@/utils/db";
 import { revalidateTag } from "next/cache";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
 	req: NextRequest,
@@ -14,9 +14,9 @@ export const GET = async (
 			email: 0,
 		});
 
-		return Response.json(topic, { status: 200 });
+		return NextResponse.json(topic, { status: 200 });
 	} catch (error: any) {
-		return Response.json({ error: error.message }, { status: 500 });
+		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 };
 
@@ -34,9 +34,9 @@ export const PATCH = async (
 
 		revalidateTag("topics");
 
-		return Response.json(topic, { status: 200 });
+		return NextResponse.json(topic, { status: 200 });
 	} catch (error: any) {
-		return Response.json({ error }, { status: 500 });
+		return NextResponse.json({ error }, { status: 500 });
 	}
 };
 
@@ -50,8 +50,11 @@ export const DELETE = async (
 		await Topic.findByIdAndDelete(id);
 		revalidateTag("topics");
 
-		return Response.json({ message: "Deleted successfully!" }, { status: 200 });
+		return NextResponse.json(
+			{ message: "Deleted successfully!" },
+			{ status: 200 }
+		);
 	} catch (error: any) {
-		return Response.json({ error: error.message }, { status: 500 });
+		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 };
