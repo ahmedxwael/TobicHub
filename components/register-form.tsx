@@ -14,7 +14,7 @@ import { FcGoogle } from "react-icons/fc";
 
 export function RegisterForm() {
 	return (
-		<Card className="w-[420px] max-w-full mx-auto">
+		<Card className="w-[400px] max-w-full mx-auto">
 			<CardHeader className="space-y-1">
 				<CardTitle className="text-2xl">Join us now</CardTitle>
 				<CardDescription>

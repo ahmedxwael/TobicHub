@@ -24,6 +24,8 @@ type Props = {
 const ControlMenu = ({ topic, session }: Props) => {
 	const user = session?.user as UserType;
 
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
 	const router = useRouter();
 
 	const hasControl = user && (user?.id === topic.creator._id || user?.admin);
@@ -33,44 +35,43 @@ const ControlMenu = ({ topic, session }: Props) => {
 			method: "DELETE",
 		});
 
+		setIsDropdownOpen(false);
 		router.refresh();
 	};
 
 	return (
 		<>
 			{hasControl && (
-				<DropdownMenu>
+				<DropdownMenu open={isDropdownOpen}>
 					<DropdownMenuTrigger asChild>
-						<Button className="w-fit" variant="outline">
+						<Button
+							onClick={() => setIsDropdownOpen(true)}
+							className="w-fit"
+							variant="outline"
+						>
 							<BsThreeDots />
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end" className="w-max">
 						<DropdownMenuLabel>Options</DropdownMenuLabel>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem asChild>
-							<Button
-								variant="ghost"
-								className="w-full cursor-pointer"
-								onClick={() => {
-									router.push(`/edit-topic/${topic._id}`);
-								}}
-							>
-								Edit
-							</Button>
-						</DropdownMenuItem>
-						<DropdownMenuItem
-							asChild
-							className="cursor-pointer"
-							onClick={deleteTopic}
+						<Button
+							variant="ghost"
+							className="w-full cursor-pointer"
+							onClick={() => {
+								router.push(`/edit-topic/${topic._id}`);
+								setIsDropdownOpen(false);
+							}}
 						>
-							<CustomAlertDialog
-								action={deleteTopic}
-								title="Delete"
-								variant="ghost"
-								description="This action cannot be undone. Are you sure that you want to delete this topic?"
-							/>
-						</DropdownMenuItem>
+							Edit
+						</Button>
+
+						<CustomAlertDialog
+							action={deleteTopic}
+							title="Delete"
+							variant="ghost"
+							description="This action cannot be undone. Are you sure that you want to delete this topic?"
+						/>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			)}

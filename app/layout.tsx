@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, session }: Props) {
 	return (
 		<html lang="en">
-			<body className={cn(inter.className, "min-h-screen bg-background")}>
+			<body className={cn(inter.className, "bg-background")}>
 				<Provider session={session}>
 					<ThemeProvider
 						attribute="class"
@@ -31,7 +31,7 @@ export default function RootLayout({ children, session }: Props) {
 						disableTransitionOnChange
 					>
 						<Navbar />
-						<main className="container mx-auto min-h-[calc(100vh-117px)] text-black dark:text-white sm:min-h-[calc(100vh-76.8px)] px-8 py-24">
+						<main className="flex flex-col container mx-auto text-black dark:text-white min-h-[calc(100vh-72px)] px-8 py-24">
 							{children}
 						</main>
 						<Footer />

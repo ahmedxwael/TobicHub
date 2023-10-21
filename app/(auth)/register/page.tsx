@@ -1,10 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { UserType } from "@/components/nav-bar/user-buttons";
 import { RegisterForm } from "@/components/register-form";
-import { User } from "@/models/User";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -23,7 +21,7 @@ export default async function RegisterPage() {
 	}
 
 	return (
-		<section className="flex items-center justify-center">
+		<section className="flex items-center justify-center my-auto">
 			<RegisterForm />
 		</section>
 	);

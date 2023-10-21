@@ -1,6 +1,12 @@
 import { TopicType } from "@/types";
 
-export async function addTopic(newTopic: Partial<TopicType>) {
+export type NewTopicType = {
+	title: string;
+	description: string;
+	creator: string;
+};
+
+export async function addTopic(newTopic: NewTopicType) {
 	await fetch(`/api/topics`, {
 		method: "POST",
 		headers: {
@@ -14,10 +20,7 @@ export async function addTopic(newTopic: Partial<TopicType>) {
 		});
 }
 
-export async function editTopic(
-	topicId: string,
-	updatedTopic: Partial<TopicType>
-) {
+export async function editTopic(topicId: string, updatedTopic: TopicType) {
 	await fetch(`/api/topics/${topicId}`, {
 		method: "PATCH",
 		headers: {

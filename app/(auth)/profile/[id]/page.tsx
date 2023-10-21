@@ -4,7 +4,7 @@ import { ProfileCard } from "@/components/user/profile-card";
 import { ParamsType } from "@/types";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
 export const generateMetadata = async ({
 	params: { id },
@@ -19,7 +19,7 @@ export const generateMetadata = async ({
 	}
 
 	return {
-		title: `TopicHub | ${user?.name}`,
+		title: `${user?.name} | TopicHub`,
 		description: `${user?.name} profile page.`,
 	};
 };

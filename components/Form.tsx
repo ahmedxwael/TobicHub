@@ -1,15 +1,33 @@
 "use client";
 
 import { TopicType } from "@/types";
-import { addTopic, editTopic } from "@/utils/topic-utils";
+import { NewTopicType, addTopic, editTopic } from "@/utils/topic-utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
 
 type Props = {
 	type: "create" | "edit";
 	currentTopic?: TopicType;
 };
+
+type InputsType = {
+	title: string;
+	description: string;
+};
+
+type InitialTopicValueType =
+	| {
+			title: string;
+			description: string;
+			creator: string;
+	  }
+	| TopicType;
 
 const Form = ({ type, currentTopic }: Props) => {
 	const { data: session }: any = useSession();
@@ -18,22 +36,25 @@ const Form = ({ type, currentTopic }: Props) => {
 	const initialTopicValue =
 		type === "create"
 			? { title: "", description: "", creator: session?.user?.id }
-			: (currentTopic as TopicType);
+			: currentTopic;
 
-	const [topic, setTopic] = useState<Partial<TopicType>>(initialTopicValue);
+	const [topic, setTopic] = useState<InitialTopicValueType>(initialTopicValue!);
 	const [submitting, setSubmitting] = useState<boolean>(false);
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<InputsType>();
+
+	const onSubmit: SubmitHandler<InputsType> = async () => {
+		setSubmitting(true);
+
 		try {
-			setSubmitting(true);
-
 			if (type === "create") {
-				await addTopic(topic);
-			}
-
-			if (type === "edit") {
-				await editTopic(currentTopic?._id!, topic);
+				await addTopic(topic as NewTopicType);
+			} else if (type === "edit") {
+				await editTopic(currentTopic?._id!, topic as TopicType);
 			}
 
 			setSubmitting(false);
@@ -46,55 +67,68 @@ const Form = ({ type, currentTopic }: Props) => {
 
 	return (
 		<form
-			onSubmit={handleSubmit}
-			className="flex-col flex gap-6 border-2 p-6 rounded-lg w-[500px] max-w-full"
+			onSubmit={handleSubmit(onSubmit)}
+			className="flex-col flex gap-6 w-[500px] max-w-full"
 		>
-			<div className="flex flex-col gap-2">
-				<label htmlFor="title">Title</label>
-				<input
+			<div className="flex flex-col gap-3">
+				<Label htmlFor="title" className="cursor-pointer">
+					Title
+				</Label>
+				<Input
 					autoFocus={true}
 					type="text"
-					name="title"
 					id="title"
-					placeholder="Enter a topic"
-					className="py-2 px-4 rounded-lg w-full text-black"
-					value={topic.title}
-					required={true}
-					onChange={(e) =>
-						setTopic((curr) => ({ ...curr, title: e.target.value }))
-					}
+					placeholder="What is the topic?"
+					{...register("title", {
+						required: "Title is required.",
+						value: topic?.title,
+						onChange: (e) => setTopic({ ...topic, title: e.target.value }),
+					})}
 				/>
+				{errors.title && (
+					<span className="inline-block text-red-500 text-sm">
+						{errors.title.message}
+					</span>
+				)}
 			</div>
-			<div className="flex flex-col gap-2">
-				<label htmlFor="userId">Description</label>
-				<textarea
+			<div className="flex flex-col gap-3">
+				<Label htmlFor="description" className="cursor-pointer">
+					Description
+				</Label>
+				<Textarea
 					id="description"
-					name="description"
-					className="py-2 px-4 rounded-lg w-full text-black"
-					placeholder="Enter a description"
-					rows={6}
-					required={true}
-					value={topic.description}
-					onChange={(e) =>
-						setTopic((curr) => ({ ...curr, description: e.target.value }))
-					}
+					placeholder="What is this topic about...?"
+					rows={10}
+					{...register("description", {
+						required: "Topic description is required.",
+						minLength: {
+							value: 10,
+							message: "Content must be at least 10 characters.",
+						},
+						value: topic?.description,
+						onChange: (e) =>
+							setTopic({ ...topic, description: e.target.value }),
+					})}
 				/>
+				{errors.description && (
+					<span className="inline-block text-red-500 text-sm">
+						{errors.description.message}
+					</span>
+				)}
 			</div>
-			<div className="flex gap-4">
-				<button
+			<div className="flex gap-4 ml-auto">
+				<Button
 					disabled={submitting}
 					type="button"
 					onClick={() => router.push("/topics")}
-					className="flex-1 capitalize btn btn-alt"
+					variant="outline"
+					size="lg"
 				>
 					Cancel
-				</button>
-				<button
-					disabled={submitting}
-					className="flex-1 capitalize btn btn-primary"
-				>
+				</Button>
+				<Button disabled={submitting} size="lg" className="capitalize">
 					{submitting ? `${type}ting...` : `${type}`}
-				</button>
+				</Button>
 			</div>
 		</form>
 	);
