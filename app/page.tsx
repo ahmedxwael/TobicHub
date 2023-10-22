@@ -16,7 +16,7 @@ const Home = () => {
 
 	return (
 		<>
-			<section className="text-center w-auto">
+			<section className="text-center">
 				<h1 className="text-3xl sm:text-5xl font-bold mb-4 leading-normal">
 					Welcome to TopicHub!
 				</h1>
@@ -25,7 +25,7 @@ const Home = () => {
 				</p>
 			</section>
 
-			<section className="mt-20">
+			<section className="mt-20 w-full">
 				<SectionHeading>Features</SectionHeading>
 				<FeaturesList />
 			</section>
