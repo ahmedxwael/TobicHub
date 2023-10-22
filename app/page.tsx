@@ -1,5 +1,3 @@
-"use client";
-
 import FeaturesList from "@/components/features/features-list";
 import SectionHeading from "@/components/section-heading";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -8,12 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
-	const router = useRouter();
-
-	const clickHandler = () => {
-		router.push("/register");
-	};
-
 	return (
 		<>
 			<section className="text-center">

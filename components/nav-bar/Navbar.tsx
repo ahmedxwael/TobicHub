@@ -13,6 +13,7 @@ import {
 	SheetTrigger,
 } from "../ui/sheet";
 import NavLinks from "./nav-links";
+import SideBar from "./side-bar";
 import UserButtons from "./user-buttons";
 
 const Navbar = async () => {
@@ -29,7 +30,7 @@ const Navbar = async () => {
 					TopicHub
 				</Link>
 
-				<div className="hidden md:flex items-center gap-4 text-muted-foreground text-sm">
+				<div className="hidden md:flex items-center gap-6 text-muted-foreground text-sm">
 					<NavLinks />
 				</div>
 				<div className="hidden md:flex items-center gap-4 shrink-0">
@@ -37,24 +38,7 @@ const Navbar = async () => {
 					<UserButtons session={session} />
 				</div>
 
-				<Sheet>
-					<SheetTrigger asChild>
-						<Button variant="outline" className="md:hidden block">
-							<HiMenuAlt3 />
-						</Button>
-					</SheetTrigger>
-					<SheetContent className="flex flex-col">
-						<SheetHeader>
-							<SheetTitle>TopicHub</SheetTitle>
-						</SheetHeader>
-						<div className="flex flex-col gap-4 text-muted-foreground mt-6">
-							<NavLinks />
-						</div>
-						<SheetFooter className="w-full mt-auto border-t-2 pt-6">
-							<UserButtons session={session} />
-						</SheetFooter>
-					</SheetContent>
-				</Sheet>
+				<SideBar session={session} />
 			</nav>
 		</header>
 	);

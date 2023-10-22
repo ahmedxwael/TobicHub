@@ -17,7 +17,12 @@ export type UserType = {
 	admin?: boolean;
 };
 
-const UserButtons = ({ session }: any) => {
+type UserButtonsProps = {
+	session: any;
+	onClose?: () => void;
+};
+
+const UserButtons = ({ session, onClose }: UserButtonsProps) => {
 	const user = session?.user;
 
 	return (
@@ -25,13 +30,17 @@ const UserButtons = ({ session }: any) => {
 			{session ? (
 				<div className="flex items-center gap-4 justify-between md:justify-normal">
 					<CustomAlertDialog
-						action={() => signOut({ callbackUrl: process.env.NEXTAUTH_URL! })}
+						action={() => {
+							onClose?.();
+							signOut({ callbackUrl: process.env.NEXTAUTH_URL! });
+						}}
 						variant="outline"
 						title="Sign out"
 						description="Are you sure that you want to sign out?"
 					/>
 					<Link
 						href={`/profile/${user?.id}`}
+						onClick={() => onClose?.()}
 						className="inline-block"
 						title={user?.name}
 					>
@@ -54,6 +63,7 @@ const UserButtons = ({ session }: any) => {
 				</div>
 			) : (
 				<Link
+					onClick={() => onClose?.()}
 					href="/register"
 					className={cn(
 						buttonVariants({ variant: "default", size: "lg" }),
