@@ -7,17 +7,17 @@ export const metadata: Metadata = {
 	description: "This page contains a form to update an existing topic.",
 };
 
-export const generateStaticParams = async () => {
-	const topics = await getTopics();
+// export const generateStaticParams = async () => {
+// 	const topics = await getTopics();
 
-	if (!topics) {
-		return [];
-	}
+// 	if (!topics) {
+// 		return [];
+// 	}
 
-	return topics.map((topic) => {
-		id: topic._id;
-	});
-};
+// 	return topics.map((topic) => {
+// 		id: topic._id;
+// 	});
+// };
 
 const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
 	const topic = await getTopic(id);

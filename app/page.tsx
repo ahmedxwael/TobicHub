@@ -16,7 +16,7 @@ const Home = () => {
 
 	return (
 		<>
-			<section className="text-center">
+			<section className="text-center w-auto">
 				<h1 className="text-3xl sm:text-5xl font-bold mb-4 leading-normal">
 					Welcome to TopicHub!
 				</h1>
