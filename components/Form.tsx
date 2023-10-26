@@ -19,6 +19,7 @@ type Props = {
 type InputsType = {
 	title: string;
 	description: string;
+	link: string;
 };
 
 type InitialTopicValueType =
@@ -26,6 +27,7 @@ type InitialTopicValueType =
 			title: string;
 			description: string;
 			creator: string;
+			link: string;
 	  }
 	| TopicType;
 
@@ -35,7 +37,7 @@ const Form = ({ type, currentTopic }: Props) => {
 
 	const initialTopicValue =
 		type === "create"
-			? { title: "", description: "", creator: session?.user?.id }
+			? { title: "", description: "", creator: session?.user?.id, link: "" }
 			: currentTopic;
 
 	const [topic, setTopic] = useState<InitialTopicValueType>(initialTopicValue!);
@@ -113,6 +115,25 @@ const Form = ({ type, currentTopic }: Props) => {
 				{errors.description && (
 					<span className="inline-block text-red-500 text-sm">
 						{errors.description.message}
+					</span>
+				)}
+			</div>
+			<div className="flex flex-col gap-3">
+				<Label htmlFor="link" className="cursor-pointer">
+					Link
+				</Label>
+				<Input
+					id="link"
+					placeholder="Related link"
+					type="url"
+					{...register("link", {
+						value: topic?.link,
+						onChange: (e) => setTopic({ ...topic, link: e.target.value }),
+					})}
+				/>
+				{errors.link && (
+					<span className="inline-block text-red-500 text-sm">
+						{errors.link.message}
 					</span>
 				)}
 			</div>

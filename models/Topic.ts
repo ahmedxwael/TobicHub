@@ -10,6 +10,9 @@ const TopicSchema = new Schema(
 			type: String,
 			required: [true, "Description is required"],
 		},
+		link: {
+			type: String,
+		},
 		creator: {
 			type: Schema.Types.ObjectId,
 			ref: "User",

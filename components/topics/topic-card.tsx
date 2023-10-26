@@ -52,6 +52,18 @@ const TopicCard = async ({ topic }: { topic: TopicType }) => {
 				<CardDescription className="leading-6 line-clamp-6 mt-2">
 					{topic.description}
 				</CardDescription>
+				{topic.link && (
+					<div className="mt-4">
+						<h4>Links</h4>
+						<div className="flex flex-col gap-y-2 text-sm">
+							{topic.link.split(" ").map((link, index) => (
+								<Link key={index} href={link}>
+									{link}
+								</Link>
+							))}
+						</div>
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);

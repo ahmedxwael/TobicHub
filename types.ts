@@ -18,6 +18,7 @@ export type TopicType = {
 	description: string;
 	updatedAt?: string;
 	createdAt?: string;
+	link?: string;
 };
 
 export type FeatureType = {

@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/shared/variables";
 import { TopicType } from "@/types";
 
 export type NewTopicType = {
@@ -35,7 +36,7 @@ export async function editTopic(topicId: string, updatedTopic: TopicType) {
 }
 
 export const getTopic = async (id: string) => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics/${id}`, {
+	const res = await fetch(`${BASE_URL}/api/topics/${id}`, {
 		next: { tags: ["topics"] },
 	});
 
@@ -47,7 +48,7 @@ export const getTopic = async (id: string) => {
 };
 
 export const getTopics = async (): Promise<TopicType[]> => {
-	const res = await fetch(`${process.env.BASE_URL}/api/topics`, {
+	const res = await fetch(`${BASE_URL}/api/topics`, {
 		next: { tags: ["topics"] },
 	});
 
@@ -59,7 +60,6 @@ export const getTopics = async (): Promise<TopicType[]> => {
 };
 
 export const getUserTopics = async (id: string): Promise<TopicType[]> => {
-	const BASE_URL = process.env.BASE_URL ?? process.env.NEXT_PUBLIC_BASE_URL;
 	const res = await fetch(`${BASE_URL}/api/topics/user?id=${id}`, {
 		next: { tags: ["topics"] },
 	});
@@ -72,10 +72,9 @@ export const getUserTopics = async (id: string): Promise<TopicType[]> => {
 };
 
 export const getSearchTopics = async (query: string): Promise<TopicType[]> => {
-	const res = await fetch(
-		`${process.env.BASE_URL}/api/topics/search?q=${query}`,
-		{ next: { tags: ["topics"] } }
-	);
+	const res = await fetch(`${BASE_URL}/api/topics/search?q=${query}`, {
+		next: { tags: ["topics"] },
+	});
 
 	if (!res.ok) {
 		throw new Error("Could not retrieve the list of topics.");
