@@ -3,8 +3,8 @@ import { getTopic, getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Topics | Edit topic",
-	description: "This page contains a form to update an existing topic.",
+  title: "Topics | Edit topic",
+  description: "This page contains a form to update an existing topic.",
 };
 
 // export const generateStaticParams = async () => {
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
 // };
 
 const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
-	const topic = await getTopic(id);
+  const topic = await getTopic(id);
 
-	return (
-		<main className="center">
-			<Form type="edit" currentTopic={topic} />
-		</main>
-	);
+  return (
+    <main className="center">
+      <Form type="edit" currentTopic={topic} />
+    </main>
+  );
 };
 
 export default EditTopic;

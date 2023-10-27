@@ -3,79 +3,79 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		--background: 0 0% 100%;
-		--foreground: 20 14.3% 4.1%;
-		--card: 0 0% 100%;
-		--card-foreground: 20 14.3% 4.1%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 20 14.3% 4.1%;
-		--primary: 24.6 95% 53.1%;
-		--primary-foreground: 60 9.1% 97.8%;
-		--secondary: 60 4.8% 95.9%;
-		--secondary-foreground: 24 9.8% 10%;
-		--muted: 60 4.8% 95.9%;
-		--muted-foreground: 25 5.3% 44.7%;
-		--accent: 60 4.8% 95.9%;
-		--accent-foreground: 24 9.8% 10%;
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 60 9.1% 97.8%;
-		--border: 20 5.9% 90%;
-		--input: 20 5.9% 90%;
-		--ring: 24.6 95% 53.1%;
-		--radius: 0.7rem;
-	}
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24.6 95% 53.1%;
+    --radius: 0.7rem;
+  }
 
-	.dark {
-		--background: 20 14.3% 4.1%;
-		--foreground: 60 9.1% 97.8%;
-		--card: 20 14.3% 4.1%;
-		--card-foreground: 60 9.1% 97.8%;
-		--popover: 20 14.3% 4.1%;
-		--popover-foreground: 60 9.1% 97.8%;
-		--primary: 20.5 90.2% 48.2%;
-		--primary-foreground: 60 9.1% 97.8%;
-		--secondary: 12 6.5% 15.1%;
-		--secondary-foreground: 60 9.1% 97.8%;
-		--muted: 12 6.5% 15.1%;
-		--muted-foreground: 24 5.4% 63.9%;
-		--accent: 12 6.5% 15.1%;
-		--accent-foreground: 60 9.1% 97.8%;
-		--destructive: 0 72.2% 50.6%;
-		--destructive-foreground: 60 9.1% 97.8%;
-		--border: 12 6.5% 15.1%;
-		--input: 12 6.5% 15.1%;
-		--ring: 20.5 90.2% 48.2%;
-	}
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 20.5 90.2% 48.2%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 20.5 90.2% 48.2%;
+  }
 
-	* {
-		@apply border-input;
-	}
-	*::selection {
-		@apply bg-primary text-white;
-	}
-	img {
-		@apply border-2;
-	}
-	section {
-		@apply w-[800px] max-w-full mx-auto;
-	}
+  * {
+    @apply border-input;
+  }
+  *::selection {
+    @apply bg-primary text-white;
+  }
+  img {
+    @apply border-2;
+  }
+  section {
+    @apply mx-auto w-[800px] max-w-full;
+  }
 }
 
 @layer components {
-	.center {
-		@apply flex items-center justify-center;
-	}
-	.btn {
-		@apply rounded-xl py-3 px-6 text-sm font-semibold;
-	}
-	.btn-primary {
-		@apply bg-white text-black hover:bg-white/80 transition-colors disabled:hover:bg-white/40 disabled:bg-opacity-40 disabled:cursor-not-allowed;
-	}
-	.btn-alt {
-		@apply hover:bg-neutral-900 border-2 border-white/20 transition-colors disabled:bg-opacity-40 disabled:text-white/40 disabled:hover:bg-black/40 disabled:cursor-not-allowed;
-	}
-	.btn-small {
-		@apply rounded-lg py-1.5 px-2.5;
-	}
+  .center {
+    @apply flex items-center justify-center;
+  }
+  .btn {
+    @apply rounded-xl px-6 py-3 text-sm font-semibold;
+  }
+  .btn-primary {
+    @apply bg-white text-black transition-colors hover:bg-white/80 disabled:cursor-not-allowed disabled:bg-opacity-40 disabled:hover:bg-white/40;
+  }
+  .btn-alt {
+    @apply border-2 border-white/20 transition-colors hover:bg-neutral-900 disabled:cursor-not-allowed disabled:bg-opacity-40 disabled:text-white/40 disabled:hover:bg-black/40;
+  }
+  .btn-small {
+    @apply rounded-lg px-2.5 py-1.5;
+  }
 }

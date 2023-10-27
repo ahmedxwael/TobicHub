@@ -1,11 +1,11 @@
 import { withAuth } from "next-auth/middleware";
 
 export default withAuth({
-	pages: {
-		signIn: "/register",
-	},
+  pages: {
+    signIn: "/register",
+  },
 });
 
 export const config = {
-	matcher: ["/create-topic", "/edit-topic/:path*"],
+  matcher: ["/create-topic", "/edit-topic/:path*"],
 };

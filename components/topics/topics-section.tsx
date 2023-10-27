@@ -8,20 +8,20 @@ import TopicsList from "./topics-list";
 type Props = { title: string; query?: string };
 
 const TopicsSection = ({ title, query }: Props) => {
-	return (
-		<>
-			<div className="w-full flex justify-between gap-6 items-center flex-wrap">
-				<h1 className="text-2xl capitalize tracking-wider font-bold w-fit">
-					{title}
-				</h1>
-				<SearchTopic />
-			</div>
+  return (
+    <>
+      <div className="flex w-full flex-wrap items-center justify-between gap-6">
+        <h1 className="w-fit text-2xl font-bold capitalize tracking-wider">
+          {title}
+        </h1>
+        <SearchTopic />
+      </div>
 
-			<Suspense fallback={<ComponentLoader />}>
-				<TopicsList query={query} />
-			</Suspense>
-		</>
-	);
+      <Suspense fallback={<ComponentLoader />}>
+        <TopicsList query={query} />
+      </Suspense>
+    </>
+  );
 };
 
 export default TopicsSection;

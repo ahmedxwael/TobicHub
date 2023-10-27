@@ -7,40 +7,40 @@ import { useEffect, useState } from "react";
 import { BiLoader } from "react-icons/bi";
 
 type PostsNumberProps = {
-	userId: string;
+  userId: string;
 };
 
 export default function PostsNumber({ userId }: PostsNumberProps) {
-	const [isLoading, setIsLoading] = useState(true);
-	const [topics, setTopics] = useState<TopicType[] | null>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [topics, setTopics] = useState<TopicType[] | null>([]);
 
-	async function getTopics(userId: string) {
-		setIsLoading(true);
+  async function getTopics(userId: string) {
+    setIsLoading(true);
 
-		try {
-			const topics = await getUserTopics(userId);
-			setTopics(topics);
-		} catch (error) {
-			throw new Error("Could not get user topics.");
-		}
+    try {
+      const topics = await getUserTopics(userId);
+      setTopics(topics);
+    } catch (error) {
+      throw new Error("Could not get user topics.");
+    }
 
-		setIsLoading(false);
-	}
+    setIsLoading(false);
+  }
 
-	useEffect(() => {
-		getTopics(userId);
-	}, [userId]);
+  useEffect(() => {
+    getTopics(userId);
+  }, [userId]);
 
-	return (
-		<div className="text-neutral-400 flex items-center gap-2">
-			Total posts:
-			{isLoading ? (
-				<span className="animate-spin text-base">
-					<BiLoader />
-				</span>
-			) : (
-				<span className="inline-block">{topics?.length || 0}</span>
-			)}
-		</div>
-	);
+  return (
+    <div className="flex items-center gap-2 text-neutral-400">
+      Total posts:
+      {isLoading ? (
+        <span className="animate-spin text-base">
+          <BiLoader />
+        </span>
+      ) : (
+        <span className="inline-block">{topics?.length || 0}</span>
+      )}
+    </div>
+  );
 }

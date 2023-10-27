@@ -3,16 +3,16 @@ import { connectToDB } from "@/utils/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
-	req: NextRequest,
-	{ params: { id } }: { params: { id: string } }
+  req: NextRequest,
+  { params: { id } }: { params: { id: string } }
 ) => {
-	try {
-		await connectToDB();
+  try {
+    await connectToDB();
 
-		const user = await User.findById(id, { email: 0 });
+    const user = await User.findById(id, { email: 0 });
 
-		return NextResponse.json(user, { status: 200 });
-	} catch (error: any) {
-		return NextResponse.json({ error: error.message }, { status: 500 });
-	}
+    return NextResponse.json(user, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 };

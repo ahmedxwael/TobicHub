@@ -7,44 +7,44 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: AuthOptions = {
-	providers: [
-		GoogleProvider({
-			clientId: process.env.GOOGLE_CLIENT_ID!,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-		}),
-		GitHubProvider({
-			clientId: process.env.GITHUB_ID!,
-			clientSecret: process.env.GITHUB_SECRET!,
-		}),
-	],
-	callbacks: {
-		async session({ session }: any) {
-			const userSession = await User.findOne({ email: session.user?.email });
-			session.user.id = userSession._id.toString();
-			session.user.admin = userSession.admin;
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+    }),
+  ],
+  callbacks: {
+    async session({ session }: any) {
+      const userSession = await User.findOne({ email: session.user?.email });
+      session.user.id = userSession._id.toString();
+      session.user.admin = userSession.admin;
 
-			return session;
-		},
-		async signIn({ user }) {
-			try {
-				await connectToDB();
+      return session;
+    },
+    async signIn({ user }) {
+      try {
+        await connectToDB();
 
-				const oldUser = await User.findOne({ email: user.email });
+        const oldUser = await User.findOne({ email: user.email });
 
-				if (!oldUser) {
-					await User.create({
-						email: user.email,
-						name: user.name,
-						image: user.image,
-					});
-				}
+        if (!oldUser) {
+          await User.create({
+            email: user.email,
+            name: user.name,
+            image: user.image,
+          });
+        }
 
-				return true;
-			} catch (error) {
-				return false;
-			}
-		},
-	},
+        return true;
+      } catch (error) {
+        return false;
+      }
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

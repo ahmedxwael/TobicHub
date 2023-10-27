@@ -7,36 +7,36 @@ import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 
 type Props = {
-	closeMenu?: () => void;
+  closeMenu?: () => void;
 };
 
 const NavLinks = ({ closeMenu }: Props) => {
-	const pathname = usePathname();
+  const pathname = usePathname();
 
-	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-	}, [pathname]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
 
-	return (
-		<>
-			{links.map((link, idx) => {
-				const activeLink = link.href === pathname;
-				return (
-					<Link
-						key={idx}
-						href={link.href}
-						onClick={() => closeMenu?.()}
-						className={cn(
-							activeLink ? "text-black dark:text-white" : "",
-							"hover:text-black dark:hover:text-white transition-colors inline-block font-medium"
-						)}
-					>
-						{link.name}
-					</Link>
-				);
-			})}
-		</>
-	);
+  return (
+    <>
+      {links.map((link, idx) => {
+        const activeLink = link.href === pathname;
+        return (
+          <Link
+            key={idx}
+            href={link.href}
+            onClick={() => closeMenu?.()}
+            className={cn(
+              activeLink ? "text-black dark:text-white" : "",
+              "inline-block font-medium transition-colors hover:text-black dark:hover:text-white"
+            )}
+          >
+            {link.name}
+          </Link>
+        );
+      })}
+    </>
+  );
 };
 
 export default NavLinks;
