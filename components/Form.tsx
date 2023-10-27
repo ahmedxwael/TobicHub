@@ -120,11 +120,11 @@ const Form = ({ type, currentTopic }: Props) => {
 			</div>
 			<div className="flex flex-col gap-3">
 				<Label htmlFor="link" className="cursor-pointer">
-					Link
+					Recourses
 				</Label>
 				<Input
 					id="link"
-					placeholder="Related link"
+					placeholder="Recourses"
 					type="url"
 					{...register("link", {
 						value: topic?.link,

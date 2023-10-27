@@ -35,7 +35,7 @@ export async function editTopic(topicId: string, updatedTopic: TopicType) {
 		});
 }
 
-export const getTopic = async (id: string) => {
+export const getTopic = async (id: string): Promise<TopicType> => {
 	const res = await fetch(`${BASE_URL}/api/topics/${id}`, {
 		next: { tags: ["topics"] },
 	});

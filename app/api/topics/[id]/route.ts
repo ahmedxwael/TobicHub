@@ -24,13 +24,10 @@ export const PATCH = async (
 	request: NextRequest,
 	{ params: { id } }: { params: { id: string } }
 ) => {
-	const { title, description } = await request.json();
+	const body = await request.json();
 
 	try {
-		const topic = await Topic.findByIdAndUpdate(id, {
-			title,
-			description,
-		});
+		const topic = await Topic.findByIdAndUpdate(id, body);
 
 		revalidateTag("topics");
 

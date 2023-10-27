@@ -32,6 +32,7 @@ const TopicCard = async ({ topic }: { topic: TopicType }) => {
 						alt="user image"
 						width={35}
 						height={35}
+						loading="lazy"
 						className="rounded-full border  "
 					/>
 					<div className="flex flex-col">
@@ -46,18 +47,26 @@ const TopicCard = async ({ topic }: { topic: TopicType }) => {
 				<ControlMenu session={session} topic={topic} />
 			</CardHeader>
 			<CardContent>
-				<h3 className="font-semibold line-clamp-1 text-xl capitalize">
+				<Link
+					href={`/topics/${topic._id}`}
+					className="font-semibold line-clamp-1 text-xl capitalize"
+				>
 					{topic.title}
-				</h3>
+				</Link>
 				<CardDescription className="leading-6 line-clamp-6 mt-2">
 					{topic.description}
 				</CardDescription>
 				{topic.link && (
-					<div className="mt-4">
-						<h4>Links</h4>
-						<div className="flex flex-col gap-y-2 text-sm">
-							{topic.link.split(" ").map((link, index) => (
-								<Link key={index} href={link}>
+					<div className="mt-4 text-sm border-t pt-4 space-y-2">
+						<h3>Recourses:</h3>
+						<div className="flex flex-col gap-y-1 line-clamp-3">
+							{topic.link.split(/(\n|\s)/g).map((link, index) => (
+								<Link
+									key={index}
+									href={link}
+									className="text-blue-500 inline-block shrink-0"
+									target="_blank"
+								>
 									{link}
 								</Link>
 							))}

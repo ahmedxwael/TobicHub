@@ -14,19 +14,21 @@ export default function PostsNumber({ userId }: PostsNumberProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [topics, setTopics] = useState<TopicType[] | null>([]);
 
+	async function getTopics(userId: string) {
+		setIsLoading(true);
+
+		try {
+			const topics = await getUserTopics(userId);
+			setTopics(topics);
+		} catch (error) {
+			throw new Error("Could not get user topics.");
+		}
+
+		setIsLoading(false);
+	}
+
 	useEffect(() => {
-		(async function getTopics() {
-			setIsLoading(true);
-
-			try {
-				const topics = await getUserTopics(userId);
-				setTopics(topics);
-			} catch (error) {
-				throw new Error("Could not get user topics.");
-			}
-
-			setIsLoading(false);
-		})();
+		getTopics(userId);
 	}, [userId]);
 
 	return (
