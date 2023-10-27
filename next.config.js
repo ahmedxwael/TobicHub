@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ["lh3.googleusercontent.com", "upload.wikimedia.org"],
+		remotePatterns: [
+			{ hostname: "upload.wikimedia.org" },
+			{ hostname: "lh3.googleusercontent.com" },
+		],
 	},
 };
 

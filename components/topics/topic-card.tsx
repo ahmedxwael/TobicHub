@@ -59,18 +59,13 @@ const TopicCard = async ({ topic }: { topic: TopicType }) => {
 				{topic.link && (
 					<div className="mt-4 text-sm border-t pt-4 space-y-2">
 						<h3>Recourses:</h3>
-						<div className="flex flex-col gap-y-1 line-clamp-3">
-							{topic.link.split(/(\n|\s)/g).map((link, index) => (
-								<Link
-									key={index}
-									href={link}
-									className="text-blue-500 inline-block shrink-0"
-									target="_blank"
-								>
-									{link}
-								</Link>
-							))}
-						</div>
+						<Link
+							href={topic.link}
+							className="text-blue-500 block truncate"
+							target="_blank"
+						>
+							{topic.link}
+						</Link>
 					</div>
 				)}
 			</CardContent>
