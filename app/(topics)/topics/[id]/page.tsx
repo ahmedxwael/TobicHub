@@ -1,3 +1,4 @@
+import BackButton from "@/components/back-button";
 import { getTopic } from "@/utils/topic-utils";
 import { MoveLeft } from "lucide-react";
 import { Metadata } from "next";
@@ -40,10 +41,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
 
   return (
     <section>
-      <Link href="/topics" className="mb-8 flex items-center gap-3 text-base">
-        <MoveLeft />
-        Back to topics
-      </Link>
+      <BackButton />
       <div className="space-y-8">
         <div className="space-y-4 border-b pb-6 md:pb-8">
           <h1 className="text-2xl font-bold first-letter:uppercase md:text-3xl">

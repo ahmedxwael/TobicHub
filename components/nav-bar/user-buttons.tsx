@@ -18,17 +18,15 @@ export type UserType = {
 };
 
 type UserButtonsProps = {
-  session: any;
   onClose?: () => void;
+  user: UserType | undefined;
 };
 
-const UserButtons = ({ session, onClose }: UserButtonsProps) => {
-  const user = session?.user;
-
+const UserButtons = ({ user, onClose }: UserButtonsProps) => {
   return (
     <>
-      {session ? (
-        <div className="flex items-center justify-between gap-4 md:justify-normal">
+      {user ? (
+        <div className="flex w-full items-center justify-between gap-4 md:justify-normal">
           <CustomAlertDialog
             action={() => {
               onClose?.();
@@ -37,10 +35,11 @@ const UserButtons = ({ session, onClose }: UserButtonsProps) => {
             variant="outline"
             title="Sign out"
             description="Are you sure that you want to sign out?"
+            className="w-full"
           />
           <Link
             href={`/profile/${user?.id}`}
-            onClick={() => onClose?.()}
+            onClick={onClose}
             className="inline-block"
             title={user?.name}
           >
@@ -63,7 +62,7 @@ const UserButtons = ({ session, onClose }: UserButtonsProps) => {
         </div>
       ) : (
         <Link
-          onClick={() => onClose?.()}
+          onClick={onClose}
           href="/register"
           className={cn(
             buttonVariants({ variant: "default", size: "lg" }),

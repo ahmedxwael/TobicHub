@@ -1,14 +1,20 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { TopicType } from "@/types";
-import { getServerSession } from "next-auth";
+import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
 import ControlMenu from "../control-menu";
+import { UserType } from "../nav-bar/user-buttons";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
+import ApprovementButton from "./approvement-button";
 
-const TopicCard = async ({ topic }: { topic: TopicType }) => {
-  const session = await getServerSession(authOptions);
+type TopicCardProps = {
+  topic: TopicType;
+  session: Session | null;
+};
+
+const TopicCard = ({ topic, session }: TopicCardProps) => {
+  const user = session?.user as UserType;
 
   const updatedAtDate = topic.updatedAt ? new Date(topic.updatedAt) : null;
   const date = updatedAtDate
@@ -25,7 +31,7 @@ const TopicCard = async ({ topic }: { topic: TopicType }) => {
       <CardHeader className="flex flex-row items-center justify-between">
         <Link
           href={`/profile/${topic.creator._id}`}
-          className="flex w-fit items-center gap-4"
+          className="mr-auto flex w-fit items-center gap-4"
         >
           <Image
             src={topic.creator.image}
@@ -53,7 +59,7 @@ const TopicCard = async ({ topic }: { topic: TopicType }) => {
         >
           {topic.title}
         </Link>
-        <CardDescription className="mt-2 line-clamp-6 leading-6">
+        <CardDescription className="mt-2 line-clamp-5 leading-6">
           {topic.description}
         </CardDescription>
         {topic.link && (
@@ -61,7 +67,7 @@ const TopicCard = async ({ topic }: { topic: TopicType }) => {
             <h3>Recourses:</h3>
             <Link
               href={topic.link}
-              className="block w-fit truncate text-blue-500"
+              className="block w-fit max-w-full truncate text-blue-500"
               target="_blank"
             >
               {topic.link}

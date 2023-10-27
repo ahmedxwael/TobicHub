@@ -7,7 +7,7 @@ export const GET = async () => {
   try {
     await connectToDB();
 
-    const topics = await Topic.find({})
+    const topics = await Topic.find({approved: true})
       .populate("creator", { email: 0 })
       .sort({ _id: -1 });
 
@@ -26,7 +26,7 @@ export const POST = async (request: NextRequest) => {
     await Topic.create(data);
     revalidateTag("topics");
     return NextResponse.json(
-      { message: "Topic created successfuly" },
+      { message: "Topic created successfully" },
       { status: 201 }
     );
   } catch (error: any) {

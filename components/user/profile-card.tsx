@@ -1,8 +1,8 @@
-import { PubCreatorType } from "@/types";
+import { creatorType } from "@/types";
 import Image from "next/image";
 import PostsNumber from "./posts-number";
 
-type Props = { user: PubCreatorType };
+type Props = { user: creatorType };
 
 export const ProfileCard = ({ user }: Props) => {
   return (

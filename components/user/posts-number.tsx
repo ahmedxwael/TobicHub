@@ -1,10 +1,9 @@
 "use client";
 
-import useGetUserTopics from "@/hooks/useGetTopics";
 import { TopicType } from "@/types";
 import { getUserTopics } from "@/utils/topic-utils";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { BiLoader } from "react-icons/bi";
 
 type PostsNumberProps = {
   userId: string;
@@ -33,14 +32,14 @@ export default function PostsNumber({ userId }: PostsNumberProps) {
 
   return (
     <div className="flex items-center gap-2 text-neutral-400">
-      Total posts:
-      {isLoading ? (
-        <span className="animate-spin text-base">
-          <BiLoader />
-        </span>
-      ) : (
-        <span className="inline-block">{topics?.length || 0}</span>
-      )}
+      <span className="inline-block">
+        {isLoading ? (
+          <Loader2 className="animate-spin text-base" />
+        ) : (
+          topics?.length || 0
+        )}
+      </span>
+      Topics
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { User } from "@/models/User";
-import { PubCreatorType } from "@/types";
+import { creatorType } from "@/types";
 import { connectToDB } from "@/utils/db";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
@@ -19,7 +19,7 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async session({ session }: any) {
-      const userSession = await User.findOne({ email: session.user?.email });
+      const [userSession] = await User.find({ email: session.user?.email });
       session.user.id = userSession._id.toString();
       session.user.admin = userSession.admin;
 
@@ -29,7 +29,7 @@ export const authOptions: AuthOptions = {
       try {
         await connectToDB();
 
-        const oldUser = await User.findOne({ email: user.email });
+        const [oldUser] = await User.find({ email: user.email });
 
         if (!oldUser) {
           await User.create({

@@ -1,6 +1,6 @@
-import { PubCreatorType } from "@/types";
+import { creatorType } from "@/types";
 
-export const getUsers = async (): Promise<PubCreatorType[]> => {
+export const getUsers = async (): Promise<creatorType[]> => {
   const res = await fetch(`${process.env.BASE_URL}/api/users`);
 
   if (!res.ok) {
@@ -10,7 +10,7 @@ export const getUsers = async (): Promise<PubCreatorType[]> => {
   return res.json();
 };
 
-export const getUser = async (id: string): Promise<PubCreatorType> => {
+export const getUser = async (id: string): Promise<creatorType> => {
   const res = await fetch(`${process.env.BASE_URL}/api/users/${id}`);
 
   if (!res.ok) {

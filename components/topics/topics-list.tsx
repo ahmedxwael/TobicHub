@@ -1,21 +1,45 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { TopicType } from "@/types";
-import { getSearchTopics, getTopics, getUserTopics } from "@/utils/topic-utils";
+import {
+  getAllTopics,
+  getApprovedTopics,
+  getSearchTopics,
+  getUserTopics,
+} from "@/utils/topic-utils";
+import { getServerSession } from "next-auth";
 import React from "react";
 import { Pagination } from "../pagination/pagination";
 import TopicCard from "./topic-card";
+
+export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 
 type Props = {
   topics?: TopicType[];
   userId?: string;
   query?: string;
+  type: TopicsTypeType;
 };
 
-const TopicsList = async ({ userId, query }: Props) => {
-  const topics = userId
-    ? await getUserTopics(userId)
-    : query
-    ? await getSearchTopics(query)
-    : await getTopics();
+function getTopics(type: TopicsTypeType, query?: string, userId?: string) {
+  switch (type) {
+    case "approved": {
+      return getApprovedTopics();
+    }
+    case "search": {
+      return getSearchTopics(query!);
+    }
+    case "user": {
+      return getUserTopics(userId!);
+    }
+    case "admin": {
+      return getAllTopics();
+    }
+  }
+}
+
+const TopicsList = async ({ type, userId, query }: Props) => {
+  const topics = await getTopics(type, query, userId);
+  const session = await getServerSession(authOptions);
 
   if (!topics || topics.length === 0) {
     return (
@@ -29,7 +53,7 @@ const TopicsList = async ({ userId, query }: Props) => {
     <div className="space-y-10">
       <div className="space-y-6">
         {topics.map((topic) => (
-          <TopicCard key={topic._id} topic={topic} />
+          <TopicCard session={session} key={topic._id} topic={topic} />
         ))}
       </div>
       <Pagination />

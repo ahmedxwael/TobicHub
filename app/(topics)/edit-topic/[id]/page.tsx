@@ -1,5 +1,5 @@
 import Form from "@/components/Form";
-import { getTopic, getTopics } from "@/utils/topic-utils";
+import { getApprovedTopics, getTopic } from "@/utils/topic-utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

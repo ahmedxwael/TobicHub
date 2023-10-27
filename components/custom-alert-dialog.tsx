@@ -1,5 +1,5 @@
-import { signOut } from "next-auth/react";
-import React from "react";
+import { cn } from "@/lib/utils";
+import { ButtonHTMLAttributes } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,18 +18,26 @@ type CustomAlertDialogProps = {
   title: string;
   description?: string;
   variant?: "ghost" | "link" | "outline";
-};
+  className?: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function CustomAlertDialog({
   action,
   title,
   description,
   variant,
+  className,
+  ...rest
 }: CustomAlertDialogProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={variant} size="lg" className="w-full">
+        <Button
+          variant={variant}
+          size="lg"
+          className={cn("w-full", className)}
+          {...rest}
+        >
           {title}
         </Button>
       </AlertDialogTrigger>

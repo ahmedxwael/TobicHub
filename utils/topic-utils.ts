@@ -1,11 +1,6 @@
 import { BASE_URL } from "@/shared/variables";
-import { TopicType } from "@/types";
-
-export type NewTopicType = {
-  title: string;
-  description: string;
-  creator: string;
-};
+import { NewTopicType, TopicType } from "@/types";
+import axios from "axios";
 
 export async function addTopic(newTopic: NewTopicType) {
   await fetch(`/api/topics`, {
@@ -21,7 +16,10 @@ export async function addTopic(newTopic: NewTopicType) {
     });
 }
 
-export async function editTopic(topicId: string, updatedTopic: TopicType) {
+export async function editTopic(
+  topicId: string,
+  updatedTopic: Partial<TopicType> | TopicType
+) {
   await fetch(`/api/topics/${topicId}`, {
     method: "PATCH",
     headers: {
@@ -33,6 +31,12 @@ export async function editTopic(topicId: string, updatedTopic: TopicType) {
     .catch(() => {
       throw new Error("Something went wrong.");
     });
+}
+
+export async function deleteTopic(id: string) {
+  await fetch(`/api/topics/${id}`, {
+    method: "DELETE",
+  });
 }
 
 export const getTopic = async (id: string): Promise<TopicType> => {
@@ -47,8 +51,20 @@ export const getTopic = async (id: string): Promise<TopicType> => {
   return res.json();
 };
 
-export const getTopics = async (): Promise<TopicType[]> => {
+export const getApprovedTopics = async (): Promise<TopicType[]> => {
   const res = await fetch(`${BASE_URL}/api/topics`, {
+    next: { tags: ["topics"] },
+  });
+
+  if (!res.ok) {
+    throw new Error("Could not retrieve the list of topics.");
+  }
+
+  return res.json();
+};
+
+export const getAllTopics = async (): Promise<TopicType[]> => {
+  const res = await fetch(`${BASE_URL}/api/topics/admin`, {
     next: { tags: ["topics"] },
   });
 

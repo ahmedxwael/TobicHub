@@ -1,13 +1,12 @@
 "use client";
 
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LuSearch } from "react-icons/lu";
 import { Button } from "./ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -22,6 +21,8 @@ type Inputs = {
 const SearchTopic = () => {
   const router = useRouter();
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -31,48 +32,51 @@ const SearchTopic = () => {
     const encodedQueryString = encodeURI(search);
 
     router.push(`/search?q=${encodedQueryString}`);
+    setIsPopupOpen(false);
   };
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
         <Button
           variant="outline"
           className="text-xl transition-transform hover:scale-105"
         >
-          <LuSearch />
+          <Search />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Search for topic</DialogTitle>
-        </DialogHeader>
-        <form
-          className="mt-4 flex flex-col gap-y-4"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="space-y-3">
-            <label htmlFor="search">Topic</label>
-            <Input
-              id="search"
-              type="text"
-              {...register("search", {
-                required: "You have to write something to search.",
-              })}
-              placeholder="Search for a specific topic"
-              className="mt-3"
-            />
-          </div>
-          {errors.search && (
-            <span className="inline-block text-sm text-red-500">
-              {errors.search.message}
-            </span>
-          )}
-          <Button size="lg" className="ml-auto">
-            Search
-          </Button>
-        </form>
-      </DialogContent>
+      {isPopupOpen && (
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Search for topic</DialogTitle>
+          </DialogHeader>
+          <form
+            className="mt-4 flex flex-col gap-y-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="space-y-3">
+              <label htmlFor="search">Topic</label>
+              <Input
+                id="search"
+                type="text"
+                {...register("search", {
+                  required: "You have to write something to search.",
+                })}
+                placeholder="Search for a specific topic"
+                className="mt-3"
+              />
+            </div>
+            {errors.search && (
+              <span className="inline-block text-sm text-red-500">
+                {errors.search.message}
+              </span>
+            )}
+            <Button size="lg" className="ml-auto">
+              Search
+            </Button>
+          </form>
+        </DialogContent>
+      )}
     </Dialog>
   );
 };

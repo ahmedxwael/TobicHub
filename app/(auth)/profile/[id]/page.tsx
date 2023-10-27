@@ -43,7 +43,7 @@ const Profile = async ({ params: { id } }: ParamsType) => {
       <div className="flex flex-col gap-12">
         <h1 className="w-fit text-2xl font-bold  tracking-wider">Topics</h1>
         <Suspense fallback={<ComponentLoader />}>
-          <TopicsList userId={id} />
+          <TopicsList type="user" userId={id} />
         </Suspense>
       </div>
     </section>

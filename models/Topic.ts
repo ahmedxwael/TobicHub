@@ -13,6 +13,9 @@ const TopicSchema = new Schema(
     link: {
       type: String,
     },
+    approved: {
+      type: Boolean,
+    },
     creator: {
       type: Schema.Types.ObjectId,
       ref: "User",

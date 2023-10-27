@@ -1,13 +1,11 @@
-import { TopicType } from "@/types";
-import { getTopics } from "@/utils/topic-utils";
 import { Suspense } from "react";
 import ComponentLoader from "../component-loader";
 import SearchTopic from "../search-topic";
-import TopicsList from "./topics-list";
+import TopicsList, { TopicsTypeType } from "./topics-list";
 
-type Props = { title: string; query?: string };
+type Props = { title: string; query?: string; type: TopicsTypeType };
 
-const TopicsSection = ({ title, query }: Props) => {
+const TopicsSection = ({ title, query, type }: Props) => {
   return (
     <>
       <div className="flex w-full flex-wrap items-center justify-between gap-6">
@@ -18,7 +16,7 @@ const TopicsSection = ({ title, query }: Props) => {
       </div>
 
       <Suspense fallback={<ComponentLoader />}>
-        <TopicsList query={query} />
+        <TopicsList type={type} query={query} />
       </Suspense>
     </>
   );

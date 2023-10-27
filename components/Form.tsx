@@ -1,11 +1,12 @@
 "use client";
 
-import { TopicType } from "@/types";
-import { NewTopicType, addTopic, editTopic } from "@/utils/topic-utils";
+import { NewTopicType, TopicType } from "@/types";
+import { addTopic, editTopic } from "@/utils/topic-utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { UserType } from "./nav-bar/user-buttons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -22,25 +23,13 @@ type InputsType = {
   link: string;
 };
 
-type InitialTopicValueType =
-  | {
-      title: string;
-      description: string;
-      creator: string;
-      link: string;
-    }
-  | TopicType;
-
 const Form = ({ type, currentTopic }: Props) => {
-  const { data: session }: any = useSession();
+  const { data: session } = useSession();
+  const user = session?.user as UserType;
+
   const router = useRouter();
 
-  const initialTopicValue =
-    type === "create"
-      ? { title: "", description: "", creator: session?.user?.id, link: "" }
-      : currentTopic;
-
-  const [topic, setTopic] = useState<InitialTopicValueType>(initialTopicValue!);
+  const [topic, setTopic] = useState<TopicType | NewTopicType>(currentTopic!);
   const [submitting, setSubmitting] = useState<boolean>(false);
 
   const {
@@ -54,7 +43,7 @@ const Form = ({ type, currentTopic }: Props) => {
 
     try {
       if (type === "create") {
-        await addTopic(topic as NewTopicType);
+        await addTopic({ ...topic, creator: user?.id });
       } else if (type === "edit") {
         await editTopic(currentTopic?._id!, topic as TopicType);
       }
@@ -142,7 +131,7 @@ const Form = ({ type, currentTopic }: Props) => {
         <Button
           disabled={submitting}
           type="button"
-          onClick={() => router.push("/topics")}
+          onClick={router.back}
           variant="outline"
           size="lg"
         >

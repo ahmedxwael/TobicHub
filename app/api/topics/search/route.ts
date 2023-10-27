@@ -7,7 +7,7 @@ export const GET = async (req: NextRequest) => {
   try {
     await connectToDB();
 
-    const topics = await Topic.find({
+    const topics = await Topic.find({approved: true,
       $or: [
         { title: { $regex: new RegExp(query || "", "i") } },
         { description: { $regex: new RegExp(query || "", "i") } },

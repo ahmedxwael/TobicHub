@@ -1,14 +1,12 @@
 import { Topic } from "@/models/Topic";
 import { connectToDB } from "@/utils/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
-  const id = req.nextUrl.searchParams.get("id");
-
+export const GET = async () => {
   try {
     await connectToDB();
 
-    const topics = await Topic.find({ creator: { _id: id }, approved: true })
+    const topics = await Topic.find({})
       .populate("creator", { email: 0 })
       .sort({ _id: -1 });
 

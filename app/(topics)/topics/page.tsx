@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const TopicsPage = async () => {
   return (
     <section className="flex flex-col gap-10">
-      <TopicsSection title="all topics" />
+      <TopicsSection title="all topics" type="approved" />
     </section>
   );
 };

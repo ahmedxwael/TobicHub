@@ -1,23 +1,15 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { HiMenuAlt3 } from "react-icons/hi";
 import { ModeToggle } from "../toggle-mode-button";
-import { Button } from "../ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
+
 import NavLinks from "./nav-links";
 import SideBar from "./side-bar";
-import UserButtons from "./user-buttons";
+import UserButtons, { UserType } from "./user-buttons";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
+  const user = session?.user as UserType;
 
   return (
     <header className="sticky top-0 z-10 border-b border-b-input bg-transparent backdrop-blur-lg">
@@ -31,14 +23,14 @@ const Navbar = async () => {
         </Link>
 
         <div className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <NavLinks />
+          <NavLinks isAdmin={user?.admin} />
         </div>
         <div className="hidden shrink-0 items-center gap-4 md:flex">
           <ModeToggle />
-          <UserButtons session={session} />
+          <UserButtons user={user} />
         </div>
 
-        <SideBar session={session} />
+        <SideBar user={user} />
       </nav>
     </header>
   );

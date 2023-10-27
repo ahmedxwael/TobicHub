@@ -1,16 +1,16 @@
 "use client";
 
 import { TopicType } from "@/types";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
-import { BsThreeDots } from "react-icons/bs";
+import { deleteTopic, editTopic } from "@/utils/topic-utils";
+import { MoreHorizontal } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import CustomAlertDialog from "./custom-alert-dialog";
 import { UserType } from "./nav-bar/user-buttons";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -23,18 +23,33 @@ type Props = {
 
 const ControlMenu = ({ topic, session }: Props) => {
   const user = session?.user as UserType;
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const router = useRouter();
+  const pathname = usePathname();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const hasControl = user && (user?.id === topic.creator._id || user?.admin);
 
-  const deleteTopic = async () => {
-    await fetch(`/api/topics/${topic._id}`, {
-      method: "DELETE",
-    });
+  async function handleTopicApprovement(topicId: string) {
+    setIsLoading(true);
+    await editTopic(topicId, { approved: true });
+    router.refresh();
+    setIsLoading(false);
+  }
 
+  async function handleTopicUnApprovement(topicId: string) {
+    setIsLoading(true);
+    await editTopic(topicId, { approved: false });
+    router.refresh();
+    setIsLoading(false);
+  }
+
+  const handleTopicDelete = async () => {
+    setIsLoading(true);
+    await deleteTopic(topic._id);
+
+    setIsLoading(false);
     setIsDropdownOpen(false);
     router.refresh();
   };
@@ -42,37 +57,64 @@ const ControlMenu = ({ topic, session }: Props) => {
   return (
     <>
       {hasControl && (
-        <DropdownMenu open={isDropdownOpen}>
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               onClick={() => setIsDropdownOpen(true)}
               className="w-fit"
               variant="outline"
             >
-              <BsThreeDots />
+              <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-max">
-            <DropdownMenuLabel>Options</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <Button
-              variant="ghost"
-              className="w-full cursor-pointer"
-              onClick={() => {
-                router.push(`/edit-topic/${topic._id}`);
-                setIsDropdownOpen(false);
-              }}
-            >
-              Edit
-            </Button>
-
-            <CustomAlertDialog
-              action={deleteTopic}
-              title="Delete"
-              variant="ghost"
-              description="This action cannot be undone. Are you sure that you want to delete this topic?"
-            />
-          </DropdownMenuContent>
+          {isDropdownOpen && (
+            <DropdownMenuContent align="end" className="w-[170px]">
+              <DropdownMenuLabel>Options</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {user?.admin &&
+                pathname.endsWith("/dashboard") &&
+                (!topic.approved ? (
+                  <Button
+                    disabled={isLoading}
+                    variant="ghost"
+                    className="w-full cursor-pointer hover:bg-primary"
+                    onClick={() => handleTopicApprovement(topic._id)}
+                  >
+                    Approve
+                  </Button>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    className="w-full cursor-pointer"
+                    disabled={isLoading}
+                    onClick={() => handleTopicUnApprovement(topic._id)}
+                  >
+                    Un approve
+                  </Button>
+                ))}
+              <Button
+                variant="ghost"
+                className="w-full cursor-pointer"
+                disabled={isLoading}
+                onClick={() => {
+                  setIsLoading(true);
+                  setIsDropdownOpen(false);
+                  router.push(`/edit-topic/${topic._id}`);
+                  setIsLoading(false);
+                }}
+              >
+                Edit
+              </Button>
+              <CustomAlertDialog
+                action={handleTopicDelete}
+                title="Delete"
+                variant="ghost"
+                description="This action cannot be undone. Are you sure that you want to delete this topic?"
+                className="text-red-600 hover:bg-red-600 hover:text-white"
+                disabled={isLoading}
+              />
+            </DropdownMenuContent>
+          )}
         </DropdownMenu>
       )}
     </>
