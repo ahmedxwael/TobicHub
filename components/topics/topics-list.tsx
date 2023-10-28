@@ -39,8 +39,7 @@ function getTopics(type: TopicsTypeType, query?: string, userId?: string) {
 }
 
 const TopicsList = async ({ type, userId, query }: Props) => {
-  // const topics = await getTopics(type, query, userId);
-  const topics: TopicType[] = [];
+  const topics = await getTopics(type, query, userId);
   const session = await getServerSession(authOptions);
 
   if (!topics) {

@@ -1,6 +1,6 @@
 import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
-import { getTopic } from "@/utils/topic-utils";
+import { getApprovedTopics, getTopic } from "@/utils/topic-utils";
 import { MoveLeft } from "lucide-react";
 import { Metadata } from "next";
 import Error from "next/error";
@@ -26,6 +26,16 @@ export const generateMetadata = async ({
     title: `${topic.title} | TopicHub`,
     description: topic.description,
   };
+};
+
+export const generateStaticParams = async () => {
+  const topics = await getApprovedTopics();
+
+  if (!topics || topics.length === 0) {
+    return [];
+  }
+
+  return topics.map((topic) => ({ id: topic._id }));
 };
 
 export default async function TopicPage({ params: { id } }: TopicPageProps) {
