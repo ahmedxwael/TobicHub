@@ -26,6 +26,8 @@ export const PATCH = async (
 ) => {
   const body = await request.json();
 
+  console.log("from api: ", body);
+
   try {
     const topic = await Topic.findByIdAndUpdate(id, body);
 

@@ -8,6 +8,7 @@ import {
 } from "@/utils/topic-utils";
 import { getServerSession } from "next-auth";
 import React from "react";
+import NotFound from "../not-found";
 import { Pagination } from "../pagination/pagination";
 import TopicCard from "./topic-card";
 
@@ -41,15 +42,15 @@ const TopicsList = async ({ type, userId, query }: Props) => {
   const topics = await getTopics(type, query, userId);
   const session = await getServerSession(authOptions);
 
-  if (!topics || topics.length === 0) {
-    return (
-      <p className="p-6 text-center text-xl font-bold">
-        There is no topics to show
-      </p>
-    );
+  if (!topics) {
+    return <NotFound message="Could not retrieve the list of topics." />;
   }
 
-  return (
+  return topics.length === 0 ? (
+    <div className="p-6 text-center text-xl font-bold">
+      There is no topics to show
+    </div>
+  ) : (
     <div className="space-y-10">
       <div className="space-y-6">
         {topics.map((topic) => (

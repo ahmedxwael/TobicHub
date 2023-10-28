@@ -1,9 +1,12 @@
 import BackButton from "@/components/back-button";
+import NotFound from "@/components/not-found";
 import { getTopic } from "@/utils/topic-utils";
 import { MoveLeft } from "lucide-react";
 import { Metadata } from "next";
+import Error from "next/error";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 type TopicPageProps = {
@@ -29,7 +32,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
   const topic = await getTopic(id);
 
   if (!topic) {
-    return <div className=""></div>;
+    return <NotFound message="Couldn't get your topic." />;
   }
 
   const updatedAtDate = topic.updatedAt ? new Date(topic.updatedAt) : null;
