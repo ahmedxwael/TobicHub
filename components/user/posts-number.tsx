@@ -16,11 +16,12 @@ export default function PostsNumber({ userId }: PostsNumberProps) {
   async function getTopics(userId: string) {
     setIsLoading(true);
 
-    try {
-      const topics = await getUserTopics(userId);
+    const topics = await getUserTopics(userId);
+
+    if (!topics) {
+      setTopics([]);
+    } else {
       setTopics(topics);
-    } catch (error) {
-      throw new Error("Could not get user topics.");
     }
 
     setIsLoading(false);
