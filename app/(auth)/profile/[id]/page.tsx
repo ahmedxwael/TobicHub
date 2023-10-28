@@ -1,4 +1,5 @@
 import ComponentLoader from "@/components/component-loader";
+import NotFound from "@/components/not-found";
 import TopicsList from "@/components/topics/topics-list";
 import { ProfileCard } from "@/components/user/profile-card";
 import { ParamsType } from "@/types";
@@ -36,6 +37,10 @@ export const generateStaticParams = async () => {
 
 const Profile = async ({ params: { id } }: ParamsType) => {
   const user = await getUser(id);
+
+  if (!user) {
+    return <NotFound message="Couldn't get user's data." />;
+  }
 
   return (
     <section className="flex flex-col gap-20">

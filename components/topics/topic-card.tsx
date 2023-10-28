@@ -6,7 +6,6 @@ import { memo } from "react";
 import ControlMenu from "../control-menu";
 import { UserType } from "../nav-bar/user-buttons";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
-import ApprovementButton from "./approvement-button";
 
 type TopicCardProps = {
   topic: TopicType;
@@ -14,7 +13,7 @@ type TopicCardProps = {
 };
 
 const TopicCard = ({ topic, session }: TopicCardProps) => {
-  const user = session?.user as UserType;
+  const user = session?.user as UserType | undefined;
 
   const updatedAtDate = topic.updatedAt ? new Date(topic.updatedAt) : null;
   const date = updatedAtDate
@@ -50,7 +49,7 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
             )}
           </div>
         </Link>
-        <ControlMenu session={session} topic={topic} />
+        <ControlMenu user={user} topic={topic} />
       </CardHeader>
       <CardContent>
         <Link

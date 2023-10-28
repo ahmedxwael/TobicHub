@@ -18,11 +18,10 @@ import {
 
 type Props = {
   topic: TopicType;
-  session: any;
+  user: UserType | undefined;
 };
 
-const ControlMenu = ({ topic, session }: Props) => {
-  const user = session?.user as UserType;
+const ControlMenu = ({ topic, user }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -61,10 +60,10 @@ const ControlMenu = ({ topic, session }: Props) => {
           <DropdownMenuTrigger asChild>
             <Button
               onClick={() => setIsDropdownOpen(true)}
-              className="w-fit"
+              className="h-fit w-fit px-2"
               variant="outline"
             >
-              <MoreHorizontal />
+              <MoreHorizontal size={15} />
             </Button>
           </DropdownMenuTrigger>
           {isDropdownOpen && (
@@ -77,7 +76,7 @@ const ControlMenu = ({ topic, session }: Props) => {
                   <Button
                     disabled={isLoading}
                     variant="ghost"
-                    className="w-full cursor-pointer hover:bg-primary"
+                    className="w-full cursor-pointer hover:bg-primary hover:text-white"
                     onClick={() => handleTopicApprovement(topic._id)}
                   >
                     Approve

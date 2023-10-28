@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import TextInputField from "./form/text-input-field";
 import { UserType } from "./nav-bar/user-buttons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -17,7 +18,7 @@ type Props = {
   currentTopic?: TopicType;
 };
 
-type InputsType = {
+export type InputsType = {
   title: string;
   description: string;
   link: string;

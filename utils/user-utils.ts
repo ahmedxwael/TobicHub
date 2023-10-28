@@ -1,21 +1,29 @@
 import { creatorType } from "@/types";
 
-export const getUsers = async (): Promise<creatorType[]> => {
-  const res = await fetch(`${process.env.BASE_URL}/api/users`);
+export const getUsers = async (): Promise<creatorType[] | undefined> => {
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/api/users`);
 
-  if (!res.ok) {
-    throw new Error("Could not fetch users.");
+    if (!response.ok) {
+      return undefined;
+    }
+
+    return response.json();
+  } catch (error) {
+    throw new Error("Couldn't get the users.");
   }
-
-  return res.json();
 };
 
-export const getUser = async (id: string): Promise<creatorType> => {
-  const res = await fetch(`${process.env.BASE_URL}/api/users/${id}`);
+export const getUser = async (id: string): Promise<creatorType | undefined> => {
+  try {
+    const response = await fetch(`${process.env.BASE_URL}/api/users/${id}`);
 
-  if (!res.ok) {
-    throw new Error("Could not fetch user.");
+    if (!response.ok) {
+      return undefined;
+    }
+
+    return response.json();
+  } catch (error) {
+    throw new Error("Couldn't get the user.");
   }
-
-  return res.json();
 };
