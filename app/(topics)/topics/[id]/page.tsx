@@ -1,12 +1,9 @@
 import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
-import { getApprovedTopics, getTopic } from "@/utils/topic-utils";
-import { MoveLeft } from "lucide-react";
+import { getAllTopics, getTopic } from "@/utils/topic-utils";
 import { Metadata } from "next";
-import Error from "next/error";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import React from "react";
 
 type TopicPageProps = {
@@ -29,7 +26,7 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = async () => {
-  const topics = await getApprovedTopics();
+  const topics = await getAllTopics();
 
   if (!topics || topics.length === 0) {
     return [];
