@@ -1,6 +1,7 @@
 import prisma from "@/prisma";
 import { NewTopicType, TopicType } from "@/types";
 import axios from "axios";
+import { Regex } from "lucide-react";
 
 const userAllowedFields = { admin: true, id: true, name: true, image: true };
 
@@ -99,8 +100,8 @@ export const getSearchTopics = async (
     const topics = await prisma.topic.findMany({
       where: {
         OR: [
-          { title: { contains: query } },
-          { description: { contains: query } },
+          { title: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } },
         ],
       },
       include: {

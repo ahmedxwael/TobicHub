@@ -46,11 +46,7 @@ const TopicsList = async ({ type, userId, query }: Props) => {
     return <NotFound message="Could not retrieve the list of topics." />;
   }
 
-  return topics.length === 0 ? (
-    <div className="p-6 text-center text-xl font-bold">
-      There is no topics to show.
-    </div>
-  ) : (
+  return topics.length > 0 ? (
     <div className="space-y-10">
       <div className="space-y-6">
         {topics.map((topic) => (
@@ -58,6 +54,10 @@ const TopicsList = async ({ type, userId, query }: Props) => {
         ))}
       </div>
       <Pagination />
+    </div>
+  ) : (
+    <div className="px-6 py-10 text-center text-xl font-bold">
+      There is no topics to show.
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import prisma from "@/prisma";
 import { UserType } from "@/types";
+import axios from "axios";
 
 export const getUsers = async (): Promise<UserType[] | undefined> => {
   try {
@@ -20,5 +21,15 @@ export const getUser = async (
     return user;
   } catch (error) {
     return undefined;
+  }
+};
+
+export const updateUser = async (id: string, data: Partial<UserType>) => {
+  try {
+    await axios.patch(`/api/users/${id}`, data).catch(() => {
+      throw new Error("Something went wrong.");
+    });
+  } catch (error) {
+    throw new Error("Couldn't update user.");
   }
 };

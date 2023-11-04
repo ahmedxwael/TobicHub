@@ -5,16 +5,16 @@ import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import CustomAlertDialog from "./custom-alert-dialog";
-import { UserType } from "./nav-bar/user-buttons";
-import { Button } from "./ui/button";
+import CustomAlertDialog from "../custom-alert-dialog";
+import { UserType } from "../nav-bar/user-buttons";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 
 type Props = {
   topic: TopicType;

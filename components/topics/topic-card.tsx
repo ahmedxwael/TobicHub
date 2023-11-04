@@ -3,9 +3,9 @@ import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
-import ControlMenu from "../control-menu";
 import { UserType } from "../nav-bar/user-buttons";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
+import ControlMenu from "./control-menu";
 
 type TopicCardProps = {
   topic: TopicType;
@@ -35,8 +35,8 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
           <Image
             src={topic.User.image ?? "images/avatar.jpg"}
             alt="user image"
-            width={35}
-            height={35}
+            width={40}
+            height={40}
             loading="lazy"
             className="rounded-full border  "
           />
