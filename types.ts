@@ -6,8 +6,8 @@ export type ParamsType = {
 
 export type UserType = {
   id: string;
-  email: string;
-  name: string;
+  email: string | null;
+  name: string | null;
   image: string | null;
   admin: boolean;
   created_at: Date;
