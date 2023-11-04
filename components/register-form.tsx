@@ -8,11 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { signIn } from "next-auth/react";
+import { BuiltInProviderType } from "next-auth/providers/index";
+import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
-export function RegisterForm() {
+type RegisterFormProps = {
+  providers: Record<
+    LiteralUnion<BuiltInProviderType>,
+    ClientSafeProvider
+  > | null;
+};
+
+export function RegisterForm({ providers }: RegisterFormProps) {
   return (
     <Card className="mx-auto w-[400px] max-w-full">
       <CardHeader className="space-y-1">
@@ -24,14 +32,16 @@ export function RegisterForm() {
       <CardContent className="grid gap-4">
         <div className="grid grid-cols-1 gap-6">
           <Button
-            onClick={() => signIn("google")}
+            disabled={!providers?.google}
+            onClick={() => signIn(providers?.google?.id)}
             variant="outline"
             className="flex items-center gap-2"
           >
             Google <FcGoogle />
           </Button>
           <Button
-            onClick={() => signIn("github")}
+            disabled={!providers?.github}
+            onClick={() => signIn(providers?.github?.id)}
             variant="outline"
             className="flex items-center gap-2"
           >

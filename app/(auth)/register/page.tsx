@@ -3,6 +3,7 @@ import { UserType } from "@/components/nav-bar/user-buttons";
 import { RegisterForm } from "@/components/register-form";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import { getProviders } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -20,9 +21,11 @@ export default async function RegisterPage() {
     redirect(`/profile/${userId}`);
   }
 
+  const providers = await getProviders();
+
   return (
     <section className="my-auto flex items-center justify-center">
-      <RegisterForm />
+      <RegisterForm providers={providers} />
     </section>
   );
 }
