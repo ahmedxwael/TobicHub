@@ -1,51 +1,30 @@
-import { Topic } from "@/models/Topic";
-import { connectToDB } from "@/utils/db";
-import { revalidateTag } from "next/cache";
+import prisma from "@/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (
-  req: NextRequest,
-  { params: { id } }: { params: { id: string } }
-) => {
-  try {
-    await connectToDB();
-
-    const [topic] = await Topic.find({ _id: id }).populate("creator", {
-      email: 0,
-    });
-
-    return NextResponse.json(topic, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-};
+type ParamsType = { params: { id: string } };
 
 export const PATCH = async (
   request: NextRequest,
-  { params: { id } }: { params: { id: string } }
+  { params: { id } }: ParamsType
 ) => {
-  const body = await request.json();
+  const data = await request.json();
 
   try {
-    const topic = await Topic.findByIdAndUpdate(id, body);
-
-    revalidateTag("topics");
+    const topic = await prisma.topic.update({ where: { id }, data });
 
     return NextResponse.json(topic, { status: 200 });
   } catch (error: any) {
+    console.log(error);
     return NextResponse.json({ error }, { status: 500 });
   }
 };
 
 export const DELETE = async (
   request: NextRequest,
-  { params: { id } }: { params: { id: string } }
+  { params: { id } }: ParamsType
 ) => {
   try {
-    await connectToDB();
-
-    await Topic.findByIdAndDelete(id);
-    revalidateTag("topics");
+    await prisma.topic.delete({ where: { id } });
 
     return NextResponse.json(
       { message: "Deleted successfully!" },

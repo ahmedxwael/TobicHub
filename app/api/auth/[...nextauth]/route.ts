@@ -1,6 +1,4 @@
-import { User } from "@/models/User";
-import { creatorType } from "@/types";
-import { connectToDB } from "@/utils/db";
+import prisma from "@/prisma";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import GitHubProvider from "next-auth/providers/github";
@@ -19,23 +17,28 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async session({ session }: any) {
-      const [userSession] = await User.find({ email: session.user?.email });
-      session.user.id = userSession._id.toString();
-      session.user.admin = userSession.admin;
+      const user = await prisma.user.findUnique({
+        where: { email: session?.user?.email },
+      });
+
+      session.user.id = user?.id.toString();
+      session.user.admin = user?.admin;
 
       return session;
     },
-    async signIn({ user }) {
+    async signIn({ user }: any) {
       try {
-        await connectToDB();
+        const storedUser = await prisma.user.findUnique({
+          where: { email: user?.email },
+        });
 
-        const [oldUser] = await User.find({ email: user.email });
-
-        if (!oldUser) {
-          await User.create({
-            email: user.email,
-            name: user.name,
-            image: user.image,
+        if (!storedUser) {
+          await prisma.user.create({
+            data: {
+              email: user?.email,
+              name: user?.name,
+              image: user?.image,
+            },
           });
         }
 

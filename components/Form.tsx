@@ -14,7 +14,7 @@ import { Textarea } from "./ui/textarea";
 
 type Props = {
   type: "create" | "edit";
-  currentTopic?: TopicType;
+  currentTopic?: TopicType | null;
 };
 
 export type InputsType = {
@@ -43,9 +43,18 @@ const Form = ({ type, currentTopic }: Props) => {
 
     try {
       if (type === "create") {
-        await addTopic({ ...topic, creator: user?.id });
+        await addTopic({
+          ...topic,
+          userId: user?.id,
+          approved: user.admin ? true : false,
+        });
       } else if (type === "edit") {
-        await editTopic(currentTopic?._id!, topic as TopicType);
+        await editTopic(currentTopic?.id!, {
+          description: topic?.description,
+          link: topic?.link,
+          title: topic?.title,
+          userId: topic?.userId,
+        });
       }
 
       setSubmitting(false);

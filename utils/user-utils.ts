@@ -1,29 +1,24 @@
-import { creatorType } from "@/types";
+import prisma from "@/prisma";
+import { UserType } from "@/types";
 
-export const getUsers = async (): Promise<creatorType[] | undefined> => {
+export const getUsers = async (): Promise<UserType[] | undefined> => {
   try {
-    const response = await fetch(`${process.env.BASE_URL}/api/users`);
+    const users = await prisma.user.findMany({});
 
-    if (!response.ok) {
-      return undefined;
-    }
-
-    return response.json();
+    return users;
   } catch (error) {
-    throw new Error("Couldn't get the users.");
+    return undefined;
   }
 };
 
-export const getUser = async (id: string): Promise<creatorType | undefined> => {
+export const getUser = async (
+  id: string
+): Promise<UserType | null | undefined> => {
   try {
-    const response = await fetch(`${process.env.BASE_URL}/api/users/${id}`);
+    const user = await prisma.user.findUnique({ where: { id } });
 
-    if (!response.ok) {
-      return undefined;
-    }
-
-    return response.json();
+    return user;
   } catch (error) {
-    throw new Error("Couldn't get the user.");
+    return undefined;
   }
 };

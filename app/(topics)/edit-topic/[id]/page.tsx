@@ -14,11 +14,13 @@ export const generateStaticParams = async () => {
     return [];
   }
 
-  return topics.map((topic) => ({ id: topic._id }));
+  return topics.map((topic) => ({ id: topic.id }));
 };
 
+export const revalidate = 0;
+
 const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
-  const topic = await getTopic(id);
+  const topic = await getTopic(id, true);
 
   return (
     <main className="center">

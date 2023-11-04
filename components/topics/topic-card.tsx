@@ -15,7 +15,7 @@ type TopicCardProps = {
 const TopicCard = ({ topic, session }: TopicCardProps) => {
   const user = session?.user as UserType | undefined;
 
-  const updatedAtDate = topic.updatedAt ? new Date(topic.updatedAt) : null;
+  const updatedAtDate = topic.updated_at ? new Date(topic.updated_at) : null;
   const date = updatedAtDate
     ? new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
         updatedAtDate
@@ -24,16 +24,16 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
 
   return (
     <Card
-      key={topic._id}
+      key={topic.id}
       className="space-y-5 dark:shadow-[0_8px_16px_0_rgba(0,0,0,0.04),8px_0_16px_0_rgba(0,0,0,0.04)]"
     >
       <CardHeader className="flex flex-row items-center justify-between">
         <Link
-          href={`/profile/${topic.creator._id}`}
+          href={`/profile/${topic.User.id}`}
           className="mr-auto flex w-fit items-center gap-4"
         >
           <Image
-            src={topic.creator.image}
+            src={topic.User.image}
             alt="user image"
             width={35}
             height={35}
@@ -41,7 +41,7 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
             className="rounded-full border  "
           />
           <div className="flex flex-col">
-            <h2 className="text-sm font-medium">{topic.creator.name}</h2>
+            <h2 className="text-sm font-medium">{topic.User.name}</h2>
             {!!date && (
               <span className="inline-block text-xs text-muted-foreground">
                 {date}
@@ -53,7 +53,7 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
       </CardHeader>
       <CardContent>
         <Link
-          href={`/topics/${topic._id}`}
+          href={`/topics/${topic.id}`}
           className="line-clamp-1 w-fit text-xl font-semibold capitalize"
         >
           {topic.title}

@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Topics page that contains general information about popular topics.",
 };
 
+export const revalidate = 1;
+
 const TopicsPage = async () => {
   return (
     <section className="flex flex-col gap-10">

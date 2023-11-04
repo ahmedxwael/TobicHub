@@ -28,7 +28,7 @@ const ControlMenu = ({ topic, user }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const hasControl = user && (user?.id === topic.creator._id || user?.admin);
+  const hasControl = user && (user?.id === topic.User.id || user?.admin);
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
@@ -46,7 +46,7 @@ const ControlMenu = ({ topic, user }: Props) => {
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
-    await deleteTopic(topic._id);
+    await deleteTopic(topic.id);
 
     setIsLoading(false);
     setIsDropdownOpen(false);
@@ -77,7 +77,7 @@ const ControlMenu = ({ topic, user }: Props) => {
                     disabled={isLoading}
                     variant="ghost"
                     className="w-full cursor-pointer hover:bg-primary hover:text-white"
-                    onClick={() => handleTopicApprovement(topic._id)}
+                    onClick={() => handleTopicApprovement(topic.id)}
                   >
                     Approve
                   </Button>
@@ -86,7 +86,7 @@ const ControlMenu = ({ topic, user }: Props) => {
                     variant="ghost"
                     className="w-full cursor-pointer"
                     disabled={isLoading}
-                    onClick={() => handleTopicUnApprovement(topic._id)}
+                    onClick={() => handleTopicUnApprovement(topic.id)}
                   >
                     Un approve
                   </Button>
@@ -98,7 +98,7 @@ const ControlMenu = ({ topic, user }: Props) => {
                 onClick={() => {
                   setIsLoading(true);
                   setIsDropdownOpen(false);
-                  router.push(`/edit-topic/${topic._id}`);
+                  router.push(`/edit-topic/${topic.id}`);
                   setIsLoading(false);
                 }}
               >

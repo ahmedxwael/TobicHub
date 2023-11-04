@@ -32,8 +32,10 @@ export const generateStaticParams = async () => {
     return [];
   }
 
-  return topics.map((topic) => ({ id: topic._id }));
+  return topics.map((topic) => ({ id: topic.id }));
 };
+
+export const revalidate = 1;
 
 export default async function TopicPage({ params: { id } }: TopicPageProps) {
   const topic = await getTopic(id);
@@ -42,7 +44,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
     return <NotFound message="Couldn't get your topic." />;
   }
 
-  const updatedAtDate = topic.updatedAt ? new Date(topic.updatedAt) : null;
+  const updatedAtDate = topic.updated_at ? new Date(topic.updated_at) : null;
   const date = updatedAtDate
     ? new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
         updatedAtDate
@@ -58,11 +60,11 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
             {topic.title}
           </h1>
           <Link
-            href={`/profile/${topic.creator._id}`}
+            href={`/profile/${topic.User.id}`}
             className="flex w-fit items-center gap-4"
           >
             <Image
-              src={topic.creator.image}
+              src={topic.User.image}
               alt="user image"
               width={35}
               height={35}
@@ -70,7 +72,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
               className="rounded-full border"
             />
             <div className="flex flex-col">
-              <h2 className="text-sm font-medium">{topic.creator.name}</h2>
+              <h2 className="text-sm font-medium">{topic.User.name}</h2>
               {!!date && (
                 <span className="inline-block text-xs text-muted-foreground">
                   {date}

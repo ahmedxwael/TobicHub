@@ -1,8 +1,10 @@
-import { creatorType } from "@/types";
+import { UserType } from "@/types";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import { Suspense } from "react";
 import PostsNumber from "./posts-number";
 
-type Props = { user: creatorType };
+type Props = { user: UserType };
 
 export const ProfileCard = ({ user }: Props) => {
   return (
@@ -21,7 +23,9 @@ export const ProfileCard = ({ user }: Props) => {
         <h1 className="text-center text-3xl font-bold capitalize tracking-wide">
           {user?.name}
         </h1>
-        <PostsNumber userId={user._id} />
+        <Suspense fallback={<Loader2 className="animate-spin text-base" />}>
+          <PostsNumber userId={user.id} />
+        </Suspense>
       </div>
     </div>
   );

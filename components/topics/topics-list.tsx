@@ -48,13 +48,13 @@ const TopicsList = async ({ type, userId, query }: Props) => {
 
   return topics.length === 0 ? (
     <div className="p-6 text-center text-xl font-bold">
-      There is no topics to show
+      There is no topics to show.
     </div>
   ) : (
     <div className="space-y-10">
       <div className="space-y-6">
         {topics.map((topic) => (
-          <TopicCard session={session} key={topic._id} topic={topic} />
+          <TopicCard session={session} key={topic.id} topic={topic} />
         ))}
       </div>
       <Pagination />

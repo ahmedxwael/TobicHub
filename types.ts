@@ -4,30 +4,34 @@ export type ParamsType = {
   params: { id: string };
 };
 
-export type creatorType = {
-  _id: string;
+export type UserType = {
+  id: string;
+  email: string;
   name: string;
-  image: string;
-  admin?: boolean;
+  image: string | null;
+  admin: boolean;
+  created_at: Date;
+  updated_at: Date;
 };
 
 export type NewTopicType = {
-  creator: string;
   title: string;
   description: string;
   link?: string;
+  userId: string;
   approved?: boolean;
 };
 
 export type TopicType = {
-  _id: string;
-  creator: creatorType;
+  id: string;
   title: string;
   description: string;
-  updatedAt?: string;
-  createdAt?: string;
-  link?: string;
-  approved?: boolean;
+  link: string | undefined;
+  approved: boolean;
+  created_at: Date;
+  updated_at: Date;
+  User: UserType;
+  userId: string;
 };
 
 export type FeatureType = {

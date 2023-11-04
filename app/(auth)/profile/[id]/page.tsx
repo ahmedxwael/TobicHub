@@ -32,7 +32,7 @@ export const generateStaticParams = async () => {
     return [];
   }
 
-  return users.map((user) => ({ id: user._id }));
+  return users.map((user) => ({ id: user.id }));
 };
 
 const Profile = async ({ params: { id } }: ParamsType) => {
