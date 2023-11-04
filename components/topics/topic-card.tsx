@@ -33,7 +33,7 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
           className="mr-auto flex w-fit items-center gap-4"
         >
           <Image
-            src={topic.User.image}
+            src={topic.User.image ?? "images/avatar.jpg"}
             alt="user image"
             width={35}
             height={35}
