@@ -1,4 +1,5 @@
 import DashboardSideNav from "@/components/dashboard/dashboard-side-nav";
+import RefreshButton from "@/components/refresh-button";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 import { ReactNode } from "react";
@@ -18,8 +19,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </p>
       </div>
       <Separator className="my-8" />
-      <section className="flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+      <section className="relative flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <RefreshButton className="absolute right-0 top-8 lg:top-0" />
         <DashboardSideNav />
+
         {children}
       </section>
     </section>

@@ -43,7 +43,7 @@ const SearchTopic = () => {
           variant="outline"
           className="default-shadow text-xl transition-transform hover:scale-105 hover:text-primary"
         >
-          <Search />
+          <Search size={20} />
         </Button>
       </DialogTrigger>
       {isPopupOpen && (

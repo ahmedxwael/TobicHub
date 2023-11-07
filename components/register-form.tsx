@@ -8,10 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { GithubIcon, GoogleIcon } from "@/shared/icons";
 import { BuiltInProviderType } from "next-auth/providers/index";
 import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 
 type RegisterFormProps = {
   providers: Record<
@@ -37,7 +36,7 @@ export function RegisterForm({ providers }: RegisterFormProps) {
             variant="outline"
             className="default-shadow flex h-auto items-center gap-2 py-3"
           >
-            Google <FcGoogle />
+            Google <GoogleIcon />
           </Button>
           <Button
             disabled={!providers?.github}
@@ -45,7 +44,7 @@ export function RegisterForm({ providers }: RegisterFormProps) {
             variant="outline"
             className="default-shadow flex h-auto items-center gap-2 py-3"
           >
-            Github <FaGithub />
+            Github <GithubIcon />
           </Button>
         </div>
         {/* <div className="relative">
