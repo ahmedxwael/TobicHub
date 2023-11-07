@@ -33,7 +33,7 @@ const Form = ({ type, currentTopic }: Props) => {
   const { toast } = useToast();
 
   const [topic, setTopic] = useState<TopicType | NewTopicType>(currentTopic!);
-  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -42,7 +42,7 @@ const Form = ({ type, currentTopic }: Props) => {
   } = useForm<InputsType>();
 
   const onSubmit: SubmitHandler<InputsType> = async () => {
-    setSubmitting(true);
+    setIsSubmitting(true);
 
     try {
       if (type === "create") {
@@ -74,7 +74,7 @@ const Form = ({ type, currentTopic }: Props) => {
         });
       }
 
-      setSubmitting(false);
+      setIsSubmitting(false);
       router.refresh();
       router.back();
     } catch (error: any) {
@@ -96,6 +96,7 @@ const Form = ({ type, currentTopic }: Props) => {
           type="text"
           id="title"
           placeholder="What is the topic?"
+          disabled={isSubmitting}
           {...register("title", {
             required: "Title is required.",
             value: topic?.title,
@@ -116,6 +117,7 @@ const Form = ({ type, currentTopic }: Props) => {
           id="description"
           placeholder="What is this topic about...?"
           rows={10}
+          disabled={isSubmitting}
           {...register("description", {
             required: "Topic description is required.",
             minLength: {
@@ -141,6 +143,7 @@ const Form = ({ type, currentTopic }: Props) => {
           id="link"
           placeholder="Recourses"
           type="url"
+          disabled={isSubmitting}
           {...register("link", {
             value: topic?.link,
             onChange: (e: ChangeEvent<HTMLInputElement>) =>
@@ -155,7 +158,7 @@ const Form = ({ type, currentTopic }: Props) => {
       </div>
       <div className="ml-auto flex gap-4">
         <Button
-          disabled={submitting}
+          disabled={isSubmitting}
           type="button"
           onClick={router.back}
           variant="outline"
@@ -163,8 +166,8 @@ const Form = ({ type, currentTopic }: Props) => {
         >
           Cancel
         </Button>
-        <Button disabled={submitting} size="lg" className="capitalize">
-          {submitting ? `${type}ting...` : `${type}`}
+        <Button disabled={isSubmitting} size="lg" className="capitalize">
+          {isSubmitting ? `${type}ting...` : `${type}`}
         </Button>
       </div>
     </form>

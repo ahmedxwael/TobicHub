@@ -8,6 +8,7 @@ export type UserType = {
   id: string;
   email: string | null;
   name: string | null;
+  display_name: string | null;
   image: string | null;
   admin: boolean;
   created_at: Date;

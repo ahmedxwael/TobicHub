@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  email      String?  @unique
-  name       String?
-  image      String?
-  admin      Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  topics     Topic[]
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  email        String?  @unique
+  name         String?
+  display_name String?  @default("")
+  image        String?
+  admin        Boolean  @default(false)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  topics       Topic[]
 }
 
 model Topic {

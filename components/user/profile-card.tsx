@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
 import PostsNumber from "./posts-number";
+import UserName from "./user-name";
 
 type Props = { user: UserType };
 
@@ -20,9 +21,7 @@ export const ProfileCard = ({ user }: Props) => {
         />
       </div>
       <div className="space-y-3">
-        <h1 className="text-center text-3xl font-bold capitalize tracking-wide">
-          {user?.name}
-        </h1>
+        <UserName user={user} />
         <Suspense fallback={<Loader2 className="animate-spin text-base" />}>
           <PostsNumber userId={user.id} />
         </Suspense>
