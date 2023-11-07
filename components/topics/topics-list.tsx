@@ -8,8 +8,8 @@ import {
 } from "@/utils/topic-utils";
 import { getServerSession } from "next-auth";
 import React from "react";
+import { InfiniteScrolling } from "../infinite-scrolling/infinite-scrolling";
 import NotFound from "../not-found";
-import { Pagination } from "../pagination/pagination";
 import TopicCard from "./topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
@@ -53,11 +53,11 @@ const TopicsList = async ({ type, userId, query }: Props) => {
           <TopicCard session={session} key={topic.id} topic={topic} />
         ))}
       </div>
-      <Pagination />
+      <InfiniteScrolling />
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">
-      There is no topics to show.
+      There are no topics to show.
     </div>
   );
 };

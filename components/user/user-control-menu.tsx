@@ -51,7 +51,7 @@ export default function UserControlMenus({
         <DropdownMenuTrigger asChild className={className}>
           <Button
             onClick={() => setIsDropdownOpen(true)}
-            className="h-fit w-fit px-2"
+            className="h-fit w-fit px-2 hover:text-primary"
             variant="outline"
           >
             <MoreHorizontal size={15} />

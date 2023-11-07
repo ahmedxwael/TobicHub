@@ -25,7 +25,7 @@ export default async function UsersPage() {
         </div>
       ) : (
         <div className="px-6 py-10 text-center text-xl font-bold">
-          There is no users to show.
+          There are no users to show.
         </div>
       )}
     </section>

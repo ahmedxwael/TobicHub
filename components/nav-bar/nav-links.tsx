@@ -26,8 +26,8 @@ const NavLinks = ({ closeMenu, isAdmin }: Props) => {
             href={link.href}
             onClick={closeMenu}
             className={cn(
-              activeLink && "text-black dark:text-white",
-              "inline-block font-medium transition-colors hover:text-black dark:hover:text-white"
+              activeLink && "text-primary",
+              "inline-block font-medium transition-colors hover:text-primary"
             )}
           >
             {link.name}

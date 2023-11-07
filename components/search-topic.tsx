@@ -39,8 +39,9 @@ const SearchTopic = () => {
     <Dialog>
       <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
         <Button
+          size="sm"
           variant="outline"
-          className="text-xl transition-transform hover:scale-105"
+          className="default-shadow text-xl transition-transform hover:scale-105 hover:text-primary"
         >
           <Search />
         </Button>

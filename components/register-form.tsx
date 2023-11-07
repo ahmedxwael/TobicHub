@@ -22,20 +22,20 @@ type RegisterFormProps = {
 
 export function RegisterForm({ providers }: RegisterFormProps) {
   return (
-    <Card className="mx-auto w-[400px] max-w-full">
+    <Card className="default-shadow mx-auto w-[400px] max-w-full pb-6">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Join us now</CardTitle>
-        <CardDescription>
+        <CardTitle className="mb-1 text-2xl md:text-3xl">Join us now</CardTitle>
+        <CardDescription className="">
           You can join our community using your google or github accounts.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-4">
           <Button
             disabled={!providers?.google}
             onClick={() => signIn(providers?.google?.id)}
             variant="outline"
-            className="flex items-center gap-2"
+            className="default-shadow flex h-auto items-center gap-2 py-3"
           >
             Google <FcGoogle />
           </Button>
@@ -43,7 +43,7 @@ export function RegisterForm({ providers }: RegisterFormProps) {
             disabled={!providers?.github}
             onClick={() => signIn(providers?.github?.id)}
             variant="outline"
-            className="flex items-center gap-2"
+            className="default-shadow flex h-auto items-center gap-2 py-3"
           >
             Github <FaGithub />
           </Button>
@@ -67,9 +67,6 @@ export function RegisterForm({ providers }: RegisterFormProps) {
 					<Input id="password" type="password" placeholder="password" />
 				</div> */}
       </CardContent>
-      {/* <CardFooter>
-				<Button className="w-full">Create account</Button>
-			</CardFooter> */}
     </Card>
   );
 }

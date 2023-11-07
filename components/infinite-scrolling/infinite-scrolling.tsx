@@ -1,9 +1,12 @@
+import { TopicType } from "@/types";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
-type PaginationProps = {};
+type InfiniteScrollingProps = {
+  topics?: TopicType[];
+};
 
-export function Pagination({}: PaginationProps) {
+export function InfiniteScrolling({}: InfiniteScrollingProps) {
   return (
     <div className="flex items-center justify-between">
       <Button

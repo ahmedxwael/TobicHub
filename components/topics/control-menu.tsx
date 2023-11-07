@@ -19,10 +19,11 @@ import { useToast } from "../ui/use-toast";
 
 type Props = {
   topic: TopicType;
+  className?: string;
   user: UserType | undefined;
 };
 
-const ControlMenu = ({ topic, user }: Props) => {
+const ControlMenu = ({ topic, user, className }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -77,10 +78,10 @@ const ControlMenu = ({ topic, user }: Props) => {
     <>
       {hasControl && (
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger asChild className={className}>
             <Button
               onClick={() => setIsDropdownOpen(true)}
-              className="h-fit w-fit px-2"
+              className="h-fit w-fit px-2 hover:text-primary"
               variant="outline"
             >
               <MoreHorizontal size={15} />

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Topics page that contains general information about popular topics.",
 };
 
-export const revalidate = 1;
+export const revalidate = 60;
 
 const TopicsPage = async () => {
   return (

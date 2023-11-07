@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <section className="text-center">
-        <h1 className="mb-4 text-3xl font-bold leading-normal sm:text-5xl">
+        <h1 className="mb-4 text-3xl font-bold leading-normal text-primary sm:text-5xl">
           Welcome to TopicHub!
         </h1>
         <p className="text-muted-foreground sm:text-lg">

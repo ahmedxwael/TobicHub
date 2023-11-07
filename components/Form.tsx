@@ -70,7 +70,7 @@ const Form = ({ type, currentTopic }: Props) => {
 
         toast({
           title: "Topic has been updated successfully.",
-          variant: "success",
+          variant: "default",
         });
       }
 

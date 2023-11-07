@@ -28,7 +28,7 @@ export default function SideBar({ user }: { user: UserType }) {
         <Button
           onClick={() => setIsSheetOpen(true)}
           variant="outline"
-          className="block p-2 md:hidden"
+          className="default-shadow block p-2 md:hidden"
         >
           <AlignJustify />
         </Button>
@@ -36,10 +36,10 @@ export default function SideBar({ user }: { user: UserType }) {
       {isSheetOpen && (
         <SheetContent className="flex flex-col">
           <SheetHeader>
-            <SheetTitle>TopicHub</SheetTitle>
+            <SheetTitle className="text-primary">TopicHub</SheetTitle>
           </SheetHeader>
           <div className="mt-6 flex flex-col gap-4 text-muted-foreground">
-            <NavLinks closeMenu={handleSheetToggle} />
+            <NavLinks closeMenu={handleSheetToggle} isAdmin={user.admin} />
           </div>
           <SheetFooter className="mt-auto flex w-full flex-row items-center gap-4 border-t-2 pt-6">
             <ModeToggle />

@@ -1,3 +1,4 @@
+import BackButton from "@/components/back-button";
 import ComponentLoader from "@/components/component-loader";
 import NotFound from "@/components/not-found";
 import TopicsList from "@/components/topics/topics-list";
@@ -43,9 +44,10 @@ const Profile = async ({ params: { id } }: ParamsType) => {
   }
 
   return (
-    <section className="flex flex-col gap-20">
+    <section className="flex flex-col">
+      <BackButton />
       <ProfileCard user={user} />
-      <div className="flex flex-col gap-12">
+      <div className="mt-20 flex flex-col gap-12">
         <h1 className="w-fit text-2xl font-bold  tracking-wider">Topics</h1>
         <Suspense fallback={<ComponentLoader />}>
           <TopicsList type="user" userId={id} />

@@ -3,7 +3,9 @@ import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
+import CardBadge from "../card-badge";
 import { UserType } from "../nav-bar/user-buttons";
+import { Badge } from "../ui/badge";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import ControlMenu from "./control-menu";
 
@@ -25,31 +27,42 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
   return (
     <Card
       key={topic.id}
-      className="space-y-5 dark:shadow-[0_8px_16px_0_rgba(0,0,0,0.04),8px_0_16px_0_rgba(0,0,0,0.04)]"
+      className="default-shadow mx-auto max-w-2xl space-y-5 lg:w-full"
     >
-      <CardHeader className="flex flex-row items-center justify-between">
-        <Link
-          href={`/profile/${topic.User.id}`}
-          className="mr-auto flex w-fit items-center gap-4"
-        >
-          <Image
-            src={topic.User.image ?? "images/avatar.jpg"}
-            alt="user image"
-            width={40}
-            height={40}
-            loading="lazy"
-            className="rounded-full border  "
+      <CardHeader className="relative flex flex-row items-center justify-between">
+        <div className="flex w-fit flex-wrap items-center gap-4">
+          <Link
+            href={`/profile/${topic.User.id}`}
+            className="flex items-center gap-4"
+          >
+            <Image
+              src={topic.User.image ?? "images/avatar.jpg"}
+              alt="user image"
+              width={40}
+              height={40}
+              loading="lazy"
+              className="rounded-full border"
+            />
+            <div className="flex flex-col">
+              <h2 className="text-sm font-medium">{topic.User.name}</h2>
+              {!!date && (
+                <span className="inline-block text-xs text-muted-foreground">
+                  {date}
+                </span>
+              )}
+            </div>
+          </Link>
+          <CardBadge
+            isValid={topic.approved}
+            inValidLabel="Un approved"
+            validLabel="Approved"
           />
-          <div className="flex flex-col">
-            <h2 className="text-sm font-medium">{topic.User.name}</h2>
-            {!!date && (
-              <span className="inline-block text-xs text-muted-foreground">
-                {date}
-              </span>
-            )}
-          </div>
-        </Link>
-        <ControlMenu user={user} topic={topic} />
+        </div>
+        <ControlMenu
+          user={user}
+          topic={topic}
+          className="absolute right-6 top-5"
+        />
       </CardHeader>
       <CardContent>
         <Link
