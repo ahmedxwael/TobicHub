@@ -16,7 +16,7 @@ const Navbar = async () => {
       <nav className="container mx-auto flex items-center justify-between gap-4 px-8 py-4">
         <Link
           href="/"
-          className="text-xl font-bold text-primary"
+          className="text-xl font-bold"
           title="Talking about general and useful stuff"
         >
           TopicHub

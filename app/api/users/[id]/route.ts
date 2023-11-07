@@ -16,7 +16,22 @@ export const PATCH = async (
       { status: 200 }
     );
   } catch (error: any) {
-    console.log(error);
+    return NextResponse.json({ error }, { status: 500 });
+  }
+};
+
+export const DELETE = async (
+  request: NextRequest,
+  { params: { id } }: ParamsType
+) => {
+  try {
+    await prisma.user.delete({ where: { id }, include: { topics: true } });
+
+    return NextResponse.json(
+      { message: "User deleted successfully." },
+      { status: 200 }
+    );
+  } catch (error: any) {
     return NextResponse.json({ error }, { status: 500 });
   }
 };

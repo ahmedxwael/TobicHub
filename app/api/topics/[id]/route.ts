@@ -14,7 +14,6 @@ export const PATCH = async (
 
     return NextResponse.json(topic, { status: 200 });
   } catch (error: any) {
-    console.log(error);
     return NextResponse.json({ error }, { status: 500 });
   }
 };

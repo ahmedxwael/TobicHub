@@ -37,3 +37,14 @@ export const updateUser = async (id: string, data: Partial<UserType>) => {
     throw new Error("Couldn't update user.");
   }
 };
+
+export const deleteUser = async (id: string) => {
+  try {
+    await axios.delete(`/api/users/${id}`).catch(() => {
+      throw new Error("Something went wrong.");
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Couldn't delete user.");
+  }
+};

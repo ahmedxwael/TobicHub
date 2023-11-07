@@ -48,12 +48,12 @@ const TopicsList = async ({ type, userId, query }: Props) => {
 
   return topics.length > 0 ? (
     <div className="space-y-10">
-      <div className="space-y-6">
+      <div className="space-y-6 lg:space-y-10">
         {topics.map((topic) => (
           <TopicCard session={session} key={topic.id} topic={topic} />
         ))}
       </div>
-      <InfiniteScrolling />
+      <InfiniteScrolling length={topics.length} />
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">

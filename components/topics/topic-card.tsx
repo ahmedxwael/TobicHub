@@ -2,10 +2,8 @@ import { TopicType } from "@/types";
 import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { memo } from "react";
 import CardBadge from "../card-badge";
 import { UserType } from "../nav-bar/user-buttons";
-import { Badge } from "../ui/badge";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import ControlMenu from "./control-menu";
 
@@ -14,7 +12,7 @@ type TopicCardProps = {
   session: Session | null;
 };
 
-const TopicCard = ({ topic, session }: TopicCardProps) => {
+export default function TopicCard({ topic, session }: TopicCardProps) {
   const user = session?.user as UserType | undefined;
 
   const updatedAtDate = topic.updated_at ? new Date(topic.updated_at) : null;
@@ -27,7 +25,7 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
   return (
     <Card
       key={topic.id}
-      className="default-shadow mx-auto max-w-2xl space-y-5 lg:w-full"
+      className="default-shadow mx-auto max-w-full space-y-5"
     >
       <CardHeader className="relative flex flex-row items-center justify-between">
         <div className="flex w-fit flex-wrap items-center gap-4">
@@ -89,6 +87,4 @@ const TopicCard = ({ topic, session }: TopicCardProps) => {
       </CardContent>
     </Card>
   );
-};
-
-export default memo(TopicCard);
+}
