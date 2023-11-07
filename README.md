@@ -28,7 +28,7 @@ Users should be able to:
 
 ## links
 
-- Live site URL: [Demo](https://rest-api-nu-six.vercel.app)
+- Live site URL: [Demo](https://topic-hub.vercel.app)
 
 ### Technologies
 
