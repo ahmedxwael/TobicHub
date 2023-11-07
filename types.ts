@@ -12,6 +12,7 @@ export type UserType = {
   admin: boolean;
   created_at: Date;
   updated_at: Date;
+  topics?: TopicType[];
 };
 
 export type NewTopicType = {

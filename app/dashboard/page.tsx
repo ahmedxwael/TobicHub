@@ -4,8 +4,8 @@ export const revalidate = 0;
 
 export default function DashboardPage() {
   return (
-    <div className="flex w-full flex-col gap-10">
+    <section className="flex w-full flex-1 flex-col gap-10 lg:max-w-2xl">
       <TopicsSection title="topics" type="admin" />
-    </div>
+    </section>
   );
 }

@@ -17,9 +17,13 @@ import {
 
 type UserControlMenusProps = {
   user: UserType;
+  className?: string;
 };
 
-export default function UserControlMenus({ user }: UserControlMenusProps) {
+export default function UserControlMenus({
+  user,
+  className,
+}: UserControlMenusProps) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -39,10 +43,12 @@ export default function UserControlMenus({ user }: UserControlMenusProps) {
     setIsLoading(false);
   }
 
+  console.log(user);
+
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild className={className}>
           <Button
             onClick={() => setIsDropdownOpen(true)}
             className="h-fit w-fit px-2"

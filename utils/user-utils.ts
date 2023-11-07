@@ -2,9 +2,13 @@ import prisma from "@/prisma";
 import { UserType } from "@/types";
 import axios from "axios";
 
-export const getUsers = async (): Promise<UserType[] | undefined> => {
+export const getUsers = async (
+  inDashboard?: boolean
+): Promise<UserType[] | undefined> => {
   try {
-    const users = await prisma.user.findMany({});
+    const users = await prisma.user.findMany({
+      include: inDashboard ? { topics: true } : null,
+    });
 
     return users;
   } catch (error) {

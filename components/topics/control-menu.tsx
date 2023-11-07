@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useToast } from "../ui/use-toast";
 
 type Props = {
   topic: TopicType;
@@ -25,6 +26,8 @@ const ControlMenu = ({ topic, user }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const { toast } = useToast();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -33,6 +36,12 @@ const ControlMenu = ({ topic, user }: Props) => {
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
     await editTopic(topicId, { approved: true });
+
+    toast({
+      title: "Topic has been approved successfully.",
+      variant: "success",
+    });
+
     router.refresh();
     setIsLoading(false);
   }
@@ -40,6 +49,12 @@ const ControlMenu = ({ topic, user }: Props) => {
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
     await editTopic(topicId, { approved: false });
+
+    toast({
+      title: "Topic has been un-approved successfully.",
+      variant: "success",
+    });
+
     router.refresh();
     setIsLoading(false);
   }
@@ -47,6 +62,11 @@ const ControlMenu = ({ topic, user }: Props) => {
   const handleTopicDelete = async () => {
     setIsLoading(true);
     await deleteTopic(topic.id);
+
+    toast({
+      title: "Topic has been deleted successfully.",
+      variant: "success",
+    });
 
     setIsLoading(false);
     setIsDropdownOpen(false);

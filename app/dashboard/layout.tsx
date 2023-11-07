@@ -18,10 +18,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </p>
       </div>
       <Separator className="my-8" />
-      <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+      <section className="flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <DashboardSideNav />
-        <section className="flex-1 lg:max-w-2xl">{children}</section>
-      </div>
+        {children}
+      </section>
     </section>
   );
 }

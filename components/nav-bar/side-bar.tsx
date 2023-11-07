@@ -28,7 +28,7 @@ export default function SideBar({ user }: { user: UserType }) {
         <Button
           onClick={() => setIsSheetOpen(true)}
           variant="outline"
-          className="block md:hidden"
+          className="block p-2 md:hidden"
         >
           <AlignJustify />
         </Button>

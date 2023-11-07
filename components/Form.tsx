@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
+import { useToast } from "./ui/use-toast";
 
 type Props = {
   type: "create" | "edit";
@@ -29,6 +30,8 @@ const Form = ({ type, currentTopic }: Props) => {
 
   const router = useRouter();
 
+  const { toast } = useToast();
+
   const [topic, setTopic] = useState<TopicType | NewTopicType>(currentTopic!);
   const [submitting, setSubmitting] = useState<boolean>(false);
 
@@ -46,14 +49,28 @@ const Form = ({ type, currentTopic }: Props) => {
         await addTopic({
           ...topic,
           userId: user?.id,
-          approved: user.admin ? true : false,
+          approved: user.admin,
         });
+
+        if (!user.admin) {
+          toast({
+            title: "Your new topic has been submitted successfully.",
+            description:
+              "It will be reviewed by our team before it can be published. Thank you for your contribution and patience during this process.",
+            variant: "success",
+          });
+        }
       } else if (type === "edit") {
         await editTopic(currentTopic?.id!, {
           description: topic?.description,
           link: topic?.link,
           title: topic?.title,
           userId: topic?.userId,
+        });
+
+        toast({
+          title: "Topic has been updated successfully.",
+          variant: "success",
         });
       }
 

@@ -1,5 +1,6 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/nav-bar/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import Provider from "@/providers/provider";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -34,6 +35,7 @@ export default function RootLayout({ children, session }: Props) {
             <main className="container mx-auto flex min-h-[calc(100vh-72px)] flex-col px-8 py-24 text-black dark:text-white">
               {children}
             </main>
+            <Toaster />
             <Footer />
           </ThemeProvider>
         </Provider>
