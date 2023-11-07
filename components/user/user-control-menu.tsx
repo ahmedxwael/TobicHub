@@ -3,7 +3,7 @@
 import { UserType } from "@/types";
 import { deleteUser, updateUser } from "@/utils/user-utils";
 import { MoreHorizontal } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import CustomAlertDialog from "../custom-alert-dialog";
 import { Button } from "../ui/button";
@@ -77,14 +77,16 @@ export default function UserControlMenus({
             >
               {isAdmin ? "Demote" : "Promote"}
             </Button>
-            <CustomAlertDialog
-              title="Delete"
-              variant="ghost"
-              description="This action cannot be undone. Are you sure that you want to delete all user's data?"
-              className="text-red-600 hover:bg-red-600 hover:text-white"
-              action={handleDeleteUser}
-              disabled={isLoading}
-            />
+            {!isAdmin && (
+              <CustomAlertDialog
+                title="Delete"
+                variant="ghost"
+                description="This action cannot be undone. Are you sure that you want to delete all user's data?"
+                className="text-red-600 hover:bg-red-600 hover:text-white"
+                action={handleDeleteUser}
+                disabled={isLoading}
+              />
+            )}
           </DropdownMenuContent>
         )}
       </DropdownMenu>

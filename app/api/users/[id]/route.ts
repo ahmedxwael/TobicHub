@@ -25,7 +25,8 @@ export const DELETE = async (
   { params: { id } }: ParamsType
 ) => {
   try {
-    await prisma.user.delete({ where: { id }, include: { topics: true } });
+    await prisma.topic.deleteMany({ where: { userId: id } });
+    await prisma.user.delete({ where: { id } });
 
     return NextResponse.json(
       { message: "User deleted successfully." },
