@@ -8,6 +8,7 @@ import React from "react";
 import CustomAlertDialog from "../custom-alert-dialog";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { buttonVariants } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 export type UserType = {
   name: string;
@@ -23,14 +24,17 @@ type UserButtonsProps = {
 };
 
 const UserButtons = ({ user, onClose }: UserButtonsProps) => {
+  const { toast } = useToast();
+
   return (
     <>
       {user ? (
         <div className="flex w-full items-center justify-between gap-4 md:justify-normal">
           <CustomAlertDialog
-            action={() => {
+            action={async () => {
               onClose?.();
-              signOut({ callbackUrl: process.env.NEXTAUTH_URL! });
+              await signOut({ callbackUrl: process.env.NEXTAUTH_URL! });
+              toast({ title: "Signed out successfully." });
             }}
             variant="outline"
             title="Sign out"

@@ -52,8 +52,7 @@ const ControlMenu = ({ topic, user, className }: Props) => {
     await editTopic(topicId, { approved: false });
 
     toast({
-      title: "Topic has been un-approved successfully.",
-      variant: "success",
+      title: "Topic has been un-approved.",
     });
 
     router.refresh();
@@ -108,7 +107,7 @@ const ControlMenu = ({ topic, user, className }: Props) => {
                     disabled={isLoading}
                     onClick={() => handleTopicUnApprovement(topic.id)}
                   >
-                    Un approve
+                    Un Approve
                   </Button>
                 ))}
               <Button
