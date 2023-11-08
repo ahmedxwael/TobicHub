@@ -18,7 +18,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const initialNameValue = user.display_name ?? user.name ?? "";
+  const initialNameValue = user.display_name || user.name || "";
 
   const [newName, setNewName] = useState(initialNameValue);
 
