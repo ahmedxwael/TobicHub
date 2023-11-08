@@ -15,12 +15,10 @@ type TopicCardProps = {
 export default function TopicCard({ topic, session }: TopicCardProps) {
   const user = session?.user as UserType | undefined;
 
-  const updatedAtDate = topic.updated_at ? new Date(topic.updated_at) : null;
-  const date = updatedAtDate
-    ? new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
-        updatedAtDate
-      )
-    : null;
+  const updatedAtDate = new Date(topic.updated_at);
+  const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
+    updatedAtDate
+  );
 
   return (
     <Card
@@ -42,7 +40,9 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
               className="rounded-full border"
             />
             <div className="flex flex-col">
-              <h2 className="text-sm font-medium">{topic.User.name}</h2>
+              <h2 className="text-sm font-medium">
+                {topic.User.display_name ?? topic.User.name}
+              </h2>
               {!!date && (
                 <span className="inline-block text-xs text-muted-foreground">
                   {date}

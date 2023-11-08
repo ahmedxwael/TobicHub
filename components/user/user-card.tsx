@@ -11,9 +11,14 @@ type UserCardProps = {
 };
 
 export default function UserCard({ user }: UserCardProps) {
+  const joinDate = new Date(user.created_at);
+  const joinDateFormat = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "long",
+  }).format(joinDate);
+
   return (
     <Card className="default-shadow">
-      <CardHeader className="relative flex gap-2 p-4 sm:p-6">
+      <div className="relative p-4 sm:p-6">
         <Link
           href={`/profile/${user.id}`}
           className="flex w-fit flex-col flex-wrap gap-4"
@@ -38,11 +43,16 @@ export default function UserCard({ user }: UserCardProps) {
             <div className="text-sm text-muted-foreground">{user.email}</div>
           </div>
         </Link>
-        <span className="inline-block w-fit text-sm text-muted-foreground">
-          {user?.topics?.length || 0} Topic(s)
-        </span>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span className="inline-block w-fit text-muted-foreground">
+            {user?.topics?.length || 0} Topic(s)
+          </span>
+          <div className="text-muted-foreground">
+            Joined at: {joinDateFormat}
+          </div>
+        </div>
         <UserControlMenus user={user} className="absolute right-6 top-5" />
-      </CardHeader>
+      </div>
     </Card>
   );
 }
