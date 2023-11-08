@@ -1,7 +1,12 @@
 "use client";
 
+import EmailTemplate from "@/emails/EmailTemplate";
+import { ownerEmail } from "@/shared/flags";
+import { EmailRequestBodyType } from "@/shared/types";
 import { NewTopicType, TopicType } from "@/types";
+import { sendEmail } from "@/utils/email";
 import { addTopic, editTopic } from "@/utils/topic-utils";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -46,11 +51,19 @@ const Form = ({ type, currentTopic }: Props) => {
 
     try {
       if (type === "create") {
+        const emailBody: EmailRequestBodyType = {
+          sender: user.email,
+          receiver: ownerEmail!,
+          subject: `${user.name} created a new topic.`,
+        };
+
         await addTopic({
           ...topic,
           userId: user?.id,
           approved: user.admin,
         });
+
+        sendEmail(emailBody);
 
         if (!user.admin) {
           toast({
