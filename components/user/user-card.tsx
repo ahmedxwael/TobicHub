@@ -36,6 +36,8 @@ export default function UserCard({ user }: UserCardProps) {
               isValid={user.admin}
               validLabel="Admin"
               inValidLabel="User"
+              isMaster={user.owner}
+              masterLabel="Owner"
             />
           </div>
           <div className="block">
@@ -51,7 +53,9 @@ export default function UserCard({ user }: UserCardProps) {
             Joined at: {joinDateFormat}
           </div>
         </div>
-        <UserControlMenus user={user} className="absolute right-6 top-5" />
+        {!user.owner && (
+          <UserControlMenus user={user} className="absolute right-6 top-5" />
+        )}
       </div>
     </Card>
   );

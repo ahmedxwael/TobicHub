@@ -67,7 +67,6 @@ export default function UserControlMenus({
         </DropdownMenuTrigger>
         {isDropdownOpen && (
           <DropdownMenuContent align="end" className="w-[170px]">
-            <DropdownMenuLabel>Options</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <Button
               variant="ghost"

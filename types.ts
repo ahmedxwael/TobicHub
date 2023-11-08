@@ -11,6 +11,7 @@ export type UserType = {
   display_name: string | null;
   image: string | null;
   admin: boolean;
+  owner: boolean;
   created_at: Date;
   updated_at: Date;
   topics?: TopicType[];

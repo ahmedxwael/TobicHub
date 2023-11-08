@@ -89,7 +89,6 @@ const ControlMenu = ({ topic, user, className }: Props) => {
           </DropdownMenuTrigger>
           {isDropdownOpen && (
             <DropdownMenuContent align="end" className="w-[170px]">
-              <DropdownMenuLabel>Options</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {user?.admin &&
                 pathname.endsWith("/dashboard") &&

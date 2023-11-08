@@ -4,7 +4,7 @@ import { UserType } from "@/types";
 import { updateUser } from "@/utils/user-utils";
 import { Loader2, Pencil, Save, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
@@ -22,7 +22,8 @@ export default function UserName({ user, userSession }: UserNameProps) {
 
   const [newName, setNewName] = useState(initialNameValue);
 
-  async function handleSubmit() {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setIsSubmitting(true);
 
     await updateUser(user.id, { display_name: newName });
@@ -33,7 +34,10 @@ export default function UserName({ user, userSession }: UserNameProps) {
   }
 
   return isEditingName ? (
-    <form onSubmit={handleSubmit} className="flex max-w-[240px] flex-col gap-2">
+    <form
+      onSubmit={(e) => handleSubmit(e)}
+      className="flex max-w-[240px] flex-col gap-2"
+    >
       <div className="relative flex items-center justify-center gap-2">
         <Input
           name="display_name"
@@ -74,6 +78,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
           onClick={() => setIsEditingName(true)}
           variant="ghost"
           size="icon"
+          className="text-primary hover:bg-primary hover:text-white"
         >
           <Pencil size={20} />
         </Button>

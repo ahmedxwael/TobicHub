@@ -8,6 +8,8 @@ type CardBadgeProps = {
   validLabel: string;
   inValidLabel: string;
   danger?: boolean;
+  isMaster?: boolean;
+  masterLabel?: string;
 };
 
 export default function CardBadge({
@@ -15,16 +17,21 @@ export default function CardBadge({
   inValidLabel,
   validLabel,
   danger,
+  isMaster,
+  masterLabel,
 }: CardBadgeProps) {
   const pathname = usePathname();
 
   return (
-    pathname.includes("dashboard") && (
+    pathname.includes("dashboard") &&
+    (isMaster ? (
+      <Badge variant="destructive">{masterLabel}</Badge>
+    ) : (
       <Badge
         variant={isValid ? "default" : danger ? "destructive" : "secondary"}
       >
         {isValid ? validLabel : inValidLabel}
       </Badge>
-    )
+    ))
   );
 }
