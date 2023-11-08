@@ -2,7 +2,7 @@ import BackButton from "@/components/back-button";
 import ComponentLoader from "@/components/component-loader";
 import NotFound from "@/components/not-found";
 import TopicsList from "@/components/topics/topics-list";
-import { ProfileCard } from "@/components/user/profile-card";
+import ProfileCard from "@/components/user/profile-card";
 import { ParamsType } from "@/types";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
@@ -35,6 +35,8 @@ export const generateStaticParams = async () => {
 
   return users.map((user) => ({ id: user.id }));
 };
+
+export const revalidate = 0;
 
 const Profile = async ({ params: { id } }: ParamsType) => {
   const user = await getUser(id);
