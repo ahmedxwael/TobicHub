@@ -13,7 +13,7 @@ type TopicCardProps = {
 };
 
 export default function TopicCard({ topic, session }: TopicCardProps) {
-  const user = session?.user as UserType | undefined;
+  const userSession = session?.user as UserType | undefined;
 
   const updatedAtDate = new Date(topic.updated_at);
   const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
@@ -57,7 +57,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
           />
         </div>
         <ControlMenu
-          user={user}
+          userSession={userSession}
           topic={topic}
           className="absolute right-6 top-5"
         />

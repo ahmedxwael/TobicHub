@@ -1,6 +1,9 @@
 "use client";
 
+import { ownerEmail } from "@/shared/flags";
+import { EmailRequestBodyType } from "@/shared/types";
 import { TopicType } from "@/types";
+import { sendEmail } from "@/utils/email";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -17,13 +20,13 @@ import {
 } from "../ui/dropdown-menu";
 import { useToast } from "../ui/use-toast";
 
-type Props = {
+type ControlMenuProps = {
   topic: TopicType;
   className?: string;
-  user: UserType | undefined;
+  userSession: UserType | undefined;
 };
 
-const ControlMenu = ({ topic, user, className }: Props) => {
+const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -32,10 +35,18 @@ const ControlMenu = ({ topic, user, className }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const hasControl = user && (user?.id === topic.User.id || user?.admin);
+  const hasControl =
+    userSession && (userSession?.id === topic.User.id || userSession?.admin);
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
+
+    const emailBody: EmailRequestBodyType = {
+      sender: ownerEmail!,
+      receiver: topic.User.email!,
+      subject: "Your topic has been approved.",
+    };
+
     await editTopic(topicId, { approved: true });
 
     toast({
@@ -43,31 +54,44 @@ const ControlMenu = ({ topic, user, className }: Props) => {
       variant: "success",
     });
 
+    sendEmail(emailBody);
     router.refresh();
     setIsLoading(false);
   }
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
+    const emailBody: EmailRequestBodyType = {
+      sender: ownerEmail!,
+      receiver: topic.User.email!,
+      subject: "Your topic has been un approved.",
+    };
+
     await editTopic(topicId, { approved: false });
 
     toast({
-      title: "Topic has been un-approved.",
+      title: "Topic has been un approved.",
     });
 
+    sendEmail(emailBody);
     router.refresh();
     setIsLoading(false);
   }
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
+    const emailBody: EmailRequestBodyType = {
+      sender: ownerEmail!,
+      receiver: topic.User.email!,
+      subject: "Your topic has been deleted.",
+    };
     await deleteTopic(topic.id);
 
     toast({
-      title: "Topic has been deleted successfully.",
-      variant: "success",
+      title: "Topic has been deleted.",
     });
 
+    sendEmail(emailBody);
     setIsLoading(false);
     setIsDropdownOpen(false);
     router.refresh();
@@ -89,7 +113,7 @@ const ControlMenu = ({ topic, user, className }: Props) => {
           {isDropdownOpen && (
             <DropdownMenuContent align="end" className="w-[170px]">
               <DropdownMenuSeparator />
-              {user?.admin &&
+              {userSession?.admin &&
                 pathname.endsWith("/dashboard") &&
                 (!topic.approved ? (
                   <Button
