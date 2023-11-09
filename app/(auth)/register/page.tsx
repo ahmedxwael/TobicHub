@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { RegisterForm } from "@/modules/auth/components/register-form";
-import { UserSessionType } from "@/shared/types";
+import { UserSessionType } from "@/modules/user/types";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { getProviders } from "next-auth/react";

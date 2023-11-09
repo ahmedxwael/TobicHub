@@ -1,9 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ModeToggle } from "@/components/toggle-mode-button";
+import { UserSessionType } from "@/modules/user/types";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-
-import { UserSessionType } from "@/modules/user/types";
 import NavLinks from "./nav-links";
 import SideBar from "./side-bar";
 import UserButtons from "./user-buttons";
