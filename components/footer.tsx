@@ -17,7 +17,7 @@ export default function Footer() {
           </a>
           .
         </div>
-        <Badge variant="secondary">v2.0.0</Badge>
+        <Badge variant="secondary">v1.3.0</Badge>
       </div>
       <p className="text-xs leading-6">
         <span className="font-semibold">About this website:</span> built with
