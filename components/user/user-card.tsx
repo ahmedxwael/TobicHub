@@ -4,6 +4,13 @@ import { UserType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import CardBadge from "../card-badge";
+import { Badge } from "../ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 type UserCardProps = {
   user: UserType;
@@ -44,11 +51,22 @@ export default function UserCard({ user }: UserCardProps) {
             <div className="text-sm text-muted-foreground">{user.email}</div>
           </div>
         </Link>
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs">
-          <span className="inline-block w-fit text-muted-foreground">
-            {user?.topics?.length || 0} Topic(s)
-          </span>
-          <div className="text-muted-foreground">
+        <div className="mt-4 flex items-center gap-2 text-xs">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                {user?.topics?.length || 0} Topic(s)
+              </TooltipTrigger>
+              <TooltipContent>
+                <div>{user?.topics?.length || 0} Topic(s)</div>
+                <div>
+                  {user?.topics?.filter((topic) => !topic.approved).length || 0}{" "}
+                  Un approved
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <div className="ml-auto text-muted-foreground">
             Joined at: {joinDateFormat}
           </div>
         </div>
