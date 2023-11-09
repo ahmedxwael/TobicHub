@@ -1,4 +1,4 @@
-import TopicsSection from "@/components/topics/topics-section";
+import TopicsSection from "@/modules/topics/components/topics-section";
 
 export const revalidate = 0;
 

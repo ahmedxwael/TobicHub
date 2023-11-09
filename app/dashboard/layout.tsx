@@ -1,6 +1,6 @@
-import DashboardSideNav from "@/components/dashboard/dashboard-side-nav";
 import RefreshButton from "@/components/refresh-button";
 import { Separator } from "@/components/ui/separator";
+import DashboardSideNav from "@/modules/dashboard/components/dashboard-side-nav";
 import { Metadata } from "next";
 import { ReactNode } from "react";
 

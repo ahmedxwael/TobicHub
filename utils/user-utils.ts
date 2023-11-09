@@ -1,5 +1,5 @@
+import { UserType } from "@/modules/user/types";
 import prisma from "@/prisma";
-import { UserType } from "@/types";
 import axios from "axios";
 
 export const getUsers = async (

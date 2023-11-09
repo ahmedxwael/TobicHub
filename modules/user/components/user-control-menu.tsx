@@ -1,19 +1,19 @@
 "use client";
 
-import { UserType } from "@/types";
-import { deleteUser, updateUser } from "@/utils/user-utils";
-import { MoreHorizontal } from "lucide-react";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import CustomAlertDialog from "../custom-alert-dialog";
-import { Button } from "../ui/button";
+import CustomAlertDialog from "@/components/custom-alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { useToast } from "../ui/use-toast";
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
+import { deleteUser, updateUser } from "@/utils/user-utils";
+import { MoreHorizontal } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { UserType } from "../types";
 
 type UserControlMenusProps = {
   user: UserType;

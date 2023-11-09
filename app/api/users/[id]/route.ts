@@ -1,5 +1,5 @@
 import prisma from "@/prisma";
-import { ParamsType } from "@/types";
+import { ParamsType } from "@/shared/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const PATCH = async (

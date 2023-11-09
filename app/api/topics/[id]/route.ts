@@ -1,7 +1,6 @@
 import prisma from "@/prisma";
+import { ParamsType } from "@/shared/types";
 import { NextRequest, NextResponse } from "next/server";
-
-type ParamsType = { params: { id: string } };
 
 export const PATCH = async (
   request: NextRequest,

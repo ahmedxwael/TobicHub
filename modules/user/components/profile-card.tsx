@@ -1,9 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { UserSessionType } from "@/shared/types";
-import { UserType } from "@/types";
 import { Loader2 } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
+import { UserSessionType, UserType } from "../types";
 import PostsNumber from "./posts-number";
 import UserImage from "./user-image";
 import UserName from "./user-name";

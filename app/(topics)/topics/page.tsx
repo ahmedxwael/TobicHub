@@ -1,4 +1,4 @@
-import TopicsSection from "@/components/topics/topics-section";
+import TopicsSection from "@/modules/topics/components/topics-section";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

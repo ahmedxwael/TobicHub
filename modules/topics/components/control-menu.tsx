@@ -1,22 +1,23 @@
 "use client";
 
-import { ownerEmail } from "@/shared/flags";
-import { EmailRequestBodyType, UserSessionType } from "@/shared/types";
-import { TopicType } from "@/types";
-import { sendEmail } from "@/utils/email";
-import { deleteTopic, editTopic } from "@/utils/topic-utils";
-import { MoreHorizontal } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import CustomAlertDialog from "../custom-alert-dialog";
-import { Button } from "../ui/button";
+import CustomAlertDialog from "@/components/custom-alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { useToast } from "../ui/use-toast";
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
+import { EmailRequestBodyType } from "@/emails/types";
+import { TopicType } from "@/modules/topics/types";
+import { UserSessionType } from "@/modules/user/types";
+import { ownerEmail } from "@/shared/flags";
+import { sendEmail } from "@/utils/email";
+import { deleteTopic, editTopic } from "@/utils/topic-utils";
+import { MoreHorizontal } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 type ControlMenuProps = {
   topic: TopicType;

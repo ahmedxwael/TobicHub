@@ -1,10 +1,7 @@
 "use client";
 
-import { UserSessionType } from "@/shared/types";
-import { AlignJustify } from "lucide-react";
-import { useState } from "react";
-import { ModeToggle } from "../toggle-mode-button";
-import { Button } from "../ui/button";
+import { ModeToggle } from "@/components/toggle-mode-button";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -12,7 +9,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
+} from "@/components/ui/sheet";
+import { UserSessionType } from "@/modules/user/types";
+import { AlignJustify } from "lucide-react";
+import { useState } from "react";
 import NavLinks from "./nav-links";
 import UserButtons from "./user-buttons";
 

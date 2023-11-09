@@ -1,5 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { TopicType } from "@/types";
+import { InfiniteScrolling } from "@/components/infinite-scrolling/infinite-scrolling";
+import NotFound from "@/components/not-found";
+import { TopicType } from "@/modules/topics/types";
 import {
   getAllTopics,
   getApprovedTopics,
@@ -8,8 +10,6 @@ import {
 } from "@/utils/topic-utils";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { InfiniteScrolling } from "../infinite-scrolling/infinite-scrolling";
-import NotFound from "../not-found";
 import TopicCard from "./topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";

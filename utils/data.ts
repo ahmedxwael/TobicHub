@@ -1,6 +1,4 @@
-import { FeatureType } from "@/types";
-
-export const features: FeatureType[] = [
+export const features = [
   {
     id: 1,
     icon: "",

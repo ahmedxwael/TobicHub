@@ -1,4 +1,4 @@
-import { EmailRequestBodyType } from "@/shared/types";
+import { EmailRequestBodyType } from "@/emails/types";
 import axios from "axios";
 
 export async function sendEmail(body: EmailRequestBodyType) {

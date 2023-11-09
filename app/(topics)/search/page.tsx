@@ -1,5 +1,5 @@
 import BackButton from "@/components/back-button";
-import TopicsSection from "@/components/topics/topics-section";
+import TopicsSection from "@/modules/topics/components/topics-section";
 import React from "react";
 
 type Props = {

@@ -1,5 +1,5 @@
 import NotFound from "@/components/not-found";
-import UserCard from "@/components/user/user-card";
+import UserCard from "@/modules/user/components/user-card";
 import { getUsers } from "@/utils/user-utils";
 import React from "react";
 

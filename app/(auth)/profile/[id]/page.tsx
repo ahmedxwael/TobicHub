@@ -1,9 +1,9 @@
 import BackButton from "@/components/back-button";
 import ComponentLoader from "@/components/component-loader";
 import NotFound from "@/components/not-found";
-import TopicsList from "@/components/topics/topics-list";
-import ProfileCard from "@/components/user/profile-card";
-import { ParamsType } from "@/types";
+import TopicsList from "@/modules/topics/components/topics-list";
+import ProfileCard from "@/modules/user/components/profile-card";
+import { ParamsType } from "@/shared/types";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
 import { Suspense } from "react";

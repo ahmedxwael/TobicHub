@@ -1,13 +1,12 @@
 "use client";
 
-import { UserSessionType } from "@/shared/types";
-import { UserType } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { updateUser } from "@/utils/user-utils";
 import { Loader2, Pencil, Save, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { UserSessionType, UserType } from "../types";
 
 type UserNameProps = {
   user: UserType;

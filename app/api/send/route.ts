@@ -1,5 +1,5 @@
 import EmailTemplate from "@/emails/EmailTemplate";
-import { EmailRequestBodyType } from "@/shared/types";
+import { EmailRequestBodyType } from "@/emails/types";
 import { NextRequest, NextResponse } from "next/server";
 import React from "react";
 import { Resend } from "resend";

@@ -1,6 +1,6 @@
+import ComponentLoader from "@/components/component-loader";
+import SearchTopic from "@/modules/topics/components/search-topic";
 import { Suspense } from "react";
-import ComponentLoader from "../component-loader";
-import SearchTopic from "../search-topic";
 import TopicsList, { TopicsTypeType } from "./topics-list";
 
 type Props = { title: string; query?: string; type: TopicsTypeType };

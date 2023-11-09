@@ -1,7 +1,6 @@
+import { NewTopicType, TopicType } from "@/modules/topics/types";
 import prisma from "@/prisma";
-import { NewTopicType, TopicType } from "@/types";
 import axios from "axios";
-import { Regex } from "lucide-react";
 
 const userAllowedFields = { admin: true, id: true, name: true, image: true };
 

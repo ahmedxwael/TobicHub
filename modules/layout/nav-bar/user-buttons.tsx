@@ -1,15 +1,15 @@
 "use client";
 
+import CustomAlertDialog from "@/components/custom-alert-dialog";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { buttonVariants } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import { UserSessionType } from "@/shared/types";
+import { UserSessionType } from "@/modules/user/types";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import CustomAlertDialog from "../custom-alert-dialog";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { buttonVariants } from "../ui/button";
-import { useToast } from "../ui/use-toast";
 
 type UserButtonsProps = {
   onClose?: () => void;

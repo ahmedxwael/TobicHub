@@ -1,6 +1,5 @@
 "use client";
 
-import { TopicType } from "@/types";
 import { getUserTopics } from "@/utils/topic-utils";
 import { useEffect, useState } from "react";
 

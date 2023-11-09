@@ -1,8 +1,9 @@
 "use client";
 
+import { EmailRequestBodyType } from "@/emails/types";
+import { NewTopicType, TopicType } from "@/modules/topics/types";
+import { UserSessionType } from "@/modules/user/types";
 import { ownerEmail } from "@/shared/flags";
-import { EmailRequestBodyType, UserSessionType } from "@/shared/types";
-import { NewTopicType, TopicType } from "@/types";
 import { sendEmail } from "@/utils/email";
 import { addTopic, editTopic } from "@/utils/topic-utils";
 import { useSession } from "next-auth/react";

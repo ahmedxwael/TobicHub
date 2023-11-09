@@ -1,10 +1,10 @@
 "use client";
 
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { buttonVariants } from "../ui/button";
 
 type DashboardSideNavProps = {};
 

@@ -1,10 +1,15 @@
-import { UserSessionType } from "@/shared/types";
-import { TopicType } from "@/types";
+import CardBadge from "@/components/card-badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "@/components/ui/card";
+import { TopicType } from "@/modules/topics/types";
+import { UserSessionType } from "@/modules/user/types";
 import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import CardBadge from "../card-badge";
-import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import ControlMenu from "./control-menu";
 
 type TopicCardProps = {

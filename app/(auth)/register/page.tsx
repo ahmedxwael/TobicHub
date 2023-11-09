@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { RegisterForm } from "@/components/register-form";
+import { RegisterForm } from "@/modules/auth/components/register-form";
 import { UserSessionType } from "@/shared/types";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";

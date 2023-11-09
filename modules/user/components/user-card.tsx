@@ -1,16 +1,15 @@
+import CardBadge from "@/components/card-badge";
 import { Card } from "@/components/ui/card";
-import UserControlMenus from "@/components/user/user-control-menu";
-import { UserType } from "@/types";
-import Image from "next/image";
-import Link from "next/link";
-import CardBadge from "../card-badge";
-import { Badge } from "../ui/badge";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
+} from "@/components/ui/tooltip";
+import UserControlMenus from "@/modules/user/components/user-control-menu";
+import Image from "next/image";
+import Link from "next/link";
+import { UserType } from "../types";
 
 type UserCardProps = {
   user: UserType;
