@@ -52,7 +52,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
           </Link>
           <CardBadge
             isValid={topic.approved}
-            inValidLabel="Un approved"
+            inValidLabel="Un Approved"
             validLabel="Approved"
           />
         </div>
