@@ -3,13 +3,14 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { ModeToggle } from "../toggle-mode-button";
 
+import { UserSessionType } from "@/shared/types";
 import NavLinks from "./nav-links";
 import SideBar from "./side-bar";
-import UserButtons, { UserType } from "./user-buttons";
+import UserButtons from "./user-buttons";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
-  const user = session?.user as UserType;
+  const userSession = session?.user as UserSessionType;
 
   return (
     <header className="sticky top-0 z-10 border-b border-b-input bg-transparent backdrop-blur-lg">
@@ -23,14 +24,14 @@ const Navbar = async () => {
         </Link>
 
         <div className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <NavLinks isAdmin={user?.admin} />
+          <NavLinks isAdmin={userSession?.admin} />
         </div>
         <div className="hidden shrink-0 items-center gap-4 md:flex">
           <ModeToggle />
-          <UserButtons user={user} />
+          <UserButtons userSession={userSession} />
         </div>
 
-        <SideBar user={user} />
+        <SideBar userSession={userSession} />
       </nav>
     </header>
   );

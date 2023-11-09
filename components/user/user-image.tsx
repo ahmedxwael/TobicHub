@@ -1,28 +1,21 @@
 "use client";
 
+import { UserSessionType } from "@/shared/types";
 import { UserType } from "@/types";
 import axios from "axios";
 import { PenSquare } from "lucide-react";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { useToast } from "../ui/use-toast";
 
 type UserImageProps = {
   user: UserType;
+  userSession: UserSessionType;
 };
 
-export default function UserImage({ user }: UserImageProps) {
+export default function UserImage({ user, userSession }: UserImageProps) {
   const { toast } = useToast();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -63,19 +56,20 @@ export default function UserImage({ user }: UserImageProps) {
         className="rounded-full"
       />
 
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            variant="link"
-            size="sm"
-            className="pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center bg-input/60 text-primary opacity-0 transition-opacity duration-300 group-hover:pointer-events-auto group-hover:opacity-100"
-          >
-            <PenSquare size={20} />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <div className="text-center">coming soon</div>
-          {/* <DialogHeader>
+      {userSession && userSession.id === user.id && (
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="link"
+              size="sm"
+              className="pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center bg-input/60 text-primary opacity-0 transition-opacity duration-300 group-hover:pointer-events-auto group-hover:opacity-100"
+            >
+              <PenSquare size={20} />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <div className="text-center">coming soon</div>
+            {/* <DialogHeader>
             <DialogTitle>Edit your profile image</DialogTitle>
             <DialogDescription>
               You can changes your profile image from here. Click save when
@@ -102,8 +96,9 @@ export default function UserImage({ user }: UserImageProps) {
               {isLoading ? "Saving..." : "Save changes"}
             </Button>
           </form> */}
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }

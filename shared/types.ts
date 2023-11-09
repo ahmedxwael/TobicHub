@@ -3,3 +3,11 @@ export type EmailRequestBodyType = {
   receiver: string;
   subject: string;
 };
+
+export type UserSessionType = {
+  name: string;
+  email: string;
+  image: string;
+  id: string;
+  admin: boolean;
+};

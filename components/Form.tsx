@@ -1,17 +1,14 @@
 "use client";
 
-import EmailTemplate from "@/emails/EmailTemplate";
 import { ownerEmail } from "@/shared/flags";
-import { EmailRequestBodyType } from "@/shared/types";
+import { EmailRequestBodyType, UserSessionType } from "@/shared/types";
 import { NewTopicType, TopicType } from "@/types";
 import { sendEmail } from "@/utils/email";
 import { addTopic, editTopic } from "@/utils/topic-utils";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { UserType } from "./nav-bar/user-buttons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -31,7 +28,7 @@ export type InputsType = {
 
 const Form = ({ type, currentTopic }: Props) => {
   const { data: session } = useSession();
-  const user = session?.user as UserType;
+  const userSession = session?.user as UserSessionType;
 
   const router = useRouter();
 
@@ -52,20 +49,20 @@ const Form = ({ type, currentTopic }: Props) => {
     try {
       if (type === "create") {
         const emailBody: EmailRequestBodyType = {
-          sender: user.email,
+          sender: userSession.email,
           receiver: ownerEmail!,
-          subject: `${user.name} created a new topic.`,
+          subject: `${userSession.name} created a new topic.`,
         };
 
         await addTopic({
           ...topic,
-          userId: user?.id,
-          approved: user.admin,
+          userId: userSession?.id,
+          approved: userSession.admin,
         });
 
         sendEmail(emailBody);
 
-        if (!user.admin) {
+        if (!userSession.admin) {
           toast({
             title: "Your new topic has been submitted successfully.",
             description:

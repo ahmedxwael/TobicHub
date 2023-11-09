@@ -1,5 +1,6 @@
 "use client";
 
+import { UserSessionType } from "@/shared/types";
 import { UserType } from "@/types";
 import { updateUser } from "@/utils/user-utils";
 import { Loader2, Pencil, Save, X } from "lucide-react";
@@ -10,7 +11,7 @@ import { Input } from "../ui/input";
 
 type UserNameProps = {
   user: UserType;
-  userSession: UserType;
+  userSession: UserSessionType;
 };
 
 export default function UserName({ user, userSession }: UserNameProps) {

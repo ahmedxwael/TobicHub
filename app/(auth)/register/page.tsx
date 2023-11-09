@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { UserType } from "@/components/nav-bar/user-buttons";
 import { RegisterForm } from "@/components/register-form";
+import { UserSessionType } from "@/shared/types";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { getProviders } from "next-auth/react";
@@ -15,7 +15,7 @@ export default async function RegisterPage() {
   const session = await getServerSession(authOptions);
 
   if (session && session.user) {
-    const user = session.user as UserType;
+    const user = session.user as UserSessionType;
     const userId = user.id as string;
 
     redirect(`/profile/${userId}`);

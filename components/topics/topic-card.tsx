@@ -1,9 +1,9 @@
+import { UserSessionType } from "@/shared/types";
 import { TopicType } from "@/types";
 import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import CardBadge from "../card-badge";
-import { UserType } from "../nav-bar/user-buttons";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import ControlMenu from "./control-menu";
 
@@ -13,7 +13,7 @@ type TopicCardProps = {
 };
 
 export default function TopicCard({ topic, session }: TopicCardProps) {
-  const userSession = session?.user as UserType | undefined;
+  const userSession = session?.user as UserSessionType;
 
   const updatedAtDate = new Date(topic.updated_at);
   const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(

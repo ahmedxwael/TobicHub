@@ -1,7 +1,7 @@
 "use client";
 
 import { ownerEmail } from "@/shared/flags";
-import { EmailRequestBodyType } from "@/shared/types";
+import { EmailRequestBodyType, UserSessionType } from "@/shared/types";
 import { TopicType } from "@/types";
 import { sendEmail } from "@/utils/email";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
@@ -9,12 +9,10 @@ import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import CustomAlertDialog from "../custom-alert-dialog";
-import { UserType } from "../nav-bar/user-buttons";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
@@ -23,7 +21,7 @@ import { useToast } from "../ui/use-toast";
 type ControlMenuProps = {
   topic: TopicType;
   className?: string;
-  userSession: UserType | undefined;
+  userSession: UserSessionType;
 };
 
 const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {

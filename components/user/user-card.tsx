@@ -1,10 +1,9 @@
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import UserControlMenus from "@/components/user/user-control-menu";
 import { UserType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import CardBadge from "../card-badge";
-import { Badge } from "../ui/badge";
 
 type UserCardProps = {
   user: UserType;
