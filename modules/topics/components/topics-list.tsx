@@ -1,5 +1,4 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { InfiniteScrolling } from "@/components/infinite-scrolling/infinite-scrolling";
 import NotFound from "@/components/not-found";
 import { TopicType } from "@/modules/topics/types";
 import {
@@ -14,7 +13,7 @@ import TopicCard from "./topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 
-type Props = {
+type TopicsListProps = {
   topics?: TopicType[];
   userId?: string;
   query?: string;
@@ -38,7 +37,7 @@ function getTopics(type: TopicsTypeType, query?: string, userId?: string) {
   }
 }
 
-const TopicsList = async ({ type, userId, query }: Props) => {
+const TopicsList = async ({ type, userId, query }: TopicsListProps) => {
   const topics = await getTopics(type, query, userId);
   const session = await getServerSession(authOptions);
 
@@ -53,7 +52,6 @@ const TopicsList = async ({ type, userId, query }: Props) => {
           <TopicCard session={session} key={topic.id} topic={topic} />
         ))}
       </div>
-      <InfiniteScrolling length={topics.length} />
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">

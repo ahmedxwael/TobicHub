@@ -1,15 +1,31 @@
 "use client";
 
-import { useEffect } from "react";
+import { TopicType } from "@/modules/topics/types";
+import { getSomeTopics } from "@/utils/topic-utils";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 type InfiniteScrollingProps = {
   length: number;
+  topicsList?: TopicType[];
 };
 
-export function InfiniteScrolling({ length }: InfiniteScrollingProps) {
-  useEffect(() => {}, []);
+export function InfiniteScrolling({
+  length,
+  topicsList,
+}: InfiniteScrollingProps) {
+  const router = useRouter();
+  const listRef = useRef(0);
+
+  useEffect(() => {
+    async function getTopics() {
+      const topics = await getSomeTopics({ take: 5 });
+    }
+  }, []);
 
   return (
-    length > 10 && <div className="flex items-center justify-between"></div>
+    <div className="invisible flex items-center justify-between">
+      Intersection
+    </div>
   );
 }
