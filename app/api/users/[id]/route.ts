@@ -9,7 +9,10 @@ export const PATCH = async (
   const data = await request.json();
 
   try {
-    await prisma.user.update({ where: { id }, data });
+    await prisma.user.update({
+      where: { id },
+      data,
+    });
 
     return NextResponse.json(
       { message: "User updated successfully." },

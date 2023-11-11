@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { updateUser } from "@/utils/user-utils";
 import { Loader2, Pencil, Save, X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -16,6 +17,8 @@ type UserNameProps = {
 export default function UserName({ user, userSession }: UserNameProps) {
   const router = useRouter();
 
+  const { toast } = useToast();
+
   const [isEditingName, setIsEditingName] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const initialNameValue = user.display_name || user.name || "";
@@ -27,6 +30,11 @@ export default function UserName({ user, userSession }: UserNameProps) {
     setIsSubmitting(true);
 
     await updateUser(user.id, { display_name: newName });
+
+    toast({
+      title: "Your name has been updated successfully.",
+      variant: "success",
+    });
 
     router.refresh();
     setIsSubmitting(false);

@@ -108,7 +108,6 @@ export default function UserImage({ user, userSession }: UserImageProps) {
           </DialogTrigger>
           {isPopupOpen && (
             <DialogContent className="sm:max-w-[425px]">
-              <div className="text-center">coming soon</div>
               <DialogHeader>
                 <DialogTitle>Edit your profile image</DialogTitle>
                 <DialogDescription>

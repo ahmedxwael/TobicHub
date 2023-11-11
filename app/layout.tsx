@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
+import ToTopButton from "@/modules/layout/components/to-top-button";
 import Footer from "@/modules/layout/footer/footer";
 import Navbar from "@/modules/layout/nav-bar/Navbar";
 import Provider from "@/providers/provider";
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, session }: Props) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "bg-background")}>
+      <body className={cn(inter.className, "relative bg-background")}>
         <Provider session={session}>
           <ThemeProvider
             attribute="class"
@@ -36,6 +37,7 @@ export default function RootLayout({ children, session }: Props) {
               {children}
             </main>
             <Toaster />
+            <ToTopButton />
             <Footer />
           </ThemeProvider>
         </Provider>

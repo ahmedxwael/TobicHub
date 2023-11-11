@@ -13,7 +13,7 @@ const Navbar = async () => {
 
   return (
     <header className="sticky top-0 z-10 border-b border-b-input bg-transparent backdrop-blur-lg">
-      <nav className="container mx-auto flex items-center justify-between gap-4 px-8 py-4">
+      <nav className="container flex items-center justify-between gap-8 px-8 py-4">
         <Link
           href="/"
           className="text-xl font-bold"
@@ -22,10 +22,10 @@ const Navbar = async () => {
           TopicHub
         </Link>
 
-        <div className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
+        <div className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
           <NavLinks isAdmin={userSession?.admin} />
         </div>
-        <div className="hidden shrink-0 items-center gap-4 md:flex">
+        <div className="ml-auto hidden shrink-0 items-center gap-4 md:flex">
           <ModeToggle />
           <UserButtons userSession={userSession} />
         </div>

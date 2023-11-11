@@ -46,7 +46,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             />
             <div className="flex flex-col">
               <h2 className="text-sm font-medium">
-                {topic.User.display_name ?? topic.User.name}
+                {topic.User.display_name || topic.User.name}
               </h2>
               {!!date && (
                 <span className="inline-block text-xs text-muted-foreground">
