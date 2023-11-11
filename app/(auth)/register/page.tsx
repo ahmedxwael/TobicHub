@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/options";
 import { RegisterForm } from "@/modules/auth/components/register-form";
 import { UserSessionType } from "@/modules/user/types";
 import { Metadata } from "next";

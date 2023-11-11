@@ -95,7 +95,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
         </Dialog>
       </div>
 
-      {/* {userSession && userSession.id === user.id && (
+      {userSession?.admin && userSession?.id === user?.id && (
         <Dialog>
           <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
             <Button
@@ -139,7 +139,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
             </DialogContent>
           )}
         </Dialog>
-      )} */}
+      )}
     </div>
   );
 }

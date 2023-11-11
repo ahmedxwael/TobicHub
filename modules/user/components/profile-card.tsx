@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/options";
 import { Loader2 } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";

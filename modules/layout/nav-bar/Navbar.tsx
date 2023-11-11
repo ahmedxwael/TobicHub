@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/options";
 import { ModeToggle } from "@/components/toggle-mode-button";
 import { UserSessionType } from "@/modules/user/types";
 import { getServerSession } from "next-auth";

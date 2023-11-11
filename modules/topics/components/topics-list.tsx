@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/options";
 import NotFound from "@/components/not-found";
 import { TopicType } from "@/modules/topics/types";
 import {
