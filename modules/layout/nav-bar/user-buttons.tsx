@@ -50,7 +50,7 @@ const UserButtons = ({ userSession, onClose }: UserButtonsProps) => {
                 alt="user"
                 width={40}
                 height={40}
-                className="h-auto w-auto rounded-full border-2 bg-muted"
+                className="rounded-full border-2 bg-muted object-cover"
               />
 
               <AvatarFallback>{userSession?.name[0]}</AvatarFallback>

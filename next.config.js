@@ -4,6 +4,8 @@ const nextConfig = {
     remotePatterns: [
       { hostname: "upload.wikimedia.org" },
       { hostname: "lh3.googleusercontent.com" },
+      { hostname: "localhost" },
+      { hostname: "topic-hub.vercel.app" },
     ],
   },
 };

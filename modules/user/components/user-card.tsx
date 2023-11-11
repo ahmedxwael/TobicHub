@@ -22,57 +22,54 @@ export default function UserCard({ user }: UserCardProps) {
   }).format(joinDate);
 
   return (
-    <Card className="default-shadow">
-      <div className="relative p-4 sm:p-6">
-        <Link
-          href={`/profile/${user.id}`}
-          className="flex w-fit flex-col flex-wrap gap-4"
-        >
-          <div className="flex items-center gap-3">
+    <Card className="default-shadow relative p-4 sm:p-6">
+      <div className="flex w-fit flex-col flex-wrap gap-4">
+        <div className="flex items-center gap-3">
+          <Link href={`/profile/${user.id}`}>
             <Image
               src={user.image ?? "images/avatar.jpg"}
               alt="user image"
               width={40}
               height={40}
               loading="lazy"
-              className="borders rounded-full"
+              className="h-10 w-10 rounded-full border object-cover"
             />
-            <CardBadge
-              isValid={user.admin}
-              validLabel="Admin"
-              inValidLabel="User"
-              isMaster={user.owner}
-              masterLabel="Owner"
-            />
-          </div>
-          <div className="block">
-            <div className="font-medium">{user.name}</div>
-            <div className="text-sm text-muted-foreground">{user.email}</div>
-          </div>
-        </Link>
-        <div className="mt-4 flex items-center gap-2 text-xs">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                {user?.topics?.length || 0} Topic(s)
-              </TooltipTrigger>
-              <TooltipContent>
-                <div>{user?.topics?.length || 0} Topic(s)</div>
-                <div>
-                  {user?.topics?.filter((topic) => !topic.approved).length || 0}{" "}
-                  Un approved
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <div className="ml-auto text-muted-foreground">
-            Joined at: {joinDateFormat}
-          </div>
+          </Link>
+          <CardBadge
+            isValid={user.admin}
+            validLabel="Admin"
+            inValidLabel="User"
+            isMaster={user.owner}
+            masterLabel="Owner"
+          />
         </div>
-        {!user.owner && (
-          <UserControlMenus user={user} className="absolute right-6 top-5" />
-        )}
+        <Link href={`/profile/${user.id}`} className="block">
+          <div className="font-medium">{user.name}</div>
+          <div className="text-sm text-muted-foreground">{user.email}</div>
+        </Link>
       </div>
+      <div className="mt-4 flex items-center gap-2 text-xs">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              {user?.topics?.length || 0} Topic(s)
+            </TooltipTrigger>
+            <TooltipContent>
+              <div>{user?.topics?.length || 0} Topic(s)</div>
+              <div>
+                {user?.topics?.filter((topic) => !topic.approved).length || 0}{" "}
+                Un approved
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <div className="ml-auto text-muted-foreground">
+          Joined at: {joinDateFormat}
+        </div>
+      </div>
+      {!user.owner && (
+        <UserControlMenus user={user} className="absolute right-6 top-5" />
+      )}
     </Card>
   );
 }
