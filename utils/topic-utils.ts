@@ -74,6 +74,24 @@ export const getAllTopics = async (): Promise<TopicType[] | undefined> => {
   }
 };
 
+type SomeTopicsProps = { take: number };
+
+export const getSomeTopics = async (
+  options?: SomeTopicsProps
+): Promise<TopicType[] | undefined> => {
+  try {
+    const topics = await prisma.topic.findMany({
+      include: { User: true },
+      orderBy: { created_at: "desc" },
+      take: options?.take,
+    });
+
+    return topics as TopicType[];
+  } catch (error: any) {
+    return undefined;
+  }
+};
+
 export const getUserTopics = async (
   id: string
 ): Promise<TopicType[] | undefined> => {
