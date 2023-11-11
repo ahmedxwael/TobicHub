@@ -3,7 +3,7 @@ export function GoogleIcon() {
     <svg
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       version="1.1"
       x="0px"
       y="0px"
@@ -43,7 +43,7 @@ export function GithubIcon() {
     <svg
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 496 512"
       height="1em"
       width="1em"
