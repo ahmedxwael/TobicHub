@@ -43,7 +43,8 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
     const emailBody: EmailRequestBodyType = {
       sender: ownerEmail!,
       receiver: topic.User.email!,
-      subject: "Your topic has been approved.",
+      subject: "Topic Updates",
+      message: "Your topic has been approved.",
     };
 
     await editTopic(topicId, { approved: true });
@@ -63,7 +64,8 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
     const emailBody: EmailRequestBodyType = {
       sender: ownerEmail!,
       receiver: topic.User.email!,
-      subject: "Your topic has been un approved.",
+      subject: "Topic Updates",
+      message: "Your topic has been un approved.",
     };
 
     await editTopic(topicId, { approved: false });
@@ -82,7 +84,8 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
     const emailBody: EmailRequestBodyType = {
       sender: ownerEmail!,
       receiver: topic.User.email!,
-      subject: "Your topic has been deleted.",
+      subject: "Topic Updates",
+      message: "Your topic has been deleted.",
     };
     await deleteTopic(topic.id);
 

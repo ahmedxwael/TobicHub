@@ -52,7 +52,8 @@ const Form = ({ type, currentTopic }: Props) => {
         const emailBody: EmailRequestBodyType = {
           sender: userSession.email,
           receiver: ownerEmail!,
-          subject: `${userSession.name} created a new topic.`,
+          message: `${userSession.name} created a new topic.`,
+          subject: "New topic created",
         };
 
         await addTopic({
@@ -81,7 +82,6 @@ const Form = ({ type, currentTopic }: Props) => {
 
         toast({
           title: "Topic has been updated successfully.",
-          variant: "default",
         });
       }
 

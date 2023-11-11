@@ -15,9 +15,14 @@ import * as React from "react";
 type EmailTemplateProps = {
   subject: string;
   sender: string;
+  message: string;
 };
 
-export default function EmailTemplate({ sender, subject }: EmailTemplateProps) {
+export default function EmailTemplate({
+  sender,
+  subject,
+  message,
+}: EmailTemplateProps) {
   return (
     <Html>
       <Head />
@@ -26,10 +31,8 @@ export default function EmailTemplate({ sender, subject }: EmailTemplateProps) {
         <Body className="bg-muted-foreground text-black">
           <Container>
             <Section className="my-10 rounded-md border bg-white px-10 py-4">
-              <Heading className="leading-tight">
-                You received a new message from TopicHub
-              </Heading>
-              <Text className="text-input">{subject}</Text>
+              <Heading className="leading-tight">{subject}</Heading>
+              <Text className="text-input">{message}</Text>
               <Hr />
               <Text>Sender: {sender}</Text>
             </Section>

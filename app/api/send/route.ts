@@ -7,7 +7,7 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
-  const { sender, receiver, subject }: EmailRequestBodyType =
+  const { sender, receiver, subject, message }: EmailRequestBodyType =
     await request.json();
 
   try {
@@ -15,8 +15,9 @@ export async function POST(request: NextRequest) {
       from: "TopicHub <onboarding@resend.dev>",
       to: receiver,
       reply_to: sender,
-      subject: subject,
-      react: React.createElement(EmailTemplate, { subject, sender }),
+      subject,
+      text: message,
+      react: React.createElement(EmailTemplate, { subject, sender, message }),
     });
 
     if (data?.id) {
