@@ -1,9 +1,11 @@
 import BackButton from "@/components/back-button";
 import ComponentLoader from "@/components/component-loader";
 import NotFound from "@/components/not-found";
+import PageHeading from "@/components/page-heading";
 import TopicsList from "@/modules/topics/components/topics-list";
 import ProfileCard from "@/modules/user/components/profile-card";
 import { ParamsType } from "@/shared/types";
+import { getTopics } from "@/utils/topic-utils";
 import { getUser, getUsers } from "@/utils/user-utils";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -40,6 +42,7 @@ export const revalidate = 0;
 
 const Profile = async ({ params: { id } }: ParamsType) => {
   const user = await getUser(id);
+  const topicsPromise = getTopics({ where: { userId: id } });
 
   if (!user) {
     return <NotFound message="Couldn't get user's data." />;
@@ -50,9 +53,9 @@ const Profile = async ({ params: { id } }: ParamsType) => {
       <BackButton />
       <ProfileCard user={user} />
       <div className="mt-20 flex flex-col gap-12">
-        <h1 className="w-fit text-2xl font-bold  tracking-wider">Topics</h1>
+        <PageHeading>Topics</PageHeading>
         <Suspense fallback={<ComponentLoader />}>
-          <TopicsList type="user" userId={id} />
+          <TopicsList topicsPromise={topicsPromise} />
         </Suspense>
       </div>
     </section>

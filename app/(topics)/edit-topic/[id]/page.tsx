@@ -1,5 +1,5 @@
 import Form from "@/components/Form";
-import { getAllTopics, getTopic } from "@/utils/topic-utils";
+import { getTopic, getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export const generateStaticParams = async () => {
-  const topics = await getAllTopics();
+  const topics = await getTopics();
 
   if (!topics) {
     return [];

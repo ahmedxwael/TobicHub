@@ -1,12 +1,6 @@
 import { authOptions } from "@/app/api/auth/options";
 import NotFound from "@/components/not-found";
 import { TopicType } from "@/modules/topics/types";
-import {
-  getAllTopics,
-  getApprovedTopics,
-  getSearchTopics,
-  getUserTopics,
-} from "@/utils/topic-utils";
 import { getServerSession } from "next-auth";
 import React from "react";
 import TopicCard from "./topic-card";
@@ -14,41 +8,21 @@ import TopicCard from "./topic-card";
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 
 type TopicsListProps = {
-  topics?: TopicType[];
-  userId?: string;
-  query?: string;
-  type: TopicsTypeType;
+  topicsPromise: Promise<TopicType[] | undefined>;
 };
 
-function getTopics(type: TopicsTypeType, query?: string, userId?: string) {
-  switch (type) {
-    case "approved": {
-      return getApprovedTopics();
-    }
-    case "search": {
-      return getSearchTopics(query!);
-    }
-    case "user": {
-      return getUserTopics(userId!);
-    }
-    case "admin": {
-      return getAllTopics();
-    }
-  }
-}
-
-const TopicsList = async ({ type, userId, query }: TopicsListProps) => {
-  const topics = await getTopics(type, query, userId);
+export default async function TopicsList({ topicsPromise }: TopicsListProps) {
   const session = await getServerSession(authOptions);
+  const topicsList = await topicsPromise;
 
-  if (!topics) {
+  if (!topicsList) {
     return <NotFound message="Could not retrieve the list of topics." />;
   }
 
-  return topics.length > 0 ? (
+  return topicsList.length > 0 ? (
     <div className="space-y-10">
       <div className="space-y-6 lg:space-y-10">
-        {topics.map((topic) => (
+        {topicsList.map((topic) => (
           <TopicCard session={session} key={topic.id} topic={topic} />
         ))}
       </div>
@@ -58,6 +32,6 @@ const TopicsList = async ({ type, userId, query }: TopicsListProps) => {
       There are no topics to show.
     </div>
   );
-};
+}
 
-export default TopicsList;
+TopicsList;

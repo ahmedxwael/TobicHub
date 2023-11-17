@@ -1,6 +1,6 @@
 import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
-import { getAllTopics, getTopic } from "@/utils/topic-utils";
+import { getTopic, getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = async () => {
-  const topics = await getAllTopics();
+  const topics = await getTopics();
 
   if (!topics || topics.length === 0) {
     return [];
