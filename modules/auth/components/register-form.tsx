@@ -23,7 +23,7 @@ type RegisterFormProps = {
 };
 
 export function RegisterForm({ providers }: RegisterFormProps) {
-  const [isAgree, setIsAgree] = useState(false);
+  const [isAgree, setIsAgree] = useState(true);
 
   return (
     <Card className="default-shadow mx-auto w-[400px] max-w-full pb-6">

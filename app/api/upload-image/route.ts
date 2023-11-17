@@ -1,6 +1,9 @@
-import { supabase } from "@/app/layout";
 import prisma from "@/prisma";
+import { SUPABASE_API_KEY, SUPABASE_URL } from "@/shared/flags";
+import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+
+const supabase = createClient(SUPABASE_URL!, SUPABASE_API_KEY!);
 
 export const POST = async (request: NextRequest) => {
   const formData = await request.formData();

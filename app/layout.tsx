@@ -5,11 +5,9 @@ import Footer from "@/modules/layout/footer/footer";
 import Navbar from "@/modules/layout/nav-bar/Navbar";
 import Provider from "@/providers/provider";
 import { ThemeProvider } from "@/providers/theme-provider";
-import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { SUPABASE_API_KEY, SUPABASE_URL } from "@/shared/flags";
 import "./globals.css";
 
 type Props = {
@@ -23,8 +21,6 @@ export const metadata: Metadata = {
   title: "TopicHub",
   description: "The home page for this TopicHub application.",
 };
-
-export const supabase = createClient(SUPABASE_URL!, SUPABASE_API_KEY!);
 
 export default function RootLayout({ children, session }: Props) {
   return (
