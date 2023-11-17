@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
+import { ca } from "date-fns/locale";
 import { Eye, PenSquare } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -47,12 +48,20 @@ export default function UserImage({ user, userSession }: UserImageProps) {
 
       await axios.post(`/api/upload-image?userId=${user.id}`, formData);
 
+      toast({
+        title: "Success",
+        description: "Your profile image updated successfully",
+        variant: "success",
+      });
+
       router.refresh();
       setIsPopupOpen(false);
-    } catch (error) {
+    } catch (error: any) {
+      const message = error?.response?.data?.message;
+
       toast({
         title: "Error",
-        description: "Couldn't upload image",
+        description: message || "Couldn't upload image",
         variant: "destructive",
       });
     }
@@ -64,7 +73,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
     <div className="relative h-[150px] w-[150px] rounded-full bg-white/10">
       <div className="group h-full w-full">
         <Image
-          src={user.image ?? "/public/images/avatar.jpg"}
+          src={user.image || "/images/avatar.jpg"}
           alt="User Profile image"
           width={200}
           height={200}

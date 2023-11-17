@@ -37,7 +37,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             className="flex items-center gap-4"
           >
             <Image
-              src={topic.User.image ?? "images/avatar.jpg"}
+              src={topic.User.image || "/images/avatar.jpg"}
               alt="user image"
               width={40}
               height={40}

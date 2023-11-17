@@ -1,34 +1,51 @@
+import { supabase } from "@/app/layout";
 import prisma from "@/prisma";
-import { baseUrl } from "@/shared/flags";
-import { writeFile } from "fs/promises";
-import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
-import { join } from "path";
 
 export const POST = async (request: NextRequest) => {
-  const data = await request.formData();
+  const formData = await request.formData();
   const userId = request.nextUrl.searchParams.get("userId");
 
-  const image = data.get("image") as any;
+  const image = formData.get("image") as any;
 
   if (!image) {
-    return NextResponse.json({ message: "Image not found" }, { status: 404 });
+    return NextResponse.json(
+      { message: "Image is required." },
+      { status: 404 }
+    );
   }
 
-  const buffer = Buffer.from(await image.arrayBuffer());
+  const relativeImagePath = `topic-hub/${userId}/${image.name}`;
 
-  const relativeImagePath = `${nanoid(64)}-${image.name}`;
-  const path = join(process.cwd(), "public/images", relativeImagePath);
-  const imageSlicedPath = path
-    .split("public\\")
-    .slice(-1)[0]
-    .replace("\\", "/");
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .upload(relativeImagePath, image, { cacheControl: "3600", upsert: true });
 
-  await writeFile(path, buffer);
+  if (!data || error) {
+    return NextResponse.json(
+      { message: "Couldn't upload the image." + error.message },
+      { status: 500 }
+    );
+  }
+
+  const signedUrlData = await supabase.storage
+    .from("avatars")
+    .createSignedUrl(relativeImagePath, 60 * 60 * 24 * 360);
+
+  if (!signedUrlData || !signedUrlData.data) {
+    return NextResponse.json(
+      {
+        message:
+          "Couldn't create a signed url for the image." +
+          signedUrlData.error.message,
+      },
+      { status: 500 }
+    );
+  }
 
   await prisma.user.update({
     where: { id: userId! },
-    data: { image: `${baseUrl}/${imageSlicedPath}` },
+    data: { image: signedUrlData.data.signedUrl },
   });
 
   return NextResponse.json({ message: "Success" }, { status: 200 });

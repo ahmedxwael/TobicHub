@@ -27,7 +27,7 @@ export default function UserCard({ user }: UserCardProps) {
         <div className="flex items-center gap-3">
           <Link href={`/profile/${user.id}`}>
             <Image
-              src={user.image ?? "images/avatar.jpg"}
+              src={user.image || "/images/avatar.jpg"}
               alt="user image"
               width={40}
               height={40}

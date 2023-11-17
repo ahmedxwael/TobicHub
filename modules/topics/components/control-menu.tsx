@@ -12,7 +12,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { EmailRequestBodyType } from "@/emails/types";
 import { TopicType } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
-import { ownerEmail } from "@/shared/flags";
+import { OWNER_EMAIL } from "@/shared/flags";
 import { sendEmail } from "@/utils/email";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
@@ -41,7 +41,7 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
     setIsLoading(true);
 
     const emailBody: EmailRequestBodyType = {
-      sender: ownerEmail!,
+      sender: OWNER_EMAIL!,
       receiver: topic.User.email!,
       subject: "Topic Updates",
       message: "Your topic has been approved.",
@@ -62,7 +62,7 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
     const emailBody: EmailRequestBodyType = {
-      sender: ownerEmail!,
+      sender: OWNER_EMAIL!,
       receiver: topic.User.email!,
       subject: "Topic Updates",
       message: "Your topic has been un approved.",
@@ -82,7 +82,7 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
   const handleTopicDelete = async () => {
     setIsLoading(true);
     const emailBody: EmailRequestBodyType = {
-      sender: ownerEmail!,
+      sender: OWNER_EMAIL!,
       receiver: topic.User.email!,
       subject: "Topic Updates",
       message: "Your topic has been deleted.",

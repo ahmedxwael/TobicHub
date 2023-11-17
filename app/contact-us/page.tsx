@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { EmailRequestBodyType } from "@/emails/types";
-import { ownerEmail } from "@/shared/flags";
+import { OWNER_EMAIL } from "@/shared/flags";
 import { sendEmail } from "@/utils/email";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -38,7 +38,7 @@ export default function ContactUsPage() {
     try {
       const emailObject: EmailRequestBodyType = {
         sender: formData.email,
-        receiver: ownerEmail!,
+        receiver: OWNER_EMAIL!,
         subject: `${formData.name} wants to contact with you.`,
         message: formData.message,
       };

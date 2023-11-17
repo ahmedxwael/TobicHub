@@ -3,7 +3,7 @@
 import { EmailRequestBodyType } from "@/emails/types";
 import { NewTopicType, TopicType } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
-import { ownerEmail } from "@/shared/flags";
+import { OWNER_EMAIL } from "@/shared/flags";
 import { sendEmail } from "@/utils/email";
 import { addTopic, editTopic } from "@/utils/topic-utils";
 import { useSession } from "next-auth/react";
@@ -51,7 +51,7 @@ const Form = ({ type, currentTopic }: Props) => {
       if (type === "create") {
         const emailBody: EmailRequestBodyType = {
           sender: userSession.email,
-          receiver: ownerEmail!,
+          receiver: OWNER_EMAIL!,
           message: `${userSession.name} created a new topic.`,
           subject: "New topic created",
         };
