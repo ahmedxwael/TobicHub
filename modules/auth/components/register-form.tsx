@@ -71,7 +71,11 @@ export function RegisterForm({ providers }: RegisterFormProps) {
 					<Input id="password" type="password" placeholder="password" />
 				</div> */}
         <div className="flex items-start gap-2 text-xs">
-          <Checkbox id="privacy" onCheckedChange={() => setIsAgree(!isAgree)} />
+          <Checkbox
+            id="privacy"
+            checked={isAgree}
+            onCheckedChange={() => setIsAgree(!isAgree)}
+          />
           <label htmlFor="privacy" className="text-muted-foreground">
             By signing in to our website, you confirm that you have read and
             agree to our{" "}
