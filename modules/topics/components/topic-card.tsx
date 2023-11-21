@@ -39,8 +39,8 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             <Image
               src={topic.User.image || "/images/avatar.jpg"}
               alt="user image"
-              width={40}
-              height={40}
+              width={500}
+              height={500}
               loading="lazy"
               className="h-10 w-10 rounded-full border object-cover"
             />

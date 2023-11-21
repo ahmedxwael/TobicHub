@@ -64,12 +64,12 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
             className="flex w-fit items-center gap-4"
           >
             <Image
-              src={topic.User.image ?? "images/avatar.jpg"}
+              src={topic.User.image || "/images/avatar.jpg"}
               alt="user image"
-              width={35}
-              height={35}
+              width={500}
+              height={500}
               loading="lazy"
-              className="rounded-full border"
+              className="h-14 w-14 rounded-full border object-cover"
             />
             <div className="flex flex-col">
               <h2 className="text-sm font-medium">{topic.User.name}</h2>

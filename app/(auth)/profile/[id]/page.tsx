@@ -40,7 +40,7 @@ export const generateStaticParams = async () => {
 
 export const revalidate = 0;
 
-const Profile = async ({ params: { id } }: ParamsType) => {
+export default async function Profile({ params: { id } }: ParamsType) {
   const user = await getUser(id);
   const topicsPromise = getTopics({ where: { userId: id } });
 
@@ -60,6 +60,6 @@ const Profile = async ({ params: { id } }: ParamsType) => {
       </div>
     </section>
   );
-};
+}
 
-export default Profile;
+Profile;

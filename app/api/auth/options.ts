@@ -20,9 +20,10 @@ export const authOptions: AuthOptions = {
         where: { email: session?.user?.email },
       });
 
-      session.user.image = user?.image ?? session?.user?.image;
+      session.user.image = user?.image || session?.user?.image;
       session.user.id = user?.id.toString();
       session.user.admin = user?.admin;
+      session.user.owner = user?.owner;
 
       return session;
     },

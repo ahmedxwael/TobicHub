@@ -75,8 +75,8 @@ export default function UserImage({ user, userSession }: UserImageProps) {
         <Image
           src={user.image || "/images/avatar.jpg"}
           alt="User Profile image"
-          width={200}
-          height={200}
+          width={500}
+          height={500}
           quality={100}
           className="h-full w-full cursor-pointer rounded-full object-cover"
         />
@@ -93,12 +93,12 @@ export default function UserImage({ user, userSession }: UserImageProps) {
           <DialogContent>
             <DialogTitle>{user.name}&lsquo;s image</DialogTitle>
             <Image
-              src={user.image ?? "/public/images/avatar.jpg"}
+              src={user.image || "/images/avatar.jpg"}
               alt="User Profile image"
-              width={400}
-              height={400}
+              width={500}
+              height={500}
               quality={100}
-              className="mx-auto mt-4 aspect-square rounded-full object-cover"
+              className="mx-auto mt-4 aspect-square h-[400px] w-[400px] rounded-full object-cover"
             />
           </DialogContent>
         </Dialog>

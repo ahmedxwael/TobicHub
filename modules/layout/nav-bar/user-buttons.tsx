@@ -43,16 +43,12 @@ const UserButtons = ({ userSession, onClose }: UserButtonsProps) => {
             <Avatar>
               <Image
                 priority
-                src={
-                  userSession?.image ||
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png"
-                }
+                src={userSession?.image || "/images/avatar.jpg"}
                 alt="user"
-                width={40}
-                height={40}
-                className="rounded-full border-2 bg-muted object-cover"
+                width={500}
+                height={500}
+                className="h-10 w-10 rounded-full border-2 bg-muted object-cover"
               />
-
               <AvatarFallback>{userSession?.name[0]}</AvatarFallback>
             </Avatar>
           </Link>
