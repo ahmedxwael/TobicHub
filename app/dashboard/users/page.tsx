@@ -1,12 +1,17 @@
+import { authOptions } from "@/app/api/auth/options";
 import NotFound from "@/components/not-found";
 import UserCard from "@/modules/user/components/user-card";
+import { UserSessionType } from "@/modules/user/types";
 import { getUsers } from "@/utils/user-utils";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 export const revalidate = 0;
 
 export default async function UsersPage() {
   const users = await getUsers(true);
+  const session = await getServerSession(authOptions);
+  const userSession = session?.user as UserSessionType;
 
   if (!users) {
     return <NotFound message="Could not get the list of users." />;
@@ -20,7 +25,7 @@ export default async function UsersPage() {
       {users.length > 0 ? (
         <div className="mt-12 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6">
           {users.map((user) => (
-            <UserCard key={user.id} user={user} />
+            <UserCard key={user.id} user={user} userSession={userSession} />
           ))}
         </div>
       ) : (

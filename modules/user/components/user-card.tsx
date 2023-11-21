@@ -9,13 +9,14 @@ import {
 import UserControlMenus from "@/modules/user/components/user-control-menu";
 import Image from "next/image";
 import Link from "next/link";
-import { UserType } from "../types";
+import { UserSessionType, UserType } from "../types";
 
 type UserCardProps = {
   user: UserType;
+  userSession: UserSessionType;
 };
 
-export default function UserCard({ user }: UserCardProps) {
+export default function UserCard({ user, userSession }: UserCardProps) {
   const joinDate = new Date(user.created_at);
   const joinDateFormat = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
@@ -67,7 +68,7 @@ export default function UserCard({ user }: UserCardProps) {
           Joined at: {joinDateFormat}
         </div>
       </div>
-      {!user.owner && user.admin && (
+      {userSession.admin && !user.owner && (
         <UserControlMenus user={user} className="absolute right-6 top-5" />
       )}
     </Card>
