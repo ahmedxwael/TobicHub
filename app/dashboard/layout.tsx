@@ -21,7 +21,7 @@ export default async function DashboardLayout({
   const session = await getServerSession(authOptions);
   const user = session?.user as UserSessionType;
 
-  if (!user?.admin || !user?.owner) {
+  if (!user?.admin && !user?.owner) {
     redirect("/");
   }
 
