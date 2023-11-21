@@ -19,4 +19,5 @@ export type UserSessionType = {
   image: string;
   id: string;
   admin: boolean;
+  owner?: boolean;
 };

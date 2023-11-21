@@ -29,8 +29,8 @@ export default function UserCard({ user }: UserCardProps) {
             <Image
               src={user.image || "/images/avatar.jpg"}
               alt="user image"
-              width={40}
-              height={40}
+              width={500}
+              height={500}
               loading="lazy"
               className="h-10 w-10 rounded-full border object-cover"
             />
@@ -67,7 +67,7 @@ export default function UserCard({ user }: UserCardProps) {
           Joined at: {joinDateFormat}
         </div>
       </div>
-      {!user.owner && (
+      {!user.owner && user.admin && (
         <UserControlMenus user={user} className="absolute right-6 top-5" />
       )}
     </Card>
