@@ -12,7 +12,7 @@ export default function ToTopButton() {
     <Button
       variant="outline"
       size="sm"
-      className="default-shadow fixed bottom-6 right-6 z-20 w-fit p-2"
+      className="default-shadow fixed bottom-6 right-6 z-20 w-fit p-2 hover:text-primary"
       onClick={handleScrollToTop}
     >
       <ChevronUp size={20} />

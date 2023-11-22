@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply rounded-xl bg-background;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply rounded-xl bg-primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/80 transition-colors;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

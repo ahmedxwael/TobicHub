@@ -50,7 +50,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
         </Link>
       </div>
       <div className="mt-4 flex items-center gap-2 text-xs">
-        <TooltipProvider>
+        <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
               {user?.topics?.length || 0} Topic(s)

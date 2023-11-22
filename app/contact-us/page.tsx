@@ -91,7 +91,6 @@ export default function ContactUsPage() {
             Email
           </Label>
           <Input
-            autoFocus={true}
             type="email"
             id="email"
             placeholder="Your email address"

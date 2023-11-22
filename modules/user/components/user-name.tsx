@@ -44,7 +44,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
   return isEditingName ? (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="flex max-w-[240px] flex-col gap-2"
+      className="flex max-w-[240px] gap-2"
     >
       <div className="relative flex items-center justify-center gap-2">
         <Input
@@ -63,7 +63,10 @@ export default function UserName({ user, userSession }: UserNameProps) {
           variant="ghost"
           size="sm"
           className="absolute right-0 top-1/2 -translate-y-1/2"
-          onClick={() => setIsEditingName(false)}
+          onClick={() => {
+            setIsEditingName(false);
+            setNewName(initialNameValue);
+          }}
         >
           <X size={20} />
         </Button>

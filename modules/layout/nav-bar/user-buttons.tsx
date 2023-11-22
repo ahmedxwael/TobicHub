@@ -3,6 +3,12 @@
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { UserSessionType } from "@/modules/user/types";
@@ -34,24 +40,30 @@ const UserButtons = ({ userSession, onClose }: UserButtonsProps) => {
             description="Are you sure that you want to sign out?"
             className="w-full"
           />
-          <Link
-            href={`/profile/${userSession?.id}`}
-            onClick={onClose}
-            className="inline-block"
-            title={userSession?.name}
-          >
-            <Avatar>
-              <Image
-                priority
-                src={userSession?.image || "/images/avatar.jpg"}
-                alt="user"
-                width={500}
-                height={500}
-                className="h-10 w-10 rounded-full border-2 bg-muted object-cover"
-              />
-              <AvatarFallback>{userSession?.name[0]}</AvatarFallback>
-            </Avatar>
-          </Link>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger>
+                <Link
+                  href={`/profile/${userSession?.id}`}
+                  onClick={onClose}
+                  className="inline-block"
+                >
+                  <Avatar>
+                    <Image
+                      priority
+                      src={userSession?.image || "/images/avatar.jpg"}
+                      alt="user"
+                      width={500}
+                      height={500}
+                      className="h-10 w-10 rounded-full border-2 bg-muted object-cover"
+                    />
+                    <AvatarFallback>{userSession?.name[0]}</AvatarFallback>
+                  </Avatar>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>{userSession?.name}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       ) : (
         <Link

@@ -1,31 +1,46 @@
-import { authOptions } from "@/app/api/auth/options";
+"use client";
+
+import LoadMoreButton from "@/components/load-more-button";
 import NotFound from "@/components/not-found";
 import { TopicType } from "@/modules/topics/types";
-import { getServerSession } from "next-auth";
-import React from "react";
+import { getTopics } from "@/utils/topic-utils";
+import type { Session } from "next-auth";
+import React, { useState } from "react";
 import TopicCard from "./topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 
 type TopicsListProps = {
-  topicsPromise: Promise<TopicType[] | undefined>;
+  topicsList: TopicType[];
+  session: Session | null;
 };
 
-export default async function TopicsList({ topicsPromise }: TopicsListProps) {
-  const session = await getServerSession(authOptions);
-  const topicsList = await topicsPromise;
+export default function TopicsList({ session, topicsList }: TopicsListProps) {
+  const [displayedTopics, setDisplayedTopics] =
+    useState<TopicType[]>(topicsList);
 
-  if (!topicsList) {
-    return <NotFound message="Could not retrieve the list of topics." />;
-  }
+  console.log(displayedTopics);
 
-  return topicsList.length > 0 ? (
+  const fetchMoreTopics = async (skip: number) => {
+    console.log("im here1: ", displayedTopics, skip);
+    if (displayedTopics.length < skip) return;
+
+    const topics = await getTopics({ skip, take: 5 });
+    console.log("im here2: ", topics, skip);
+
+    if (!topics) return;
+
+    setDisplayedTopics([...displayedTopics, ...topics]);
+  };
+
+  return displayedTopics.length > 0 ? (
     <div className="space-y-10">
       <div className="space-y-6 lg:space-y-10">
-        {topicsList.map((topic) => (
+        {displayedTopics.map((topic) => (
           <TopicCard session={session} key={topic.id} topic={topic} />
         ))}
       </div>
+      <LoadMoreButton loadMore={fetchMoreTopics} />
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">

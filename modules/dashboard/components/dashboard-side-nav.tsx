@@ -34,7 +34,7 @@ export default function DashboardSideNav({}: DashboardSideNavProps) {
             className={cn(
               buttonVariants({ variant: "ghost" }),
               pathname === item.href
-                ? "bg-muted hover:bg-muted"
+                ? "bg-muted text-primary hover:bg-muted hover:text-primary"
                 : "hover:bg-transparent hover:underline",
               "inline-block justify-start"
             )}

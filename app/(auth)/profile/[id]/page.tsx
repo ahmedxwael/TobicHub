@@ -2,7 +2,7 @@ import BackButton from "@/components/back-button";
 import ComponentLoader from "@/components/component-loader";
 import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
-import TopicsList from "@/modules/topics/components/topics-list";
+import TopicsSection from "@/modules/topics/components/topics-section";
 import ProfileCard from "@/modules/user/components/profile-card";
 import { ParamsType } from "@/shared/types";
 import { getTopics } from "@/utils/topic-utils";
@@ -55,7 +55,7 @@ export default async function Profile({ params: { id } }: ParamsType) {
       <div className="mt-20 flex flex-col gap-12">
         <PageHeading>Topics</PageHeading>
         <Suspense fallback={<ComponentLoader />}>
-          <TopicsList topicsPromise={topicsPromise} />
+          <TopicsSection topicsPromise={topicsPromise} />
         </Suspense>
       </div>
     </section>

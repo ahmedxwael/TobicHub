@@ -1,7 +1,7 @@
 import ComponentLoader from "@/components/component-loader";
 import PageHeading from "@/components/page-heading";
 import SearchTopic from "@/modules/topics/components/search-topic";
-import TopicsList from "@/modules/topics/components/topics-list";
+import TopicsSection from "@/modules/topics/components/topics-section";
 import { getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -24,7 +24,7 @@ export default async function TopicsPage() {
         <SearchTopic />
       </div>
       <Suspense fallback={<ComponentLoader />}>
-        <TopicsList topicsPromise={topicsPromise} />
+        <TopicsSection topicsPromise={topicsPromise} />
       </Suspense>
     </section>
   );
