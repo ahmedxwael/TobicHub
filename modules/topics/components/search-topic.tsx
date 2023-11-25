@@ -39,6 +39,7 @@ const SearchTopic = () => {
     <Dialog>
       <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
         <Button
+          aria-label="search"
           size="sm"
           variant="outline"
           className="default-shadow text-xl transition-transform hover:scale-105 hover:text-primary"

@@ -71,7 +71,7 @@ const UserButtons = ({ userSession, onClose }: UserButtonsProps) => {
           href="/register"
           className={cn(
             buttonVariants({ variant: "default", size: "lg" }),
-            "w-full"
+            "w-full text-black"
           )}
         >
           Sign in
