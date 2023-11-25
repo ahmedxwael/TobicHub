@@ -28,7 +28,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
   return (
     <Card
       key={topic.id}
-      className="default-shadow mx-auto max-w-full space-y-5"
+      className="default-shadow mx-auto max-w-full animate-show-card space-y-5"
     >
       <CardHeader className="relative flex flex-row items-center justify-between">
         <div className="flex w-fit flex-wrap items-center gap-4">

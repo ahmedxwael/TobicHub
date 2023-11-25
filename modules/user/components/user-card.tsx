@@ -23,7 +23,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
   }).format(joinDate);
 
   return (
-    <Card className="default-shadow relative p-4 sm:p-6">
+    <Card className="default-shadow relative animate-show-card p-4 sm:p-6">
       <div className="flex w-fit flex-col flex-wrap gap-4">
         <div className="flex items-center gap-3">
           <Link href={`/profile/${user.id}`}>
