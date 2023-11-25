@@ -4,7 +4,6 @@ import { EmailRequestBodyType } from "@/emails/types";
 import { NewTopicType, TopicType } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { OWNER_EMAIL } from "@/shared/flags";
-import { sendEmail } from "@/utils/email";
 import { addTopic, editTopic } from "@/utils/topic-utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -61,8 +60,6 @@ const Form = ({ type, currentTopic }: Props) => {
           userId: userSession?.id,
           approved: userSession.admin,
         });
-
-        sendEmail(emailBody);
 
         if (!userSession.admin) {
           toast({

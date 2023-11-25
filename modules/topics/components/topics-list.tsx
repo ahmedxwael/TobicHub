@@ -1,11 +1,12 @@
 "use client";
 
-import LoadMoreButton from "@/components/load-more-button";
-import NotFound from "@/components/not-found";
+import { loadMoreTopics } from "@/actions/actions";
+import TopicsSkeleton from "@/components/topics-skeleton";
 import { TopicType } from "@/modules/topics/types";
-import { getTopics } from "@/utils/topic-utils";
+import { GetTopicsOptions } from "@/utils/topic-utils";
 import type { Session } from "next-auth";
-import React, { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import TopicCard from "./topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
@@ -13,25 +14,55 @@ export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 type TopicsListProps = {
   topicsList: TopicType[];
   session: Session | null;
+  params?: GetTopicsOptions;
 };
 
-export default function TopicsList({ session, topicsList }: TopicsListProps) {
+export default function TopicsList({
+  session,
+  topicsList,
+  params,
+}: TopicsListProps) {
   const [displayedTopics, setDisplayedTopics] =
     useState<TopicType[]>(topicsList);
+  const [newTopics, setNewTopics] = useState<TopicType[]>([]);
 
-  console.log(displayedTopics);
+  const [skip, setSkip] = useState(5);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadDisabled, setIsLoadDisabled] = useState(
+    () => displayedTopics.length < 5
+  );
 
-  const fetchMoreTopics = async (skip: number) => {
-    console.log("im here1: ", displayedTopics, skip);
-    if (displayedTopics.length < skip) return;
+  const { ref, inView } = useInView({});
 
-    const topics = await getTopics({ skip, take: 5 });
-    console.log("im here2: ", topics, skip);
+  const fetchMoreTopics = useCallback(async () => {
+    if (displayedTopics.length < skip) {
+      setIsLoadDisabled(true);
+      return;
+    }
+
+    setIsLoading(true);
+    const topics = await loadMoreTopics({ ...params, skip, take: 5 });
+    setIsLoading(false);
 
     if (!topics) return;
 
+    setSkip(skip + 5);
+    setNewTopics(topics);
     setDisplayedTopics([...displayedTopics, ...topics]);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayedTopics, skip]);
+
+  useEffect(() => {
+    if (inView) {
+      fetchMoreTopics();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
+
+  useEffect(() => {
+    setDisplayedTopics([...topicsList, ...newTopics]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [topicsList]);
 
   return displayedTopics.length > 0 ? (
     <div className="space-y-10">
@@ -40,7 +71,9 @@ export default function TopicsList({ session, topicsList }: TopicsListProps) {
           <TopicCard session={session} key={topic.id} topic={topic} />
         ))}
       </div>
-      <LoadMoreButton loadMore={fetchMoreTopics} />
+      {!isLoadDisabled && (
+        <div ref={ref}>{isLoading && <TopicsSkeleton />}</div>
+      )}
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">
@@ -48,5 +81,3 @@ export default function TopicsList({ session, topicsList }: TopicsListProps) {
     </div>
   );
 }
-
-TopicsList;

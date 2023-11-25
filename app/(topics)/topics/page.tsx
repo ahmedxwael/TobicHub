@@ -1,5 +1,5 @@
-import ComponentLoader from "@/components/component-loader";
 import PageHeading from "@/components/page-heading";
+import TopicsSkeleton from "@/components/topics-skeleton";
 import SearchTopic from "@/modules/topics/components/search-topic";
 import TopicsSection from "@/modules/topics/components/topics-section";
 import { getTopics } from "@/utils/topic-utils";
@@ -23,8 +23,11 @@ export default async function TopicsPage() {
         <PageHeading>all topics</PageHeading>
         <SearchTopic />
       </div>
-      <Suspense fallback={<ComponentLoader />}>
-        <TopicsSection topicsPromise={topicsPromise} />
+      <Suspense fallback={<TopicsSkeleton />}>
+        <TopicsSection
+          topicsPromise={topicsPromise}
+          params={{ where: { approved: true } }}
+        />
       </Suspense>
     </section>
   );

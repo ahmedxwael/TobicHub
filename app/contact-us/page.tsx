@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { EmailRequestBodyType } from "@/emails/types";
 import { OWNER_EMAIL } from "@/shared/flags";
-import { sendEmail } from "@/utils/email";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -42,8 +41,6 @@ export default function ContactUsPage() {
         subject: `${formData.name} wants to contact with you.`,
         message: formData.message,
       };
-
-      await sendEmail(emailObject, true);
 
       toast({
         title: "Your message has been sent successfully.",

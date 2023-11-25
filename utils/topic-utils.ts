@@ -46,10 +46,10 @@ export const getTopic = async (
   }
 };
 
-type GetTopicsOptions = {
+export type GetTopicsOptions = {
   where?: Prisma.TopicWhereInput;
   skip?: number;
-  take?: number;
+  take?: number | null;
   query?: string;
 };
 
@@ -68,9 +68,9 @@ export const getTopics = async (
   try {
     const topics = await prisma.topic.findMany({
       where: { ...where, OR: queryOptions },
-      include: { User: true },
+      include: { User: { select: userAllowedFields } },
       skip,
-      take,
+      take: take === null ? undefined : take || 5,
       orderBy: { created_at: "desc" },
     });
 

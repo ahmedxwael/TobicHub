@@ -37,7 +37,6 @@ export default async function DashboardLayout({
       <section className="relative flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <RefreshButton className="absolute right-0 top-8 lg:top-0" />
         <DashboardSideNav />
-
         {children}
       </section>
     </section>

@@ -38,7 +38,7 @@ const UserButtons = ({ userSession, onClose }: UserButtonsProps) => {
             variant="outline"
             title="Sign out"
             description="Are you sure that you want to sign out?"
-            className="w-full"
+            className="w-full bg-transparent"
           />
           <TooltipProvider delayDuration={200}>
             <Tooltip>

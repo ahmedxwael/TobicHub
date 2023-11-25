@@ -5,7 +5,10 @@ type PostsNumberProps = {
 };
 
 export default async function PostsNumber({ userId }: PostsNumberProps) {
-  const topics = await getTopics({ where: { userId } });
+  const topics = await getTopics({
+    where: { userId, approved: true },
+    take: null,
+  });
 
   return (
     <div className="flex items-center gap-2 text-neutral-400">

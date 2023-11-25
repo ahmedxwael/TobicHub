@@ -1,6 +1,6 @@
 import BackButton from "@/components/back-button";
-import ComponentLoader from "@/components/component-loader";
 import PageHeading from "@/components/page-heading";
+import TopicsSkeleton from "@/components/topics-skeleton";
 import SearchTopic from "@/modules/topics/components/search-topic";
 import TopicsSection from "@/modules/topics/components/topics-section";
 import { getTopics } from "@/utils/topic-utils";
@@ -22,8 +22,11 @@ export default function SearchPage({ searchParams: { q } }: Props) {
         <PageHeading> Results for: {q}</PageHeading>
         <SearchTopic />
       </div>
-      <Suspense fallback={<ComponentLoader />}>
-        <TopicsSection topicsPromise={topicsPromise} />
+      <Suspense fallback={<TopicsSkeleton />}>
+        <TopicsSection
+          topicsPromise={topicsPromise}
+          params={{ query: q, where: { approved: true } }}
+        />
       </Suspense>
     </section>
   );

@@ -13,7 +13,6 @@ import { EmailRequestBodyType } from "@/emails/types";
 import { TopicType } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { OWNER_EMAIL } from "@/shared/flags";
-import { sendEmail } from "@/utils/email";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -54,7 +53,6 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
       variant: "success",
     });
 
-    sendEmail(emailBody);
     router.refresh();
     setIsLoading(false);
   }
@@ -74,7 +72,6 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
       title: "Topic has been un approved.",
     });
 
-    sendEmail(emailBody);
     router.refresh();
     setIsLoading(false);
   }
@@ -93,7 +90,6 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
       title: "Topic has been deleted.",
     });
 
-    sendEmail(emailBody);
     setIsLoading(false);
     setIsDropdownOpen(false);
     router.refresh();

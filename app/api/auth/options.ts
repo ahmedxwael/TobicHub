@@ -22,8 +22,8 @@ export const authOptions: AuthOptions = {
 
       session.user.image = user?.image || session?.user?.image;
       session.user.id = user?.id.toString();
-      session.user.admin = user?.admin;
-      session.user.owner = user?.owner;
+      session.user.admin = user?.admin || false;
+      session.user.owner = user?.owner || false;
 
       return session;
     },
