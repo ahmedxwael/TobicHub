@@ -70,6 +70,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
           userSession={userSession}
           topic={topic}
           toggleApproved={() => setIsApproved(!isApproved)}
+          isApproved={isApproved}
           className="absolute right-6 top-5"
         />
       </CardHeader>

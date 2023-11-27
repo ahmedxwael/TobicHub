@@ -23,14 +23,16 @@ type ControlMenuProps = {
   className?: string;
   userSession: UserSessionType;
   toggleApproved: () => void;
+  isApproved: boolean;
 };
 
-const ControlMenu = ({
+export default function ControlMenu({
   topic,
   userSession,
   className,
   toggleApproved,
-}: ControlMenuProps) => {
+  isApproved,
+}: ControlMenuProps) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -86,12 +88,12 @@ const ControlMenu = ({
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
-    const emailBody: EmailRequestBodyType = {
-      sender: OWNER_EMAIL!,
-      receiver: topic.User.email!,
-      subject: "Topic Updates",
-      message: "Your topic has been deleted.",
-    };
+    // const emailBody: EmailRequestBodyType = {
+    //   sender: OWNER_EMAIL!,
+    //   receiver: topic.User.email!,
+    //   subject: "Topic Updates",
+    //   message: "Your topic has been deleted.",
+    // };
     await deleteTopic(topic.id);
 
     toast({
@@ -121,7 +123,7 @@ const ControlMenu = ({
               <DropdownMenuSeparator />
               {userSession?.admin &&
                 pathname.endsWith("/dashboard") &&
-                (!topic.approved ? (
+                (!isApproved ? (
                   <Button
                     disabled={isLoading}
                     variant="ghost"
@@ -167,6 +169,4 @@ const ControlMenu = ({
       )}
     </>
   );
-};
-
-export default ControlMenu;
+}
