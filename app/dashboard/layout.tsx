@@ -27,15 +27,17 @@ export default async function DashboardLayout({
 
   return (
     <section className="w-full space-y-6">
-      <div className="space-y-0.5">
-        <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
-        <p className="text-muted-foreground">
-          Users and topics management dashboard.
-        </p>
+      <div className="flex items-center justify-between gap-6">
+        <div className="space-y-0.5">
+          <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+          <p className="text-muted-foreground">
+            Users and topics management dashboard.
+          </p>
+        </div>
+        <RefreshButton className="shrink-0" />
       </div>
       <Separator className="my-8" />
-      <section className="relative flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <RefreshButton className="absolute right-0 top-8 lg:top-0" />
+      <section className="flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <DashboardSideNav />
         {children}
       </section>

@@ -29,7 +29,7 @@
     --card-foreground: 224 72% 5% /* gray-950 */;
     --popover: 0 0% 100% /* white */;
     --popover-foreground: 224 72% 5% /* gray-950 */;
-    --primary: 175 84% 32% /* teal-600 */;
+    --primary: 175 84% 30% /* teal-600 */;
     --primary-foreground: 167 77% 97% /* teal-50 */;
     --secondary: 168 86% 90% /* teal-100 */;
     --secondary-foreground: 176 61% 20% /* teal-900 */;
@@ -39,10 +39,10 @@
     --accent-foreground: 176 61% 20% /* teal-900 */;
     --destructive: 0 85% 61% /* red-500 */;
     --destructive-foreground: 210 20% 99% /* gray-50 */;
-    --border: 220 14% 91% /* gray-200 */;
+    --border: 220 14% 95% /* gray-200 */;
     --input: 220 14% 91% /* gray-200 */;
     --ring: 175 84% 32% /* teal-600 */;
-    --radius: 0.5rem;
+    --radius: 0.8rem;
   }
 
   .dark {
@@ -52,9 +52,9 @@
     --card-foreground: 210 20% 99% /* gray-50 */;
     --popover: 224 72% 5% /* gray-950 */;
     --popover-foreground: 210 20% 99% /* gray-50 */;
-    --primary: 175 84% 32% /* teal-600 */;
+    --primary: 175 84% 35% /* teal-600 */;
     --primary-foreground: 167 77% 97% /* teal-50 */;
-    --secondary: 177 70% 22% /* teal-800 */;
+    --secondary: 177 70% 20% /* teal-800 */;
     --secondary-foreground: 167 77% 97% /* teal-50 */;
     --muted: 215 28% 17% /* gray-800 */;
     --muted-foreground: 218 11% 65% /* gray-400 */;
@@ -62,7 +62,7 @@
     --accent-foreground: 167 77% 97% /* teal-50 */;
     --destructive: 0 63% 31% /* red-900 */;
     --destructive-foreground: 210 20% 99% /* gray-50 */;
-    --border: 215 28% 17% /* gray-800 */;
+    --border: 215 28% 10% /* gray-800 */;
     --input: 215 28% 17% /* gray-800 */;
     --ring: 175 84% 32% /* teal-600 */;
   }

@@ -5,10 +5,7 @@ export default function TopicsSkeleton() {
   return (
     <div className="flex flex-col gap-6">
       {new Array(3).fill(0).map((_, index) => (
-        <div
-          key={index}
-          className="mx-auto w-full max-w-full rounded-lg border"
-        >
+        <div key={index} className="mx-auto w-full max-w-full">
           <div className="flex flex-row items-center gap-4 p-6">
             <Skeleton className="h-12 w-12 rounded-full" />
             <div className="flex-1 space-y-2">

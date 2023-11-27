@@ -65,7 +65,7 @@ export default function TopicsList({
 
   return displayedTopics.length > 0 ? (
     <div className="space-y-10">
-      <div className="space-y-6 lg:space-y-10">
+      <div className="space-y-6 lg:space-y-12">
         {displayedTopics.map((topic) => (
           <TopicCard session={session} key={topic.id} topic={topic} />
         ))}

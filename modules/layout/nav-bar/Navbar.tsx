@@ -18,7 +18,7 @@ const Navbar = async () => {
   const userSession = session?.user as UserSessionType;
 
   return (
-    <header className="sticky top-0 z-10 border-b border-b-input bg-transparent backdrop-blur-lg">
+    <header className="sticky top-0 z-10 border-b border-border bg-transparent backdrop-blur-lg">
       <nav className="container flex items-center justify-between gap-8 px-8 py-4">
         <TooltipProvider delayDuration={200}>
           <Tooltip>

@@ -84,7 +84,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
           {topic.description}
         </CardDescription>
         {topic.link && (
-          <div className="mt-4 space-y-2 border-t pt-4 text-sm">
+          <div className="mt-4 space-y-2 border-t border-border pt-4 text-sm">
             <h3>Recourses:</h3>
             <Link
               href={topic.link}
