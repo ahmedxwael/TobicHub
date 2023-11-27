@@ -1,3 +1,5 @@
+"use client";
+
 import CardBadge from "@/components/card-badge";
 import {
   Card,
@@ -10,6 +12,7 @@ import { UserSessionType } from "@/modules/user/types";
 import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import ControlMenu from "./control-menu";
 
 type TopicCardProps = {
@@ -19,6 +22,8 @@ type TopicCardProps = {
 
 export default function TopicCard({ topic, session }: TopicCardProps) {
   const userSession = session?.user as UserSessionType;
+
+  const [isApproved, setIsApproved] = useState(topic.approved);
 
   const updatedAtDate = new Date(topic.updated_at);
   const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
@@ -56,7 +61,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             </div>
           </Link>
           <CardBadge
-            isValid={topic.approved}
+            isValid={isApproved}
             inValidLabel="Un Approved"
             validLabel="Approved"
           />
@@ -64,6 +69,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
         <ControlMenu
           userSession={userSession}
           topic={topic}
+          toggleApproved={() => setIsApproved(!isApproved)}
           className="absolute right-6 top-5"
         />
       </CardHeader>
@@ -82,7 +88,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             <h3>Recourses:</h3>
             <Link
               href={topic.link}
-              className="block w-fit max-w-full truncate text-blue-500"
+              className="block w-fit max-w-full truncate text-sky-600"
               target="_blank"
             >
               {topic.link}

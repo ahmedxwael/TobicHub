@@ -68,7 +68,7 @@ module.exports = {
         "show-card": {
           from: {
             opacity: 0,
-            transform: "scale(0.98)",
+            transform: "scale(0.99)",
           },
           to: {
             opacity: 1,
@@ -79,7 +79,7 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "show-card": "show-card 0.5s ease-out",
+        "show-card": "show-card 0.4s ease-out",
       },
     },
   },

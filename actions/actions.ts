@@ -2,7 +2,7 @@
 
 import { GetTopicsOptions, getTopics } from "@/utils/topic-utils";
 
-export async function loadMoreTopics(params: GetTopicsOptions) {
+export async function getTopicsAction(params: GetTopicsOptions) {
   const topics = await getTopics(params);
 
   if (!topics) return null;

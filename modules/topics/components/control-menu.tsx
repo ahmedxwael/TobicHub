@@ -22,9 +22,15 @@ type ControlMenuProps = {
   topic: TopicType;
   className?: string;
   userSession: UserSessionType;
+  toggleApproved: () => void;
 };
 
-const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
+const ControlMenu = ({
+  topic,
+  userSession,
+  className,
+  toggleApproved,
+}: ControlMenuProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -39,14 +45,15 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
 
-    const emailBody: EmailRequestBodyType = {
-      sender: OWNER_EMAIL!,
-      receiver: topic.User.email!,
-      subject: "Topic Updates",
-      message: "Your topic has been approved.",
-    };
+    // const emailBody: EmailRequestBodyType = {
+    //   sender: OWNER_EMAIL!,
+    //   receiver: topic.User.email!,
+    //   subject: "Topic Updates",
+    //   message: "Your topic has been approved.",
+    // };
 
     await editTopic(topicId, { approved: true });
+    toggleApproved();
 
     toast({
       title: "Topic has been approved successfully.",
@@ -59,14 +66,15 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    const emailBody: EmailRequestBodyType = {
-      sender: OWNER_EMAIL!,
-      receiver: topic.User.email!,
-      subject: "Topic Updates",
-      message: "Your topic has been un approved.",
-    };
+    // const emailBody: EmailRequestBodyType = {
+    //   sender: OWNER_EMAIL!,
+    //   receiver: topic.User.email!,
+    //   subject: "Topic Updates",
+    //   message: "Your topic has been un approved.",
+    // };
 
     await editTopic(topicId, { approved: false });
+    toggleApproved();
 
     toast({
       title: "Topic has been un approved.",
@@ -102,7 +110,7 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
           <DropdownMenuTrigger asChild className={className}>
             <Button
               onClick={() => setIsDropdownOpen(true)}
-              className="h-fit w-fit px-2 hover:text-primary"
+              className="h-fit w-fit px-2"
               variant="outline"
             >
               <MoreHorizontal size={15} />
@@ -117,7 +125,7 @@ const ControlMenu = ({ topic, userSession, className }: ControlMenuProps) => {
                   <Button
                     disabled={isLoading}
                     variant="ghost"
-                    className="w-full cursor-pointer hover:bg-primary hover:text-white"
+                    className="w-full cursor-pointer hover:text-white"
                     onClick={() => handleTopicApprovement(topic.id)}
                   >
                     Approve

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { links } from "@/shared/urls";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 type Props = {
   closeMenu?: () => void;
@@ -12,6 +13,10 @@ type Props = {
 
 const NavLinks = ({ closeMenu, isAdmin }: Props) => {
   const pathname = usePathname();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
 
   return (
     <>

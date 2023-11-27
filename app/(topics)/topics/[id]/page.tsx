@@ -55,10 +55,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
     <section>
       <BackButton />
       <div className="space-y-8">
-        <div className="space-y-4 border-b pb-6 md:pb-8">
-          <h1 className="text-2xl font-bold first-letter:uppercase md:text-3xl">
-            {topic.title}
-          </h1>
+        <div className="border-b pb-6 md:pb-8">
           <Link
             href={`/profile/${topic.User.id}`}
             className="flex w-fit items-center gap-4"
@@ -81,6 +78,9 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
             </div>
           </Link>
         </div>
+        <h1 className="text-2xl font-bold first-letter:uppercase md:text-3xl">
+          {topic.title}
+        </h1>
         <p className="whitespace-break-spaces leading-7">{topic.description}</p>
         {topic.link && (
           <div className="mt-4 space-y-2 border-t pt-4 text-sm">

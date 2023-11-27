@@ -6,7 +6,7 @@ type PageHeadingProps = {
 
 export default function PageHeading({ children }: PageHeadingProps) {
   return (
-    <h1 className="w-fit text-2xl font-bold capitalize tracking-wider">
+    <h1 className="w-fit text-2xl font-bold capitalize tracking-wider text-primary">
       {children}
     </h1>
   );

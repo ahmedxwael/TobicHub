@@ -23,7 +23,7 @@ const Navbar = async () => {
         <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
-              <Link href="/" className="text-xl font-bold">
+              <Link href="/" className="text-xl font-bold text-primary">
                 TopicHub
               </Link>
             </TooltipTrigger>

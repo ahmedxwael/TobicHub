@@ -42,7 +42,7 @@ const SearchTopic = () => {
           aria-label="search"
           size="sm"
           variant="outline"
-          className="default-shadow text-xl transition-transform hover:scale-105 hover:text-primary"
+          className="default-shadow text-xl"
         >
           <Search size={20} />
         </Button>

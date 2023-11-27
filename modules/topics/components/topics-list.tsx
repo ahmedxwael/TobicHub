@@ -1,6 +1,6 @@
 "use client";
 
-import { loadMoreTopics } from "@/actions/actions";
+import { getTopicsAction } from "@/actions/actions";
 import TopicsSkeleton from "@/components/topics-skeleton";
 import { TopicType } from "@/modules/topics/types";
 import { GetTopicsOptions } from "@/utils/topic-utils";
@@ -17,6 +17,8 @@ type TopicsListProps = {
   params?: GetTopicsOptions;
 };
 
+let skip = 5;
+
 export default function TopicsList({
   session,
   topicsList,
@@ -24,45 +26,42 @@ export default function TopicsList({
 }: TopicsListProps) {
   const [displayedTopics, setDisplayedTopics] =
     useState<TopicType[]>(topicsList);
-  const [newTopics, setNewTopics] = useState<TopicType[]>([]);
 
-  const [skip, setSkip] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadDisabled, setIsLoadDisabled] = useState(
-    () => displayedTopics.length < 5
+    () => topicsList.length < 5
   );
 
   const { ref, inView } = useInView({});
 
-  const fetchMoreTopics = useCallback(async () => {
-    if (displayedTopics.length < skip) {
-      setIsLoadDisabled(true);
-      return;
-    }
-
+  const loadMoreTopics = useCallback(async () => {
     setIsLoading(true);
-    const topics = await loadMoreTopics({ ...params, skip, take: 5 });
+    const topics = await getTopicsAction({ ...params, skip, take: 5 });
     setIsLoading(false);
 
     if (!topics) return;
 
-    setSkip(skip + 5);
-    setNewTopics(topics);
+    skip += 5;
     setDisplayedTopics([...displayedTopics, ...topics]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayedTopics, skip]);
+  }, [params]);
 
   useEffect(() => {
     if (inView) {
-      fetchMoreTopics();
+      if (displayedTopics.length < skip) {
+        setIsLoadDisabled(true);
+        return;
+      }
+
+      loadMoreTopics();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   useEffect(() => {
-    setDisplayedTopics([...topicsList, ...newTopics]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [topicsList]);
+    skip = 5;
+    setIsLoadDisabled(topicsList.length < 0);
+  }, [topicsList.length]);
 
   return displayedTopics.length > 0 ? (
     <div className="space-y-10">
@@ -77,7 +76,7 @@ export default function TopicsList({
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">
-      There are no topics to show.
+      w There are no topics to show.
     </div>
   );
 }

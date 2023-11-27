@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, MoveLeft } from "lucide-react";
+import { MoveLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 
