@@ -120,7 +120,6 @@ export default function ControlMenu({
           </DropdownMenuTrigger>
           {isDropdownOpen && (
             <DropdownMenuContent align="end" className="w-[170px]">
-              <DropdownMenuSeparator />
               {userSession?.admin &&
                 pathname.endsWith("/dashboard") &&
                 (!isApproved ? (
