@@ -13,7 +13,7 @@ export default function ToTopButton() {
       variant="outline"
       size="sm"
       aria-label="to top button"
-      className="default-shadow fixed bottom-6 right-6 z-20 w-fit p-2"
+      className="fixed bottom-6 right-6 z-20 w-fit p-2"
       onClick={handleScrollToTop}
     >
       <ChevronUp size={20} />

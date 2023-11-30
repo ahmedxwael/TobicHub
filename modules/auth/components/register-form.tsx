@@ -26,7 +26,7 @@ export function RegisterForm({ providers }: RegisterFormProps) {
   const [isAgree, setIsAgree] = useState(true);
 
   return (
-    <Card className="default-shadow mx-auto w-[400px] max-w-full pb-6">
+    <Card className="mx-auto w-[400px] max-w-full pb-6">
       <CardHeader className="space-y-1">
         <CardTitle className="mb-1 text-2xl md:text-3xl">Join us now</CardTitle>
         <CardDescription className="">
@@ -39,7 +39,7 @@ export function RegisterForm({ providers }: RegisterFormProps) {
             disabled={!providers?.google || !isAgree}
             onClick={() => signIn(providers?.google?.id)}
             variant="outline"
-            className="default-shadow flex h-auto items-center gap-2 py-3"
+            className="flex h-auto items-center gap-2 py-3"
           >
             Google <GoogleIcon />
           </Button>
@@ -47,29 +47,11 @@ export function RegisterForm({ providers }: RegisterFormProps) {
             disabled={!providers?.github || !isAgree}
             onClick={() => signIn(providers?.github?.id)}
             variant="outline"
-            className="default-shadow flex h-auto items-center gap-2 py-3"
+            className="flex h-auto items-center gap-2 py-3"
           >
             Github <GithubIcon />
           </Button>
         </div>
-        {/* <div className="relative">
-					<div className="absolute inset-0 flex items-center">
-						<span className="w-full border-t" />
-					</div>
-					<div className="relative flex justify-center text-xs uppercase">
-						<span className="bg-background px-2 text-muted-foreground">
-							Or continue with
-						</span>
-					</div>
-				</div> 
-				<div className="grid gap-2">
-					<Label htmlFor="email">Email</Label>
-					<Input id="email" type="email" placeholder="m@example.com" />
-				</div>
-				<div className="grid gap-2">
-					<Label htmlFor="password">Password</Label>
-					<Input id="password" type="password" placeholder="password" />
-				</div> */}
         <div className="flex items-start gap-2 text-xs">
           <Checkbox
             id="privacy"

@@ -33,7 +33,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
   return (
     <Card
       key={topic.id}
-      className="default-shadow mx-auto max-w-full animate-show-card space-y-5"
+      className="mx-auto max-w-full animate-show-card space-y-5"
     >
       <CardHeader className="relative flex flex-row items-center justify-between">
         <div className="flex w-fit flex-wrap items-center gap-4">
@@ -42,7 +42,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             className="flex items-center gap-4"
           >
             <Image
-              src={topic.User.image || "/images/avatar.jpg"}
+              src={topic.User.image || "/images/avatar.png"}
               alt="user image"
               width={500}
               height={500}

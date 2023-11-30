@@ -34,7 +34,7 @@ export default function RootLayout({ children, session }: Props) {
             disableTransitionOnChange
           >
             <Navbar />
-            <main className="container mx-auto flex min-h-[calc(100vh-72px)] flex-col px-8 py-24 text-black dark:text-white">
+            <main className="container mx-auto flex min-h-[calc(100vh-72px)] flex-col px-8 py-24">
               {children}
             </main>
             <Toaster />

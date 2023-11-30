@@ -51,7 +51,7 @@ const UserButtons = ({ userSession, onClose }: UserButtonsProps) => {
                   <Avatar>
                     <Image
                       priority
-                      src={userSession?.image || "/images/avatar.jpg"}
+                      src={userSession?.image || "/images/avatar.png"}
                       alt="user"
                       width={500}
                       height={500}
@@ -71,7 +71,7 @@ const UserButtons = ({ userSession, onClose }: UserButtonsProps) => {
           href="/register"
           className={cn(
             buttonVariants({ variant: "default", size: "lg" }),
-            "w-full text-black"
+            "w-full"
           )}
         >
           Sign in

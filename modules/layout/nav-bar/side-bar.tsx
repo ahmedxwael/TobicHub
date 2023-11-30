@@ -33,7 +33,7 @@ export default function SideBar({ userSession }: SideBarProps) {
         <Button
           onClick={() => setIsSheetOpen(true)}
           variant="outline"
-          className="default-shadow block p-2 md:hidden"
+          className="block p-2 md:hidden"
         >
           <AlignJustify />
         </Button>

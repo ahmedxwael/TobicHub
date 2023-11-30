@@ -29,7 +29,7 @@
     --card-foreground: 224 72% 5% /* gray-950 */;
     --popover: 0 0% 100% /* white */;
     --popover-foreground: 224 72% 5% /* gray-950 */;
-    --primary: 175 84% 30% /* teal-600 */;
+    --primary: 175 84% 35% /* teal-600 */;
     --primary-foreground: 167 77% 97% /* teal-50 */;
     --secondary: 168 86% 90% /* teal-100 */;
     --secondary-foreground: 176 61% 20% /* teal-900 */;
@@ -41,7 +41,7 @@
     --destructive-foreground: 210 20% 99% /* gray-50 */;
     --border: 220 14% 95% /* gray-200 */;
     --input: 220 14% 91% /* gray-200 */;
-    --ring: 175 84% 32% /* teal-600 */;
+    --ring: 175 84% 35% /* teal-600 */;
     --radius: 0.8rem;
   }
 
@@ -52,7 +52,7 @@
     --card-foreground: 210 20% 99% /* gray-50 */;
     --popover: 224 72% 5% /* gray-950 */;
     --popover-foreground: 210 20% 99% /* gray-50 */;
-    --primary: 175 84% 35% /* teal-600 */;
+    --primary: 175 84% 32% /* teal-600 */;
     --primary-foreground: 167 77% 97% /* teal-50 */;
     --secondary: 177 70% 20% /* teal-800 */;
     --secondary-foreground: 167 77% 97% /* teal-50 */;
@@ -81,10 +81,6 @@
   }
 }
 
-.default-shadow {
-  @apply shadow-[0_8px_16px_0_rgba(var(--primary),0.02),8px_0_16px_0_rgba(var(--primary),0.02)];
-}
-
 @layer components {
   .center {
     @apply flex items-center justify-center;
@@ -97,8 +93,5 @@
   }
   .btn-alt {
     @apply border-2 border-white/20 transition-colors hover:bg-neutral-900 disabled:cursor-not-allowed disabled:bg-opacity-40 disabled:text-white/40 disabled:hover:bg-black/40;
-  }
-  .btn-small {
-    @apply rounded-lg px-2.5 py-1.5;
   }
 }

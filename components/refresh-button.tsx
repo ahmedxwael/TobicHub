@@ -18,7 +18,7 @@ export default function RefreshButton({ className }: RefreshButtonProps) {
     <Button
       variant="outline"
       size="icon"
-      className={cn("default-shadow hover:text-primary", className)}
+      className={cn(className)}
       onClick={() => {
         router.refresh();
         toast({ title: "Data updated successfully" });

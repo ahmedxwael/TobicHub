@@ -1,39 +1,55 @@
 "use client";
 
+import { getTopicsAction } from "@/actions/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { debounce } from "@/utils/utils";
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { ChangeEvent, useState } from "react";
+import SearchItemSkeleton from "../skeletons/search-item-skeleton";
+import { TopicType } from "../types";
+import SearchItem from "./search-item";
 
-type Inputs = {
-  search: string;
+type SearchTopicProps = {
+  notApproved?: boolean;
+  userId?: string;
 };
 
-const SearchTopic = () => {
-  const router = useRouter();
+export default function SearchTopic({ notApproved, userId }: SearchTopicProps) {
+  const [topics, setTopics] = useState<TopicType[]>([]);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = ({ search }) => {
-    const encodedQueryString = encodeURI(search);
+  const handleInputChange = debounce(
+    async (e: ChangeEvent<HTMLInputElement>) => {
+      const searchValue = e.target.value.trim();
 
-    router.push(`/search?q=${encodedQueryString}`);
-    setIsPopupOpen(false);
-  };
+      if (!searchValue) {
+        setTopics([]);
+        return;
+      }
+
+      setIsLoading(true);
+      const topicsList = await getTopicsAction({
+        query: searchValue,
+        where: { approved: !notApproved, userId },
+      });
+
+      setTopics(topicsList || []);
+      setIsLoading(false);
+    }
+  );
 
   return (
     <Dialog>
@@ -42,45 +58,46 @@ const SearchTopic = () => {
           aria-label="search"
           size="sm"
           variant="outline"
-          className="default-shadow text-xl"
+          className="text-xl"
         >
           <Search size={20} />
         </Button>
       </DialogTrigger>
       {isPopupOpen && (
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="">
           <DialogHeader>
             <DialogTitle>Search for topic</DialogTitle>
           </DialogHeader>
-          <form
-            className="mt-4 flex flex-col gap-y-4"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="space-y-3">
-              <label htmlFor="search">Topic</label>
-              <Input
-                id="search"
-                type="text"
-                {...register("search", {
-                  required: "You have to write something to search.",
-                })}
-                placeholder="Search for a specific topic"
-                className="mt-3"
-              />
-            </div>
-            {errors.search && (
-              <span className="inline-block text-sm text-red-500">
-                {errors.search.message}
-              </span>
-            )}
-            <Button size="lg" className="ml-auto">
-              Search
-            </Button>
-          </form>
+
+          <div className="flex-1 space-y-3">
+            <label htmlFor="search">Topic</label>
+            <Input
+              autoComplete="off"
+              id="search"
+              type="text"
+              required
+              placeholder="Search for a specific topic"
+              onChange={handleInputChange}
+            />
+          </div>
+          <Separator className="my-4" />
+          <DialogFooter>
+            <ScrollArea className="max-h-[300px] w-full">
+              {isLoading ? (
+                <SearchItemSkeleton />
+              ) : topics.length > 0 ? (
+                <div className="flex flex-col gap-5">
+                  {topics.map((topic) => (
+                    <SearchItem key={topic.id} topic={topic} />
+                  ))}
+                </div>
+              ) : (
+                <div className="py-4 text-center">There are no topics</div>
+              )}
+            </ScrollArea>
+          </DialogFooter>
         </DialogContent>
       )}
     </Dialog>
   );
-};
-
-export default SearchTopic;
+}

@@ -2,6 +2,7 @@ import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
 import TopicsSkeleton from "@/components/topics-skeleton";
+import SearchTopic from "@/modules/topics/components/search-topic";
 import TopicsSection from "@/modules/topics/components/topics-section";
 import ProfileCard from "@/modules/user/components/profile-card";
 import { ParamsType } from "@/shared/types";
@@ -55,7 +56,10 @@ export default async function Profile({ params: { id } }: ParamsType) {
       <BackButton />
       <ProfileCard user={user} />
       <div className="mt-20 flex flex-col gap-12">
-        <PageHeading>Topics</PageHeading>
+        <div className="flex w-full flex-wrap items-center justify-between gap-6">
+          <PageHeading>Topics</PageHeading>
+          <SearchTopic userId={user.id} />
+        </div>
         <Suspense fallback={<TopicsSkeleton />}>
           <TopicsSection
             topicsPromise={topicsPromise}

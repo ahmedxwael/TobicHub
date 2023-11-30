@@ -73,7 +73,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
     <div className="relative h-[150px] w-[150px] rounded-full bg-white/10">
       <div className="group h-full w-full">
         <Image
-          src={user.image || "/images/avatar.jpg"}
+          src={user.image || "/images/avatar.png"}
           alt="User Profile image"
           width={500}
           height={500}
@@ -93,7 +93,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
           <DialogContent>
             <DialogTitle>{user.name}&lsquo;s image</DialogTitle>
             <Image
-              src={user.image || "/images/avatar.jpg"}
+              src={user.image || "/images/avatar.png"}
               alt="User Profile image"
               width={500}
               height={500}
