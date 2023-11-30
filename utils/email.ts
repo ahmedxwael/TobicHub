@@ -7,7 +7,6 @@ export async function sendEmail(body: EmailRequestBodyType, awaited = false) {
         throw new Error("Something went wrong.");
       })
     : axios.post("/api/send", body).catch((error) => {
-        console.log(error);
         throw new Error("Something went wrong.");
       });
 }

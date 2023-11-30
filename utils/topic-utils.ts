@@ -60,6 +60,7 @@ export const getTopics = async (
 
   const queryOptions: Prisma.TopicWhereInput[] | undefined = query
     ? [
+        { User: { name: { contains: query, mode: "insensitive" } } },
         { title: { contains: query, mode: "insensitive" } },
         { description: { contains: query, mode: "insensitive" } },
       ]

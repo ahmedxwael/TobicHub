@@ -20,8 +20,6 @@ export async function POST(request: NextRequest) {
       react: React.createElement(EmailTemplate, { subject, sender, message }),
     });
 
-    console.log("route: ", data);
-
     if (data?.id) {
       return NextResponse.json(
         { message: "Message sent successfully.", ...data },
