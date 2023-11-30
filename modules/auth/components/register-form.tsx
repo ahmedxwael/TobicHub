@@ -29,7 +29,7 @@ export function RegisterForm({ providers }: RegisterFormProps) {
     <Card className="mx-auto w-[400px] max-w-full pb-6">
       <CardHeader className="space-y-1">
         <CardTitle className="mb-1 text-2xl md:text-3xl">Join us now</CardTitle>
-        <CardDescription className="">
+        <CardDescription>
           You can join our community using your google or github accounts.
         </CardDescription>
       </CardHeader>

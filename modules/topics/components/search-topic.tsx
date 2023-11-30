@@ -15,7 +15,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { debounce } from "@/utils/utils";
 import { Search } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import SearchItemSkeleton from "../skeletons/search-item-skeleton";
 import { TopicType } from "../types";
 import SearchItem from "./search-item";
@@ -52,7 +52,7 @@ export default function SearchTopic({ notApproved, userId }: SearchTopicProps) {
   );
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={() => setTopics([])}>
       <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
         <Button
           aria-label="search"
@@ -64,7 +64,7 @@ export default function SearchTopic({ notApproved, userId }: SearchTopicProps) {
         </Button>
       </DialogTrigger>
       {isPopupOpen && (
-        <DialogContent className="">
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Search for topic</DialogTitle>
           </DialogHeader>
