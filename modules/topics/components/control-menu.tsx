@@ -114,6 +114,7 @@ export default function ControlMenu({
               onClick={() => setIsDropdownOpen(true)}
               className="h-fit w-fit px-2"
               variant="outline"
+              aria-label="options"
             >
               <MoreHorizontal size={15} />
             </Button>

@@ -83,6 +83,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
         <Dialog>
           <DialogTrigger asChild>
             <Button
+              aria-label="view profile image"
               variant="link"
               size="sm"
               className="pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center rounded-full bg-input/60 text-primary opacity-0 transition-opacity duration-300 group-hover:pointer-events-auto group-hover:opacity-100"
@@ -108,6 +109,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
         <Dialog>
           <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
             <Button
+              aria-label="update profile image"
               variant="ghost"
               size="sm"
               className="absolute bottom-0 right-0 text-primary hover:bg-primary hover:text-white"

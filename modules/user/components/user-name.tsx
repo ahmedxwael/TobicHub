@@ -62,6 +62,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
           disabled={isSubmitting}
           variant="ghost"
           size="sm"
+          aria-label="cancel"
           className="absolute right-0 top-1/2 -translate-y-1/2"
           onClick={() => {
             setIsEditingName(false);
@@ -71,7 +72,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
           <X size={20} />
         </Button>
       </div>
-      <Button disabled={isSubmitting} size="sm">
+      <Button aria-label="edit user name" disabled={isSubmitting} size="sm">
         {isSubmitting ? (
           <Loader2 size={20} className="animate-spin" />
         ) : (
