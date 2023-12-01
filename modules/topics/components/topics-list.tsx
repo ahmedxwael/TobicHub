@@ -76,7 +76,7 @@ export default function TopicsList({
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">
-      w There are no topics to show.
+      There are no topics to show.
     </div>
   );
 }

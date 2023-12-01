@@ -19,7 +19,7 @@ export default async function DashboardPage() {
     <section className="flex w-full flex-1 flex-col gap-10 lg:max-w-2xl">
       <div className="flex w-full flex-wrap items-center justify-between gap-6">
         <PageHeading>topics</PageHeading>
-        <SearchTopic notApproved />
+        <SearchTopic approved={false} />
       </div>
 
       <Suspense fallback={<TopicsSkeleton />}>

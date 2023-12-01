@@ -35,7 +35,7 @@ export const generateStaticParams = async () => {
   return topics.map((topic) => ({ id: topic.id }));
 };
 
-export const revalidate = 10;
+export const revalidate = 0
 
 export default async function TopicPage({ params: { id } }: TopicPageProps) {
   const topic = await getTopic(id);

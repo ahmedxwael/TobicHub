@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "Topics page that contains general information about popular topics.",
 };
 
-export const revalidate = 60;
+export const revalidate = 0
 
 export default async function TopicsPage() {
   const topicsPromise = getTopics({ where: { approved: true } });

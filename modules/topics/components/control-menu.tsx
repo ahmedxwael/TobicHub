@@ -5,14 +5,11 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { EmailRequestBodyType } from "@/emails/types";
 import { TopicType } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
-import { OWNER_EMAIL } from "@/shared/flags";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -139,7 +136,7 @@ export default function ControlMenu({
                     disabled={isLoading}
                     onClick={() => handleTopicUnApprovement(topic.id)}
                   >
-                    Un Approve
+                    Unapproved
                   </Button>
                 ))}
               <Button

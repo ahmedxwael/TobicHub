@@ -15,17 +15,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { debounce } from "@/utils/utils";
 import { Search } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import SearchItemSkeleton from "../skeletons/search-item-skeleton";
 import { TopicType } from "../types";
 import SearchItem from "./search-item";
 
 type SearchTopicProps = {
-  notApproved?: boolean;
+  approved: boolean;
   userId?: string;
 };
 
-export default function SearchTopic({ notApproved, userId }: SearchTopicProps) {
+export default function SearchTopic({ approved = true, userId }: SearchTopicProps) {
   const [topics, setTopics] = useState<TopicType[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +43,7 @@ export default function SearchTopic({ notApproved, userId }: SearchTopicProps) {
       setIsLoading(true);
       const topicsList = await getTopicsAction({
         query: searchValue,
-        where: { approved: !notApproved, userId },
+        where: { approved, userId },
       });
 
       setTopics(topicsList || []);
