@@ -21,7 +21,7 @@ import { TopicType } from "../types";
 import SearchItem from "./search-item";
 
 type SearchTopicProps = {
-  approved: boolean;
+  approved?: boolean;
   userId?: string;
 };
 
