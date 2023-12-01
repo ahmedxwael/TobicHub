@@ -8,8 +8,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
+import { EmailRequestBodyType } from "@/emails/types";
 import { TopicType } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
+import { OWNER_EMAIL } from "@/shared/flags";
+import { sendEmail } from "@/utils/email";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -44,15 +47,17 @@ export default function ControlMenu({
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
 
-    // const emailBody: EmailRequestBodyType = {
-    //   sender: OWNER_EMAIL!,
-    //   receiver: topic.User.email!,
-    //   subject: "Topic Updates",
-    //   message: "Your topic has been approved.",
-    // };
+    const emailBody: EmailRequestBodyType = {
+      sender: OWNER_EMAIL!,
+      receiver: topic.User.email!,
+      subject: "Topic Updates",
+      message: "Your topic has been approved.",
+    };
 
     await editTopic(topicId, { approved: true });
+
     toggleApproved();
+    sendEmail(emailBody);
 
     toast({
       title: "Topic has been approved successfully.",
@@ -65,18 +70,20 @@ export default function ControlMenu({
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    // const emailBody: EmailRequestBodyType = {
-    //   sender: OWNER_EMAIL!,
-    //   receiver: topic.User.email!,
-    //   subject: "Topic Updates",
-    //   message: "Your topic has been un approved.",
-    // };
+    const emailBody: EmailRequestBodyType = {
+      sender: OWNER_EMAIL!,
+      receiver: topic.User.email!,
+      subject: "Topic Updates",
+      message: "Your topic has been un approved.",
+    };
 
     await editTopic(topicId, { approved: false });
+
     toggleApproved();
+    sendEmail(emailBody);
 
     toast({
-      title: "Topic has been un approved.",
+      title: "Topic has been unapproved.",
     });
 
     router.refresh();
@@ -85,13 +92,15 @@ export default function ControlMenu({
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
-    // const emailBody: EmailRequestBodyType = {
-    //   sender: OWNER_EMAIL!,
-    //   receiver: topic.User.email!,
-    //   subject: "Topic Updates",
-    //   message: "Your topic has been deleted.",
-    // };
+    const emailBody: EmailRequestBodyType = {
+      sender: OWNER_EMAIL!,
+      receiver: topic.User.email!,
+      subject: "Topic Updates",
+      message: "Your topic has been deleted.",
+    };
+
     await deleteTopic(topic.id);
+    sendEmail(emailBody);
 
     toast({
       title: "Topic has been deleted.",

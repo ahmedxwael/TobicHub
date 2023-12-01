@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 
 type CustomAlertDialogProps = {
   action?: () => void;
@@ -49,6 +49,7 @@ export default function CustomAlertDialog({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
+            className={buttonVariants({ variant: "destructive" })}
             onClick={() => {
               action?.();
             }}
