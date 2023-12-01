@@ -21,11 +21,11 @@ import { TopicType } from "../types";
 import SearchItem from "./search-item";
 
 type SearchTopicProps = {
-  approved?: boolean;
+  unapproved?: boolean;
   userId?: string;
 };
 
-export default function SearchTopic({ approved = true, userId }: SearchTopicProps) {
+export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
   const [topics, setTopics] = useState<TopicType[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +43,7 @@ export default function SearchTopic({ approved = true, userId }: SearchTopicProp
       setIsLoading(true);
       const topicsList = await getTopicsAction({
         query: searchValue,
-        where: { approved, userId },
+        where: { approved: unapproved ? undefined : true, userId },
       });
 
       setTopics(topicsList || []);
