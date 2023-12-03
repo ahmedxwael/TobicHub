@@ -46,19 +46,9 @@ export default function ControlMenu({
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
-
-    // const emailBody: EmailRequestBodyType = {
-    //   sender: OWNER_EMAIL!,
-    //   receiver: topic.User.email!,
-    //   subject: "Topic Updates",
-    //   message: "Your topic has been approved.",
-    // };
-
     await editTopic(topicId, { approved: true });
 
     toggleApproved();
-    // sendEmail(emailBody);
-
     toast({
       title: "Topic has been approved successfully.",
       variant: "success",
@@ -70,18 +60,9 @@ export default function ControlMenu({
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    // const emailBody: EmailRequestBodyType = {
-    //   sender: OWNER_EMAIL!,
-    //   receiver: topic.User.email!,
-    //   subject: "Topic Updates",
-    //   message: "Your topic has been un approved.",
-    // };
-
     await editTopic(topicId, { approved: false });
 
     toggleApproved();
-    // sendEmail(emailBody);
-
     toast({
       title: "Topic has been unapproved.",
     });
@@ -92,15 +73,7 @@ export default function ControlMenu({
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
-    // const emailBody: EmailRequestBodyType = {
-    //   sender: OWNER_EMAIL!,
-    //   receiver: topic.User.email!,
-    //   subject: "Topic Updates",
-    //   message: "Your topic has been deleted.",
-    // };
-
     await deleteTopic(topic.id);
-    // sendEmail(emailBody);
 
     toast({
       title: "Topic has been deleted.",

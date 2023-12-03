@@ -29,21 +29,13 @@ export const getUser = async (
 };
 
 export const updateUser = async (id: string, data: Partial<UserType>) => {
-  try {
-    await axios.patch(`/api/users/${id}`, data).catch(() => {
-      throw new Error("Something went wrong.");
-    });
-  } catch (error) {
-    throw new Error("Couldn't update user.");
-  }
+  await axios.patch(`/api/users/${id}`, data).catch(() => {
+    throw new Error("Something went wrong.");
+  });
 };
 
 export const deleteUser = async (id: string) => {
-  try {
-    await axios.delete(`/api/users/${id}`).catch(() => {
-      throw new Error("Something went wrong.");
-    });
-  } catch (error) {
-    throw new Error("Couldn't delete user.");
-  }
+  await axios.delete(`/api/users/${id}`).catch(() => {
+    throw new Error("Something went wrong.");
+  });
 };

@@ -9,7 +9,7 @@ import {
 import UserControlMenus from "@/modules/user/components/user-control-menu";
 import Image from "next/image";
 import Link from "next/link";
-import { UserSessionType, UserType } from "../types";
+import { UserSessionType, UserType } from "../../user/types";
 
 type UserCardProps = {
   user: UserType;

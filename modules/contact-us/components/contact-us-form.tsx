@@ -5,9 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { EmailRequestBodyType } from "@/emails/types";
-import { OWNER_EMAIL } from "@/shared/flags";
-import { sendEmail } from "@/utils/email";
+import { sendContactMessage } from "@/utils/contact-utils";
 import { CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -35,14 +33,7 @@ export default function ContactUsForm() {
     setIsSubmitting(true);
 
     try {
-      const emailBody: EmailRequestBodyType = {
-        sender: formData.email,
-        receiver: OWNER_EMAIL!,
-        subject: `TopicHub | ${formData.name} wants to contact`,
-        message: formData.message,
-      };
-
-      await sendEmail(emailBody, true);
+      await sendContactMessage(formData);
 
       toast({
         title: "Your message has been sent successfully.",

@@ -17,6 +17,10 @@ const sidebarNavItems = [
     title: "Users",
     href: "/dashboard/users",
   },
+  {
+    title: "Contacts",
+    href: "/dashboard/contacts",
+  },
 ];
 
 export default function DashboardSideNav({}: DashboardSideNavProps) {
