@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function ContactUsPage() {
   return (
-    <section className="flex w-full">
+    <section className="flex w-full py-20">
       <div className="relative hidden min-h-[700px] flex-1 overflow-hidden rounded-xl lg:block">
         <Image
           src="/images/contact-us-unsplash.jpg"

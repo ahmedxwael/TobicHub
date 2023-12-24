@@ -26,7 +26,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <section className="w-full space-y-6">
+    <section className="w-full space-y-6 py-20">
       <div className="flex items-center justify-between gap-6">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>

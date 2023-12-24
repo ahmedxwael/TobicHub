@@ -27,7 +27,7 @@ export default function DashboardSideNav({}: DashboardSideNavProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-fit lg:w-1/5">
+    <aside className="w-fit lg:min-w-[280px]">
       <nav
         className={cn("flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1")}
       >

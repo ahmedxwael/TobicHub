@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const CreateTopic = async () => {
   return (
-    <section className="center">
+    <section className="center py-20">
       <TopicForm type="create" />
     </section>
   );

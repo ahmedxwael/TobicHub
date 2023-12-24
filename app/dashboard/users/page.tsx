@@ -18,12 +18,12 @@ export default async function UsersPage() {
   }
 
   return (
-    <section className="w-full flex-col gap-10 lg:max-w-2xl">
+    <section className="w-full flex-col gap-10">
       <h1 className="w-fit text-2xl font-bold capitalize tracking-wider">
         Users
       </h1>
       {users.length > 0 ? (
-        <div className="mt-12 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6">
+        <div className="mt-12 grid gap-6 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {users.map((user) => (
             <UserCard key={user.id} user={user} userSession={userSession} />
           ))}

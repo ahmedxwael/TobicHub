@@ -12,12 +12,12 @@ export default async function ContactsPage() {
   }
 
   return (
-    <section className="w-full flex-col gap-10 lg:max-w-2xl">
+    <section className="w-full flex-col gap-10">
       <h1 className="w-fit text-2xl font-bold capitalize tracking-wider">
-        Users
+        Contact Users
       </h1>
       {contacts.length > 0 ? (
-        <div className="relative mt-12 flex flex-col gap-6">
+        <div className="relative mt-12 grid gap-6 sm:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
           {contacts.map((contact) => (
             <ContactCard key={contact.id} contact={contact} />
           ))}

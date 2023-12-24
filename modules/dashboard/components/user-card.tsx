@@ -49,7 +49,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
           <div className="text-sm text-muted-foreground">{user.email}</div>
         </Link>
       </div>
-      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+      <div className="mt-6 flex flex-wrap items-center gap-2 text-xs">
         <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
