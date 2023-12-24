@@ -1,11 +1,15 @@
+import { authOptions } from "@/app/api/auth/options";
+import AddTopic from "@/app/dashboard/components/add-topic";
 import PageHeading from "@/components/page-heading";
 import TopicsSkeleton from "@/components/topics-skeleton";
 import SearchTopic from "@/modules/topics/components/search-topic";
 import TopicsSection from "@/modules/topics/components/topics-section";
 import { getUser } from "@/modules/user/services/profile-services";
+import { UserSessionType } from "@/modules/user/types";
 import { ParamsType } from "@/shared/types";
 import { getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
 export const generateMetadata = async ({
@@ -31,6 +35,9 @@ export default async function Profile({ params: { id } }: ParamsType) {
     where: { userId: id, approved: true },
   });
 
+  const session = await getServerSession(authOptions);
+  const userSession = session?.user as UserSessionType | undefined;
+
   return (
     <section className="flex w-[800px] max-w-full flex-col">
       <div className="flex flex-col gap-12">
@@ -38,6 +45,7 @@ export default async function Profile({ params: { id } }: ParamsType) {
           <PageHeading>Topics</PageHeading>
           <SearchTopic userId={id} />
         </div>
+        <AddTopic userId={id} userSession={userSession} />
         <Suspense fallback={<TopicsSkeleton />}>
           <TopicsSection
             topicsPromise={topicsPromise}
