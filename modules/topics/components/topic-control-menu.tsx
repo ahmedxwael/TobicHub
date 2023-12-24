@@ -18,7 +18,7 @@ import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-type ControlMenuProps = {
+type TopicControlMenuProps = {
   topic: TopicType;
   className?: string;
   userSession: UserSessionType;
@@ -26,13 +26,13 @@ type ControlMenuProps = {
   isApproved: boolean;
 };
 
-export default function ControlMenu({
+export default function TopicControlMenu({
   topic,
   userSession,
   className,
   toggleApproved,
   isApproved,
-}: ControlMenuProps) {
+}: TopicControlMenuProps) {
   const router = useRouter();
   const pathname = usePathname();
 

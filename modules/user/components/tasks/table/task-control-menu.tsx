@@ -38,8 +38,6 @@ export default function TaskControlMenu({
   const handleEditTask = async (updatedTask: Partial<Task>) => {
     setIsLoading(true);
 
-    console.log(updatedTask);
-
     await updateTask(task.id, updatedTask);
 
     setIsLoading(false);

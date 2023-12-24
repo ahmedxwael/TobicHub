@@ -1,30 +1,25 @@
 import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
-import TopicsSkeleton from "@/components/topics-skeleton";
 import SearchTopic from "@/modules/topics/components/search-topic";
-import TopicsSection from "@/modules/topics/components/topics-section";
 import { getTopics } from "@/utils/topic-utils";
-import { Suspense } from "react";
+import TopicsTable from "./components/table/topics-table";
 
 export const revalidate = 0;
 
 export default async function DashboardPage() {
-  const topicsPromise = getTopics();
+  const topics = await getTopics({ take: null });
 
-  if (!topicsPromise) {
+  if (!topics) {
     return <NotFound message="Could not retrieve the list of topics." />;
   }
 
   return (
-    <section className="flex w-full flex-1 flex-col gap-10 lg:max-w-2xl">
+    <section className="flex w-full flex-1 flex-col gap-10">
       <div className="flex w-full flex-wrap items-center justify-between gap-6">
         <PageHeading>topics</PageHeading>
         <SearchTopic unapproved />
       </div>
-
-      <Suspense fallback={<TopicsSkeleton />}>
-        <TopicsSection topicsPromise={topicsPromise} />
-      </Suspense>
+      <TopicsTable topics={topics} />
     </section>
   );
 }

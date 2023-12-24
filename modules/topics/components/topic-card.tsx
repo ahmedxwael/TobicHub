@@ -13,7 +13,7 @@ import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import ControlMenu from "./control-menu";
+import TopicControlMenu from "./topic-control-menu";
 
 type TopicCardProps = {
   topic: TopicType;
@@ -66,7 +66,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             validLabel="Approved"
           />
         </div>
-        <ControlMenu
+        <TopicControlMenu
           userSession={userSession}
           topic={topic}
           toggleApproved={() => setIsApproved(!isApproved)}

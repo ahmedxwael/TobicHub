@@ -12,28 +12,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { TopicType } from "@/modules/topics/types";
+import { editTopic } from "@/utils/topic-utils";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateTask } from "../../../services/tasks-services";
-import { Task } from "../../../types";
 
-type EditTaskProps = {
-  task: Task;
+type EditTopicProps = {
+  topic: TopicType;
 };
 
 type Input = {
   title: string;
   description: string;
-  isCompleted: boolean;
-  isImportant: boolean;
+  link: string;
+  isApproved: boolean;
 };
 
-export default function EditTask({ task }: EditTaskProps) {
+export default function EditTopic({ topic }: EditTopicProps) {
   const router = useRouter();
 
-  const [updatedTask, setUpdatedTask] = useState<Task | Partial<Task>>(task);
+  const [updatedTopic, setUpdatedTopic] = useState<
+    TopicType | Partial<TopicType>
+  >(topic);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const {
@@ -43,15 +45,15 @@ export default function EditTask({ task }: EditTaskProps) {
   } = useForm<Input>();
 
   const onSubmit = async () => {
-    const body = {
-      title: updatedTask.title,
-      description: updatedTask.description,
-      isCompleted: updatedTask.isCompleted,
-      isImportant: updatedTask.isImportant,
-      userId: task.userId,
+    const body: Partial<TopicType> = {
+      title: updatedTopic.title,
+      description: updatedTopic.description,
+      approved: updatedTopic.approved,
+      link: updatedTopic.link,
+      userId: topic.userId,
     };
 
-    await updateTask(task.id, body);
+    await editTopic(topic.id, body);
 
     setIsPopupOpen(false);
     router.refresh();
@@ -73,9 +75,8 @@ export default function EditTask({ task }: EditTaskProps) {
           }}
         >
           <DialogHeader>
-            <DialogTitle>Add new task</DialogTitle>
+            <DialogTitle>Update topic</DialogTitle>
           </DialogHeader>
-
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex w-full flex-col gap-6"
@@ -90,12 +91,12 @@ export default function EditTask({ task }: EditTaskProps) {
                 id="title"
                 placeholder="What is the topic?"
                 disabled={isSubmitting}
-                defaultValue={task.title}
+                defaultValue={topic.title}
                 {...register("title", {
                   required: "Title is required.",
-                  value: updatedTask.title,
+                  value: updatedTopic.title,
                   onChange: (e) =>
-                    setUpdatedTask({ ...updatedTask, title: e.target.value }),
+                    setUpdatedTopic({ ...updatedTopic, title: e.target.value }),
                 })}
               />
               {errors.title && (
@@ -113,17 +114,17 @@ export default function EditTask({ task }: EditTaskProps) {
                 placeholder="What is this topic about...?"
                 rows={10}
                 disabled={isSubmitting}
-                defaultValue={task.description}
+                defaultValue={topic.description}
                 {...register("description", {
                   required: "Topic description is required.",
                   minLength: {
                     value: 1,
                     message: "Content must be at least 1 character.",
                   },
-                  value: updatedTask.description,
+                  value: updatedTopic.description,
                   onChange: (e) =>
-                    setUpdatedTask({
-                      ...updatedTask,
+                    setUpdatedTopic({
+                      ...updatedTopic,
                       description: e.target.value,
                     }),
                 })}
@@ -134,43 +135,45 @@ export default function EditTask({ task }: EditTaskProps) {
                 </span>
               )}
             </div>
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="link" className="cursor-pointer">
+                Recourses
+              </Label>
+              <Input
+                id="link"
+                placeholder="Recourses"
+                type="url"
+                disabled={isSubmitting}
+                {...register("link", {
+                  value: topic?.link,
+                  onChange: (e) =>
+                    setUpdatedTopic({
+                      ...topic,
+                      link: e.target.value.split(" ")[0],
+                    }),
+                })}
+              />
+              {errors.link && (
+                <span className="inline-block text-sm text-red-500">
+                  {errors.link.message}
+                </span>
+              )}
+            </div>
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center gap-2">
                 <Checkbox
-                  id="isCompleted"
-                  {...register("isCompleted")}
-                  checked={updatedTask?.isCompleted}
+                  id="isApproved"
+                  {...register("isApproved")}
+                  checked={updatedTopic?.approved}
                   onCheckedChange={() =>
-                    setUpdatedTask({
-                      ...updatedTask,
-                      isCompleted: !updatedTask?.isCompleted,
+                    setUpdatedTopic({
+                      ...updatedTopic,
+                      approved: !updatedTopic?.approved,
                     })
                   }
                 />
-                <Label
-                  htmlFor="isCompleted"
-                  className="shrink-0 cursor-pointer"
-                >
-                  Completed
-                </Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="isImportant"
-                  {...register("isImportant")}
-                  checked={updatedTask?.isImportant}
-                  onCheckedChange={() =>
-                    setUpdatedTask({
-                      ...updatedTask,
-                      isImportant: !updatedTask?.isImportant,
-                    })
-                  }
-                />
-                <Label
-                  htmlFor="isImportant"
-                  className="shrink-0 cursor-pointer"
-                >
-                  Important
+                <Label htmlFor="isApproved" className="shrink-0 cursor-pointer">
+                  Approved
                 </Label>
               </div>
             </div>
