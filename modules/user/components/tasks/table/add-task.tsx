@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createTask } from "../../../services/tasks-services";
 import { Task, UserSessionType } from "../../../types";
@@ -57,11 +57,19 @@ export default function AddTask({ userId }: AddTaskProps) {
 
     await createTask({ ...task, userId });
 
-    setTask(initialTask);
     reset();
+    setTask(initialTask);
     setIsPopupOpen(false);
     router.refresh();
   };
+
+  useEffect(() => {
+    if (isPopupOpen) {
+      setTask(initialTask);
+      reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPopupOpen]);
 
   return (
     <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>

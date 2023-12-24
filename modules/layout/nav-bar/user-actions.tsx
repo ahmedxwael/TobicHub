@@ -12,7 +12,9 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { UserSessionType } from "@/modules/user/types";
+import { ArrowDownIcon } from "@/shared/icons";
 import { URLS } from "@/shared/urls";
+import { Play } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,6 +61,12 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
                 width={500}
                 height={500}
                 className="h-10 w-10 rounded-full border-2 bg-muted object-cover"
+              />
+              <ArrowDownIcon
+                className={cn(
+                  "mr-2 text-muted-foreground transition-transform",
+                  isDropdownOpen && "rotate-180"
+                )}
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-[200px] p-2">
