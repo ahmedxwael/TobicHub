@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { updateUser } from "@/utils/user-utils";
 import { Loader2, Pencil, Save, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { UserSessionType, UserType } from "../types";
+import { updateUser } from "../../services/profile-services";
+import { UserSessionType, UserType } from "../../types";
 
 type UserNameProps = {
   user: UserType;
@@ -91,6 +91,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
           variant="ghost"
           size="icon"
           className="text-primary hover:bg-primary hover:text-white"
+          aria-label="edit user name"
         >
           <Pencil size={20} />
         </Button>

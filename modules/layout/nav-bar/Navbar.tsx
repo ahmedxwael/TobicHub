@@ -11,15 +11,15 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import SideBar from "./side-bar";
-import UserButtons from "./user-buttons";
+import UserActions from "./user-actions";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
-  const userSession = session?.user as UserSessionType;
+  const userSession = session?.user as UserSessionType | undefined;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-transparent backdrop-blur-lg">
-      <nav className="container flex items-center justify-between gap-8 px-8 py-4">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/60 backdrop-blur-lg">
+      <nav className="container flex items-center justify-between gap-4 px-8 py-4 md:gap-8">
         <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
@@ -37,7 +37,7 @@ const Navbar = async () => {
         </div>
         <div className="ml-auto hidden shrink-0 items-center gap-4 md:flex">
           <ModeToggle />
-          <UserButtons userSession={userSession} />
+          <UserActions userSession={userSession} />
         </div>
 
         <SideBar userSession={userSession} />

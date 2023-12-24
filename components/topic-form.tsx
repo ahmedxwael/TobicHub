@@ -15,7 +15,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "./ui/use-toast";
 
-type Props = {
+type TopicFormProps = {
   type: "create" | "edit";
   currentTopic?: TopicType | null;
 };
@@ -26,7 +26,7 @@ export type InputsType = {
   link: string;
 };
 
-const Form = ({ type, currentTopic }: Props) => {
+const TopicForm = ({ type, currentTopic }: TopicFormProps) => {
   const { data: session } = useSession();
   const userSession = session?.user as UserSessionType;
 
@@ -182,4 +182,4 @@ const Form = ({ type, currentTopic }: Props) => {
   );
 };
 
-export default Form;
+export default TopicForm;

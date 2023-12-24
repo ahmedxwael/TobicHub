@@ -21,3 +21,14 @@ export type UserSessionType = {
   admin: boolean;
   owner?: boolean;
 };
+
+export type Task = {
+  id: string;
+  title: string;
+  description: string;
+  isCompleted: boolean;
+  isImportant: boolean;
+  created_at: Date;
+  updated_at: Date;
+  userId: string;
+};

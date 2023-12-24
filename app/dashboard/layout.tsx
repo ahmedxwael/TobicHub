@@ -36,7 +36,7 @@ export default async function DashboardLayout({
         </div>
         <RefreshButton className="shrink-0" />
       </div>
-      <Separator className="my-8" />
+      <Separator className="my-10" />
       <section className="flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <DashboardSideNav />
         {children}

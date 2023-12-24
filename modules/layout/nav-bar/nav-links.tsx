@@ -6,12 +6,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-type Props = {
+type NavLinksProps = {
   closeMenu?: () => void;
   isAdmin?: boolean;
 };
 
-const NavLinks = ({ closeMenu, isAdmin }: Props) => {
+const NavLinks = ({ closeMenu, isAdmin }: NavLinksProps) => {
   const pathname = usePathname();
 
   useEffect(() => {

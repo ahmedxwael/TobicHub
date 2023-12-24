@@ -12,13 +12,13 @@ export const metadata: Metadata = {
     "Topics page that contains general information about popular topics.",
 };
 
-export const revalidate = 0
+export const revalidate = 0;
 
 export default async function TopicsPage() {
   const topicsPromise = getTopics({ where: { approved: true } });
 
   return (
-    <section className="flex flex-col gap-10">
+    <section className="flex w-[800px] max-w-full flex-col gap-10 py-20">
       <div className="flex w-full flex-wrap items-center justify-between gap-6">
         <PageHeading>all topics</PageHeading>
         <SearchTopic />

@@ -1,4 +1,4 @@
-import Form from "@/components/Form";
+import TopicForm from "@/components/topic-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const CreateTopic = async () => {
   return (
     <section className="center">
-      <Form type="create" />
+      <TopicForm type="create" />
     </section>
   );
 };

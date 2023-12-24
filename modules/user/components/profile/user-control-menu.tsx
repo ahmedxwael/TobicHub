@@ -5,15 +5,14 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteUser, updateUser } from "@/utils/user-utils";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { UserType } from "../types";
+import { useState } from "react";
+import { deleteUser, updateUser } from "../../services/profile-services";
+import { UserType } from "../../types";
 
 type UserControlMenusProps = {
   user: UserType;

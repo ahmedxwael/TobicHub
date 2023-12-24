@@ -1,4 +1,4 @@
-import Form from "@/components/Form";
+import TopicForm from "@/components/topic-form";
 import { getTopic, getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 
@@ -24,7 +24,7 @@ const EditTopic = async ({ params: { id } }: { params: { id: string } }) => {
 
   return (
     <main className="center">
-      <Form type="edit" currentTopic={topic} />
+      <TopicForm type="edit" currentTopic={topic} />
     </main>
   );
 };

@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import UserControlMenus from "@/modules/user/components/user-control-menu";
+import UserControlMenus from "@/modules/user/components/profile/user-control-menu";
 import Image from "next/image";
 import Link from "next/link";
 import { UserSessionType, UserType } from "../../user/types";

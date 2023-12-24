@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  width: 8px;
+  @apply w-1;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  @apply rounded-xl bg-background;
+  @apply lg:bg-muted;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply rounded-xl bg-primary;
+  @apply lg:rounded-xl lg:bg-primary;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary/80 transition-colors;
+  @apply lg:bg-primary/80 lg:transition-colors;
 }
 
 @layer base {
@@ -60,7 +60,7 @@
     --muted-foreground: 218 11% 65% /* gray-400 */;
     --accent: 177 70% 28% /* teal-800 */;
     --accent-foreground: 167 77% 97% /* teal-50 */;
-    --destructive: 0 63% 31% /* red-900 */;
+    --destructive: 0 63% 40% /* red-900 */;
     --destructive-foreground: 210 20% 99% /* gray-50 */;
     --border: 215 28% 10% /* gray-800 */;
     --input: 215 28% 17% /* gray-800 */;
@@ -77,7 +77,7 @@
     @apply border-2;
   }
   section {
-    @apply mx-auto w-[800px] max-w-full;
+    @apply mx-auto max-w-full;
   }
 }
 

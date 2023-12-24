@@ -3,13 +3,16 @@
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
-type Props = {
+type NexAuthSessionProviderProps = {
   children: ReactNode;
   session: any;
 };
 
-const Provider = ({ children, session }: Props) => {
+const NexAuthSessionProvider = ({
+  children,
+  session,
+}: NexAuthSessionProviderProps) => {
   return <SessionProvider session={session}>{children}</SessionProvider>;
 };
 
-export default Provider;
+export default NexAuthSessionProvider;

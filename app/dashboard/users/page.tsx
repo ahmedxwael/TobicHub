@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/options";
 import NotFound from "@/components/not-found";
 import UserCard from "@/modules/dashboard/components/user-card";
+import { getUsers } from "@/modules/user/services/profile-services";
 import { UserSessionType } from "@/modules/user/types";
-import { getUsers } from "@/utils/user-utils";
 import { getServerSession } from "next-auth";
 import React from "react";
 

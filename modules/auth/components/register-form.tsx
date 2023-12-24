@@ -38,16 +38,16 @@ export function RegisterForm({ providers }: RegisterFormProps) {
           <Button
             disabled={!providers?.google || !isAgree}
             onClick={() => signIn(providers?.google?.id)}
-            variant="outline"
-            className="flex h-auto items-center gap-2 py-3"
+            variant="ghost"
+            className="flex h-auto items-center gap-2 bg-gradient-to-tr from-primary/10 py-3 hover:bg-primary/10 dark:from-muted/60 dark:hover:bg-muted dark:hover:from-muted dark:hover:to-transparent"
           >
             Google <GoogleIcon />
           </Button>
           <Button
             disabled={!providers?.github || !isAgree}
             onClick={() => signIn(providers?.github?.id)}
-            variant="outline"
-            className="flex h-auto items-center gap-2 py-3"
+            variant="ghost"
+            className="flex h-auto items-center gap-2 bg-gradient-to-tr from-primary/10 py-3 hover:bg-primary/10 dark:from-muted/60 dark:hover:bg-muted dark:hover:from-muted dark:hover:to-transparent"
           >
             Github <GithubIcon />
           </Button>
