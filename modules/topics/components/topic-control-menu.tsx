@@ -92,7 +92,7 @@ export default function TopicControlMenu({
             <Button
               onClick={() => setIsDropdownOpen(true)}
               className="h-fit w-fit px-2"
-              variant="outline"
+              variant="ghost"
               aria-label="options"
             >
               <MoreHorizontal size={15} />

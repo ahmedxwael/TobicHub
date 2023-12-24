@@ -53,39 +53,37 @@ export default function UserControlMenus({
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
         <DropdownMenuTrigger asChild className={className}>
           <Button
             onClick={() => setIsDropdownOpen(true)}
             className="h-fit w-fit px-2"
-            variant="outline"
+            variant="ghost"
             aria-label="user options"
           >
             <MoreHorizontal size={15} />
           </Button>
         </DropdownMenuTrigger>
-        {isDropdownOpen && (
-          <DropdownMenuContent align="end" className="w-[170px]">
-            <Button
+        <DropdownMenuContent align="end" className="w-[170px]">
+          <Button
+            variant="ghost"
+            className="w-full cursor-pointer"
+            disabled={isLoading}
+            onClick={updateUserRole}
+          >
+            {isAdmin ? "Demote" : "Promote"}
+          </Button>
+          {!isAdmin && (
+            <CustomAlertDialog
+              title="Delete"
               variant="ghost"
-              className="w-full cursor-pointer"
+              description="This action cannot be undone. Are you sure that you want to delete all user's data?"
+              className="text-red-600 hover:bg-red-600 hover:text-white"
+              action={handleDeleteUser}
               disabled={isLoading}
-              onClick={updateUserRole}
-            >
-              {isAdmin ? "Demote" : "Promote"}
-            </Button>
-            {!isAdmin && (
-              <CustomAlertDialog
-                title="Delete"
-                variant="ghost"
-                description="This action cannot be undone. Are you sure that you want to delete all user's data?"
-                className="text-red-600 hover:bg-red-600 hover:text-white"
-                action={handleDeleteUser}
-                disabled={isLoading}
-              />
-            )}
-          </DropdownMenuContent>
-        )}
+            />
+          )}
+        </DropdownMenuContent>
       </DropdownMenu>
     </>
   );
