@@ -12,7 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { NewTopicType } from "@/modules/topics/types";
+import { cn } from "@/lib/utils";
+import { NewTopic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { addTopic } from "@/utils/topic-utils";
 import { Pencil, Plus } from "lucide-react";
@@ -23,6 +24,7 @@ import { useForm } from "react-hook-form";
 type AddTopicProps = {
   userId: string;
   userSession?: UserSessionType;
+  className?: string;
 };
 
 type Input = {
@@ -32,7 +34,7 @@ type Input = {
   isApproved: boolean;
 };
 
-const initialTopic: NewTopicType = {
+const initialTopic: NewTopic = {
   title: "",
   description: "",
   link: "",
@@ -40,20 +42,25 @@ const initialTopic: NewTopicType = {
   userId: "",
 };
 
-export default function AddTopic({ userId, userSession }: AddTopicProps) {
+export default function AddTopic({
+  userId,
+  userSession,
+  className,
+}: AddTopicProps) {
   const router = useRouter();
 
-  const [topic, setTopic] = useState<NewTopicType>(initialTopic);
+  const [topic, setTopic] = useState<NewTopic>(initialTopic);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<Input>();
 
   const onSubmit = async () => {
-    const body: NewTopicType = {
+    const body: NewTopic = {
       title: topic.title,
       description: topic.description,
       approved: topic.approved,
@@ -63,6 +70,8 @@ export default function AddTopic({ userId, userSession }: AddTopicProps) {
 
     await addTopic(body);
 
+    reset();
+    setTopic(initialTopic);
     setIsPopupOpen(false);
     router.refresh();
   };
@@ -72,10 +81,19 @@ export default function AddTopic({ userId, userSession }: AddTopicProps) {
   }
 
   return (
-    <Dialog open={isPopupOpen} onOpenChange={(open) => setIsPopupOpen(open)}>
+    <Dialog
+      open={isPopupOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setTopic(initialTopic);
+          reset();
+        }
+        setIsPopupOpen(open);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
-          className="ml-auto flex items-center gap-2 capitalize"
+          className={cn("flex items-center gap-2 capitalize", className)}
           onClick={() => setIsPopupOpen(true)}
         >
           <Plus size={20} /> new topic
@@ -173,24 +191,26 @@ export default function AddTopic({ userId, userSession }: AddTopicProps) {
               </span>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Checkbox
-                id="isApproved"
-                {...register("isApproved")}
-                checked={topic?.approved}
-                onCheckedChange={() =>
-                  setTopic({
-                    ...topic,
-                    approved: !topic?.approved,
-                  })
-                }
-              />
-              <Label htmlFor="isApproved" className="shrink-0 cursor-pointer">
-                Approved
-              </Label>
+          {userSession?.admin && (
+            <div className="flex flex-wrap items-center gap-6">
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="isApproved"
+                  {...register("isApproved")}
+                  checked={topic?.approved}
+                  onCheckedChange={() =>
+                    setTopic({
+                      ...topic,
+                      approved: !topic?.approved,
+                    })
+                  }
+                />
+                <Label htmlFor="isApproved" className="shrink-0 cursor-pointer">
+                  Approved
+                </Label>
+              </div>
             </div>
-          </div>
+          )}
           <div className="ml-auto flex gap-4">
             <Button
               disabled={isSubmitting}

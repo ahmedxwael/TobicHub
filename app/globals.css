@@ -52,7 +52,7 @@
     --card-foreground: 210 20% 99% /* gray-50 */;
     --popover: 224 72% 5% /* gray-950 */;
     --popover-foreground: 210 20% 99% /* gray-50 */;
-    --primary: 175 87% 35% /* teal-600 */;
+    --primary: 175 87% 30% /* teal-600 */;
     --primary-foreground: 167 77% 97% /* teal-50 */;
     --secondary: 177 70% 28% /* teal-800 */;
     --secondary-foreground: 167 77% 97% /* teal-50 */;
@@ -64,7 +64,7 @@
     --destructive-foreground: 210 20% 99% /* gray-50 */;
     --border: 215 28% 10% /* gray-800 */;
     --input: 215 28% 17% /* gray-800 */;
-    --ring: 175 87% 35% /* teal-600 */;
+    --ring: 175 87% 30% /* teal-600 */;
   }
 
   * {

@@ -6,7 +6,7 @@ import Navbar from "@/modules/layout/nav-bar/Navbar";
 import NexAuthSessionProvider from "@/providers/next-auth-session-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
 import "./globals.css";
 
@@ -15,7 +15,10 @@ type RootLayoutProps = {
   session: any;
 };
 
-const inter = Inter({ subsets: ["latin"], display: "swap" });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "TopicHub",
@@ -25,7 +28,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "relative bg-background")}>
+      <body
+        className={cn(
+          montserrat.className,
+          "relative bg-background tracking-wide"
+        )}
+      >
         <NexAuthSessionProvider session={session}>
           <ThemeProvider
             attribute="class"

@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/options";
 import NotFound from "@/components/not-found";
+import PageHeading from "@/components/page-heading";
 import { Separator } from "@/components/ui/separator";
 import ProfileSideNav from "@/modules/user/components/profile-sidenav";
 import ProfileCard from "@/modules/user/components/profile/profile-card";
@@ -39,9 +40,7 @@ export default async function ProfileLayout({
   }
 
   return (
-    <section className="w-full space-y-6 pt-14">
-      <ProfileCard user={user} />
-      <Separator className="my-10" />
+    <section className="relative w-full space-y-6 py-20">
       <section className="flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <ProfileSideNav
           id={params.id}

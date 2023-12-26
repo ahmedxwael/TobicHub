@@ -11,6 +11,12 @@ export type UserType = {
   created_at: Date;
   updated_at: Date;
   topics?: TopicType[];
+  totalTopics: number;
+  totalComments: number;
+  totalLikes: number;
+  totalTasks: number;
+  totalFollowers: number;
+  totalFollowing: number;
 };
 
 export type UserSessionType = {

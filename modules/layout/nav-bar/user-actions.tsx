@@ -31,6 +31,10 @@ export const userLinks = [
     href: URLS.profile.view,
   },
   {
+    label: "My Topics",
+    href: URLS.profile.topics,
+  },
+  {
     label: "Tasks",
     href: URLS.profile.tasks,
   },
@@ -52,7 +56,7 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
           <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger
               onClick={() => setIsDropdownOpen(true)}
-              className="flex shrink-0 items-center gap-2 rounded-full bg-muted"
+              className="flex shrink-0 items-center gap-2 rounded-full bg-muted/80 transition-colors hover:bg-muted"
             >
               <Image
                 priority
@@ -60,11 +64,11 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
                 alt="user"
                 width={500}
                 height={500}
-                className="h-10 w-10 rounded-full border-2 bg-muted object-cover"
+                className="h-10 w-10 rounded-full border border-muted/50 bg-muted object-cover"
               />
               <ArrowDownIcon
                 className={cn(
-                  "mr-2 text-muted-foreground transition-transform",
+                  "mr-3 text-muted-foreground opacity-60 transition-transform",
                   isDropdownOpen && "rotate-180"
                 )}
               />

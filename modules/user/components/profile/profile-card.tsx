@@ -3,7 +3,6 @@ import { Loader2 } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 import { UserSessionType, UserType } from "../../types";
-import PostsNumber from "./posts-number";
 import UserImage from "./user-image";
 import UserName from "./user-name";
 
@@ -20,9 +19,10 @@ export default async function ProfileCard({ user }: ProfileCardProps) {
       <UserImage user={user} userSession={userSession} />
       <div className="space-y-3">
         <UserName userSession={userSession} user={user} />
-        <Suspense fallback={<Loader2 className="animate-spin text-base" />}>
-          <PostsNumber userId={user.id} />
-        </Suspense>
+        <div className="flex items-center gap-2 text-neutral-400">
+          <span className="inline-block">{user.totalTopics}</span>
+          Topic(s)
+        </div>
       </div>
     </div>
   );

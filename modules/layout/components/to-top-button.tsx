@@ -10,7 +10,7 @@ export default function ToTopButton() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="sm"
       aria-label="to top button"
       className="fixed bottom-6 right-6 z-20 w-fit p-2"

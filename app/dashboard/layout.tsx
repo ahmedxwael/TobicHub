@@ -1,3 +1,4 @@
+import PageHeading from "@/components/page-heading";
 import RefreshButton from "@/components/refresh-button";
 import { Separator } from "@/components/ui/separator";
 import DashboardSideNav from "@/modules/dashboard/components/dashboard-side-nav";
@@ -29,7 +30,7 @@ export default async function DashboardLayout({
     <section className="w-full space-y-6 py-20">
       <div className="flex items-center justify-between gap-6">
         <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+          <PageHeading>Dashboard</PageHeading>
           <p className="text-muted-foreground">
             Users and topics management dashboard.
           </p>

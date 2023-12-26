@@ -1,7 +1,7 @@
 "use client";
 
 import { EmailRequestBodyType } from "@/emails/types";
-import { NewTopicType, TopicType } from "@/modules/topics/types";
+import { NewTopic, TopicType } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { OWNER_EMAIL } from "@/shared/flags";
 import { addTopic, editTopic } from "@/utils/topic-utils";
@@ -34,7 +34,7 @@ const TopicForm = ({ type, currentTopic }: TopicFormProps) => {
 
   const { toast } = useToast();
 
-  const [topic, setTopic] = useState<TopicType | NewTopicType>(currentTopic!);
+  const [topic, setTopic] = useState<TopicType | NewTopic>(currentTopic!);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -48,17 +48,16 @@ const TopicForm = ({ type, currentTopic }: TopicFormProps) => {
 
     try {
       if (type === "create") {
-        const emailBody: EmailRequestBodyType = {
-          sender: userSession.email,
-          receiver: OWNER_EMAIL!,
-          message: `${userSession.name} created a new topic.`,
-          subject: "New topic created",
-        };
+        // const emailBody: EmailRequestBodyType = {
+        //   sender: userSession.email,
+        //   receiver: OWNER_EMAIL!,
+        //   message: `${userSession.name} created a new topic.`,
+        //   subject: "New topic created",
+        // };
 
         await addTopic({
           ...topic,
           userId: userSession?.id,
-          approved: userSession.admin,
         });
 
         if (!userSession.admin) {

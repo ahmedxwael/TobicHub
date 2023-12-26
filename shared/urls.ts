@@ -27,6 +27,7 @@ export const URLS = {
   contactUs: "/contact-us",
   profile: {
     view: (id: string) => `/profile/${id}`,
+    topics: (id: string) => `/profile/${id}/topics`,
     tasks: (id: string) => `/profile/${id}/tasks`,
   },
   dashboard: "/dashboard",

@@ -15,8 +15,12 @@ type ProfileSideNavProps = {
 
 const sidebarNavItems = [
   {
-    title: "Topics",
+    title: "Profile",
     href: URLS.profile.view,
+  },
+  {
+    title: "Topics",
+    href: URLS.profile.topics,
   },
   {
     title: "Tasks",
@@ -32,22 +36,24 @@ export default function ProfileSideNav({
   const pathname = usePathname();
 
   return (
-    <aside className="w-[250px] shrink-0">
+    <aside className="relative w-[250px] shrink-0">
       <nav
         className={cn("flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1")}
       >
         {sidebarNavItems.map((item, index) => {
-          if (
-            item.protected &&
-            (!userSession || userSession.id !== id || !userSession.admin)
-          ) {
+          const href =
+            typeof item.href === "function" ? item.href(id) : item.href;
+          const isNotTheUser =
+            !userSession || userSession.id !== id || !userSession.admin;
+
+          if (item.protected && isNotTheUser) {
             return null;
           }
 
           return (
             <Link
               key={index}
-              href={item.href(id)}
+              href={href}
               className={cn(
                 buttonVariants({ variant: "ghost" }),
                 pathname === item.href(id)

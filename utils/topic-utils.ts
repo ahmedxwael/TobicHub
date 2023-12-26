@@ -1,11 +1,11 @@
-import { NewTopicType, TopicType } from "@/modules/topics/types";
+import { NewTopic, TopicType } from "@/modules/topics/types";
 import prisma from "@/prisma";
 import { Prisma } from "@prisma/client";
 import axios from "axios";
 
 const userAllowedFields = { admin: true, id: true, name: true, image: true };
 
-export async function addTopic(newTopic: NewTopicType) {
+export async function addTopic(newTopic: NewTopic) {
   await axios.post("/api/topics", newTopic).catch(() => {
     throw new Error("Something went wrong.");
   });

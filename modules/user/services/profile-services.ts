@@ -22,6 +22,7 @@ export const getUser = async (
   try {
     const user = await prisma.user.findUnique({ where: { id } });
 
+    console.log(user);
     return user;
   } catch (error) {
     return undefined;

@@ -52,52 +52,50 @@ export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
   );
 
   return (
-    <Dialog onOpenChange={() => setTopics([])}>
+    <Dialog
+      open={isPopupOpen}
+      onOpenChange={(open) => {
+        setIsPopupOpen(open);
+        setTopics([]);
+      }}
+    >
       <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
-        <Button
-          aria-label="search"
-          size="sm"
-          variant="outline"
-          className="text-xl"
-        >
+        <Button aria-label="search" variant="ghost" className="ml-auto text-xl">
           <Search size={20} />
         </Button>
       </DialogTrigger>
-      {isPopupOpen && (
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Search for topic</DialogTitle>
-          </DialogHeader>
-
-          <div className="flex-1 space-y-3">
-            <label htmlFor="search">Topic</label>
-            <Input
-              autoComplete="off"
-              id="search"
-              type="text"
-              required
-              placeholder="Search for a specific topic"
-              onChange={handleInputChange}
-            />
-          </div>
-          <Separator className="my-4" />
-          <DialogFooter>
-            <ScrollArea className="max-h-[300px] w-full">
-              {isLoading ? (
-                <SearchItemSkeleton />
-              ) : topics.length > 0 ? (
-                <div className="flex flex-col gap-5">
-                  {topics.map((topic) => (
-                    <SearchItem key={topic.id} topic={topic} />
-                  ))}
-                </div>
-              ) : (
-                <div className="py-4 text-center">There are no topics</div>
-              )}
-            </ScrollArea>
-          </DialogFooter>
-        </DialogContent>
-      )}
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Search for topic</DialogTitle>
+        </DialogHeader>
+        <div className="flex-1 space-y-3">
+          <label htmlFor="search">Topic</label>
+          <Input
+            autoComplete="off"
+            id="search"
+            type="text"
+            required
+            placeholder="Search for a specific topic"
+            onChange={handleInputChange}
+          />
+        </div>
+        <Separator className="my-4" />
+        <DialogFooter>
+          <ScrollArea className="max-h-[300px] w-full">
+            {isLoading ? (
+              <SearchItemSkeleton />
+            ) : topics.length > 0 ? (
+              <div className="flex flex-col gap-5">
+                {topics.map((topic) => (
+                  <SearchItem key={topic.id} topic={topic} />
+                ))}
+              </div>
+            ) : (
+              <div className="py-4 text-center">There are no topics</div>
+            )}
+          </ScrollArea>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 }

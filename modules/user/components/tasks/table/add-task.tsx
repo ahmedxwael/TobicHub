@@ -30,6 +30,14 @@ type AddTaskProps = {
   userId: string;
 };
 
+export type NewTask = {
+  title: string;
+  description: string;
+  isCompleted: boolean;
+  isImportant: boolean;
+  userId: string;
+};
+
 const initialTask = {
   title: "",
   description: "",
@@ -63,16 +71,17 @@ export default function AddTask({ userId }: AddTaskProps) {
     router.refresh();
   };
 
-  useEffect(() => {
-    if (isPopupOpen) {
-      setTask(initialTask);
-      reset();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPopupOpen]);
-
   return (
-    <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>
+    <Dialog
+      open={isPopupOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setTask(initialTask);
+          reset();
+        }
+        setIsPopupOpen(open);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           className="gap-2 capitalize"
@@ -91,7 +100,6 @@ export default function AddTask({ userId }: AddTaskProps) {
         <DialogHeader>
           <DialogTitle>Add new task</DialogTitle>
         </DialogHeader>
-
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex w-full flex-col gap-6"
@@ -155,7 +163,7 @@ export default function AddTask({ userId }: AddTaskProps) {
                 }
               />
               <Label htmlFor="isCompleted" className="shrink-0 cursor-pointer">
-                Is Completed
+                Completed
               </Label>
             </div>
             <div className="flex items-center gap-2">
@@ -168,7 +176,7 @@ export default function AddTask({ userId }: AddTaskProps) {
                 }
               />
               <Label htmlFor="isImportant" className="shrink-0 cursor-pointer">
-                Is Important
+                Important
               </Label>
             </div>
           </div>

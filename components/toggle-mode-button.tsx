@@ -24,7 +24,7 @@ export function ModeToggle({ className }: ModeToggleProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
           className={cn("shrink-0 bg-transparent", className)}
         >
