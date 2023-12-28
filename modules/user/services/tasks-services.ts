@@ -10,7 +10,7 @@ export async function getUserTasks(
       where: {
         userId,
       },
-      orderBy: { created_at: "desc" },
+      orderBy: { createdAt: "desc" },
     });
 
     return tasks;

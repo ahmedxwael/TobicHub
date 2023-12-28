@@ -3,7 +3,7 @@
 import DataTable from "@/components/table/data-table";
 import { SelectFilter } from "@/components/table/select-filter";
 import { Input } from "@/components/ui/input";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { dashboardTopicsColumns } from "./dashboard-topics-columns";
 
 type TopicsTableProps = {
-  topics: TopicType[];
+  topics: Topic[];
 };
 
 const statusOptions = [

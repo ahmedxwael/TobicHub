@@ -1,22 +1,23 @@
-import { TopicType } from "../topics/types";
+import { Topic } from "../topics/types";
 
 export type UserType = {
   id: string;
   email: string | null;
   name: string | null;
-  display_name: string | null;
+  displayName: string | null;
   image: string | null;
-  admin: boolean;
-  owner: boolean;
-  created_at: Date;
-  updated_at: Date;
-  topics?: TopicType[];
+  isAdmin: boolean;
+  isOwner: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  topics?: Topic[];
   totalTopics: number;
   totalComments: number;
   totalLikes: number;
   totalTasks: number;
   totalFollowers: number;
   totalFollowing: number;
+  followingId: string | null;
 };
 
 export type UserSessionType = {
@@ -34,7 +35,7 @@ export type Task = {
   description: string;
   isCompleted: boolean;
   isImportant: boolean;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
   userId: string;
 };

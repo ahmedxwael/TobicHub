@@ -2,7 +2,7 @@
 
 import { getTopicsAction } from "@/actions/actions";
 import TopicsSkeleton from "@/components/topics-skeleton";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import { GetTopicsOptions } from "@/utils/topic-utils";
 import type { Session } from "next-auth";
 import { useCallback, useEffect, useState } from "react";
@@ -12,7 +12,7 @@ import TopicCard from "./topic-card";
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 
 type TopicsListProps = {
-  topicsList: TopicType[];
+  topicsList: Topic[];
   session: Session | null;
   params?: GetTopicsOptions;
 };
@@ -24,8 +24,7 @@ export default function TopicsList({
   topicsList,
   params,
 }: TopicsListProps) {
-  const [displayedTopics, setDisplayedTopics] =
-    useState<TopicType[]>(topicsList);
+  const [displayedTopics, setDisplayedTopics] = useState<Topic[]>(topicsList);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadDisabled, setIsLoadDisabled] = useState(
@@ -76,7 +75,7 @@ export default function TopicsList({
     </div>
   ) : (
     <div className="px-6 py-10 text-center text-xl font-bold">
-      There are no topics to show.
+      No topics to show.
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { EmailRequestBodyType } from "@/emails/types";
-import { NewTopic, TopicType } from "@/modules/topics/types";
+import { NewTopic, Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { OWNER_EMAIL } from "@/shared/flags";
 import { addTopic, editTopic } from "@/utils/topic-utils";
@@ -17,7 +17,7 @@ import { useToast } from "./ui/use-toast";
 
 type TopicFormProps = {
   type: "create" | "edit";
-  currentTopic?: TopicType | null;
+  currentTopic?: Topic | null;
 };
 
 export type InputsType = {
@@ -34,7 +34,7 @@ const TopicForm = ({ type, currentTopic }: TopicFormProps) => {
 
   const { toast } = useToast();
 
-  const [topic, setTopic] = useState<TopicType | NewTopic>(currentTopic!);
+  const [topic, setTopic] = useState<Topic | NewTopic>(currentTopic!);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -57,7 +57,7 @@ const TopicForm = ({ type, currentTopic }: TopicFormProps) => {
 
         await addTopic({
           ...topic,
-          userId: userSession?.id,
+          authorId: userSession?.id,
         });
 
         if (!userSession.admin) {
@@ -71,9 +71,9 @@ const TopicForm = ({ type, currentTopic }: TopicFormProps) => {
       } else if (type === "edit") {
         await editTopic(currentTopic?.id!, {
           description: topic?.description,
-          link: topic?.link,
+          resource: topic?.resource,
           title: topic?.title,
-          userId: topic?.userId,
+          authorId: topic?.authorId,
         });
 
         toast({
@@ -152,9 +152,9 @@ const TopicForm = ({ type, currentTopic }: TopicFormProps) => {
           type="url"
           disabled={isSubmitting}
           {...register("link", {
-            value: topic?.link,
+            value: topic?.resource,
             onChange: (e: ChangeEvent<HTMLInputElement>) =>
-              setTopic({ ...topic, link: e.target.value.split(" ")[0] }),
+              setTopic({ ...topic, resource: e.target.value.split(" ")[0] }),
           })}
         />
         {errors.link && (

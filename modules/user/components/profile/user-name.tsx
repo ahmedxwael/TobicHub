@@ -21,7 +21,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const initialNameValue = user.display_name || user.name || "";
+  const initialNameValue = user.displayName || user.name || "";
 
   const [newName, setNewName] = useState(initialNameValue);
 
@@ -29,7 +29,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    await updateUser(user.id, { display_name: newName });
+    await updateUser(user.id, { displayName: newName });
 
     toast({
       title: "Your name has been updated successfully.",

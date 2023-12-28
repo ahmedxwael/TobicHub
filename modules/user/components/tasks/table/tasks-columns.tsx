@@ -72,11 +72,11 @@ export const tasksColumns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: "updated_at",
+    accessorKey: "updatedAt",
     header: "Updated at",
     cell: ({ row }) => {
       const task = row.original;
-      const value = task.updated_at.toDateString();
+      const value = task.updatedAt.toDateString();
 
       return <div className="whitespace-nowrap">{value}</div>;
     },

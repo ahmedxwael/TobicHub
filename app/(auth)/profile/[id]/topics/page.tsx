@@ -32,7 +32,7 @@ export const generateMetadata = async ({
 
 export default async function UserTopicsPage({ params }: ParamsType) {
   const topicsPromise = getTopics({
-    where: { userId: params.id, approved: true },
+    where: { authorId: params.id, isApproved: true },
   });
 
   const session = await getServerSession(authOptions);
@@ -48,7 +48,7 @@ export default async function UserTopicsPage({ params }: ParamsType) {
         <Suspense fallback={<TopicsSkeleton />}>
           <TopicsSection
             topicsPromise={topicsPromise}
-            params={{ where: { userId: params.id, approved: true } }}
+            params={{ where: { authorId: params.id, isApproved: true } }}
           />
         </Suspense>
       </div>

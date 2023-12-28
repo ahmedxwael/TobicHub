@@ -3,11 +3,11 @@ import NotFound from "@/components/not-found";
 import { GetTopicsOptions } from "@/utils/topic-utils";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { TopicType } from "../types";
+import { Topic } from "../types";
 import TopicsList from "./topics-list";
 
 type TopicsSectionProps = {
-  topicsPromise: Promise<TopicType[] | undefined>;
+  topicsPromise: Promise<Topic[] | undefined>;
   params?: GetTopicsOptions;
 };
 

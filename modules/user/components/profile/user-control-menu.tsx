@@ -27,7 +27,7 @@ export default function UserControlMenus({
 
   const { toast } = useToast();
 
-  const isAdmin = user?.admin;
+  const isAdmin = user?.isAdmin;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function UserControlMenus({
   async function updateUserRole() {
     setIsLoading(true);
 
-    await updateUser(user.id, { admin: isAdmin ? false : true });
+    await updateUser(user.id, { isAdmin: isAdmin ? false : true });
 
     router.refresh();
     setIsLoading(false);

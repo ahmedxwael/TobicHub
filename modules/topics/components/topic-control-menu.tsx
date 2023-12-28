@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { EmailRequestBodyType } from "@/emails/types";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { OWNER_EMAIL } from "@/shared/flags";
 import { sendEmail } from "@/utils/email";
@@ -19,7 +19,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 type TopicControlMenuProps = {
-  topic: TopicType;
+  topic: Topic;
   className?: string;
   userSession: UserSessionType;
   toggleApproved: () => void;
@@ -42,11 +42,11 @@ export default function TopicControlMenu({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const hasControl =
-    userSession && (userSession?.id === topic.User.id || userSession?.admin);
+    userSession && (userSession?.id === topic.author.id || userSession?.admin);
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { approved: true });
+    await editTopic(topicId, { isApproved: true });
 
     toggleApproved();
     toast({
@@ -60,7 +60,7 @@ export default function TopicControlMenu({
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { approved: false });
+    await editTopic(topicId, { isApproved: false });
 
     toggleApproved();
     toast({

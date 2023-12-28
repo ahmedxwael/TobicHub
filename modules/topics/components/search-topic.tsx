@@ -17,7 +17,7 @@ import { debounce } from "@/utils/utils";
 import { Search } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import SearchItemSkeleton from "../skeletons/search-item-skeleton";
-import { TopicType } from "../types";
+import { Topic } from "../types";
 import SearchItem from "./search-item";
 
 type SearchTopicProps = {
@@ -26,7 +26,7 @@ type SearchTopicProps = {
 };
 
 export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
-  const [topics, setTopics] = useState<TopicType[]>([]);
+  const [topics, setTopics] = useState<Topic[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
       setIsLoading(true);
       const topicsList = await getTopicsAction({
         query: searchValue,
-        where: { approved: unapproved ? undefined : true, userId },
+        where: { isApproved: unapproved ? undefined : true, authorId: userId },
       });
 
       setTopics(topicsList || []);

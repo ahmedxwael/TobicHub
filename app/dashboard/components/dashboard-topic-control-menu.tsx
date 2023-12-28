@@ -6,14 +6,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type DashboardTopicControlMenuProps = {
-  topic: TopicType;
+  topic: Topic;
   className?: string;
 };
 
@@ -30,7 +30,7 @@ export default function DashboardTopicControlMenu({
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { approved: true });
+    await editTopic(topicId, { isApproved: true });
 
     toast({
       title: "Topic has been approved successfully.",
@@ -43,7 +43,7 @@ export default function DashboardTopicControlMenu({
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { approved: false });
+    await editTopic(topicId, { isApproved: false });
 
     toast({
       title: "Topic has been unapproved.",
@@ -80,7 +80,7 @@ export default function DashboardTopicControlMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[170px]">
-          {!topic.approved ? (
+          {!topic.isApproved ? (
             <Button
               disabled={isLoading}
               variant="ghost"

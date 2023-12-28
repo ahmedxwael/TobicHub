@@ -1,15 +1,15 @@
 import { UserType } from "../user/types";
 
-export type TopicType = {
+export type Topic = {
   id: string;
   title: string;
   description: string;
-  link: string | undefined;
-  approved: boolean;
-  created_at: Date;
-  updated_at: Date;
-  User: UserType;
-  userId: string;
+  resource: string | undefined;
+  isApproved: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  author: UserType;
+  authorId: string;
   comments: Comment[];
   totalComments: number;
   totalLikes: number;
@@ -18,18 +18,25 @@ export type TopicType = {
 export type Comment = {
   id: string;
   content: string;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
   topicId: string;
-  Topic: TopicType;
+  Topic: Topic;
   userId: string;
   User: UserType;
+  user: UserType;
+  topic: Topic;
+  isAuthorApproved: boolean;
+  isAdminApproved: boolean;
+  parentComment: Comment;
+  parentCommentId: string;
+  replies: Comment[];
 };
 
 export type NewTopic = {
   title: string;
   description: string;
-  link?: string;
-  userId: string;
-  approved?: boolean;
+  resource?: string;
+  authorId: string;
+  isApproved?: boolean;
 };

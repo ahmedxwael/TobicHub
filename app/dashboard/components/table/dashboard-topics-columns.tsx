@@ -7,7 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import { URLS } from "@/shared/urls";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
@@ -23,7 +23,7 @@ type User = {
   admin: boolean;
 };
 
-export const dashboardTopicsColumns: ColumnDef<TopicType>[] = [
+export const dashboardTopicsColumns: ColumnDef<Topic>[] = [
   {
     accessorKey: "User",
     header: "User",
@@ -105,10 +105,10 @@ export const dashboardTopicsColumns: ColumnDef<TopicType>[] = [
     },
   },
   {
-    accessorKey: "updated_at",
+    accessorKey: "updatedAt",
     header: () => <div className="whitespace-nowrap">Updated At</div>,
     cell: ({ row }) => {
-      const value = row.getValue("updated_at") as Date;
+      const value = row.getValue("updatedAt") as Date;
       const text = value.toDateString();
 
       return (

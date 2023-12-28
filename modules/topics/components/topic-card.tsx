@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import type { Session } from "next-auth";
 import Image from "next/image";
@@ -16,16 +16,16 @@ import { useState } from "react";
 import TopicControlMenu from "./topic-control-menu";
 
 type TopicCardProps = {
-  topic: TopicType;
+  topic: Topic;
   session: Session | null;
 };
 
 export default function TopicCard({ topic, session }: TopicCardProps) {
   const userSession = session?.user as UserSessionType;
 
-  const [isApproved, setIsApproved] = useState(topic.approved);
+  const [isApproved, setIsApproved] = useState(topic.isApproved);
 
-  const updatedAtDate = new Date(topic.updated_at);
+  const updatedAtDate = new Date(topic.updatedAt);
   const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
     updatedAtDate
   );
@@ -38,11 +38,11 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
       <CardHeader className="relative flex flex-row items-center justify-between">
         <div className="flex w-fit flex-wrap items-center gap-4">
           <Link
-            href={`/profile/${topic.User.id}`}
+            href={`/profile/${topic.author.id}`}
             className="flex items-center gap-4"
           >
             <Image
-              src={topic.User.image || "/images/avatar.png"}
+              src={topic.author.image || "/images/avatar.png"}
               alt="user image"
               width={500}
               height={500}
@@ -51,7 +51,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
             />
             <div className="flex flex-col">
               <h2 className="text-sm font-medium">
-                {topic.User.display_name || topic.User.name}
+                {topic.author.displayName || topic.author.name}
               </h2>
               {!!date && (
                 <span className="inline-block text-xs text-muted-foreground">
@@ -84,15 +84,15 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
         <CardDescription className="mt-2 line-clamp-5 leading-6">
           {topic.description}
         </CardDescription>
-        {topic.link && (
+        {topic.resource && (
           <div className="mt-4 space-y-2 border-t border-border pt-4 text-sm">
             <h3>Recourses:</h3>
             <Link
-              href={topic.link}
+              href={topic.resource}
               className="block w-fit max-w-full truncate text-sky-600"
               target="_blank"
             >
-              {topic.link}
+              {topic.resource}
             </Link>
           </div>
         )}

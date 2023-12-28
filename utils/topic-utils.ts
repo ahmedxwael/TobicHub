@@ -1,9 +1,9 @@
-import { NewTopic, TopicType } from "@/modules/topics/types";
+import { NewTopic, Topic } from "@/modules/topics/types";
 import prisma from "@/prisma";
 import { Prisma } from "@prisma/client";
 import axios from "axios";
 
-const userAllowedFields = { admin: true, id: true, name: true, image: true };
+const userAllowedFields = { isAdmin: true, id: true, name: true, image: true };
 
 export async function addTopic(newTopic: NewTopic) {
   await axios.post("/api/topics", newTopic).catch(() => {
@@ -13,7 +13,7 @@ export async function addTopic(newTopic: NewTopic) {
 
 export async function editTopic(
   id: string,
-  updatedTopic: Partial<TopicType> | TopicType
+  updatedTopic: Partial<Topic> | Topic
 ) {
   await axios.patch(`/api/topics/${id}`, updatedTopic).catch(() => {
     throw new Error("Something went wrong.");
@@ -29,18 +29,18 @@ export async function deleteTopic(id: string) {
 export const getTopic = async (
   id: string,
   isEditing?: boolean
-): Promise<TopicType | undefined | null> => {
+): Promise<Topic | undefined | null> => {
   try {
     const topic = await prisma.topic.findUnique({
       where: { id },
       include: isEditing
         ? {}
         : {
-            User: { select: userAllowedFields },
+            author: { select: userAllowedFields },
           },
     });
 
-    return topic as TopicType;
+    return topic as Topic;
   } catch (error: any) {
     return undefined;
   }
@@ -55,12 +55,12 @@ export type GetTopicsOptions = {
 
 export const getTopics = async (
   options: GetTopicsOptions = {}
-): Promise<TopicType[] | undefined> => {
+): Promise<Topic[] | undefined> => {
   const { where, query, skip, take } = options;
 
   const queryOptions: Prisma.TopicWhereInput[] | undefined = query
     ? [
-        { User: { name: { contains: query, mode: "insensitive" } } },
+        { author: { name: { contains: query, mode: "insensitive" } } },
         { title: { contains: query, mode: "insensitive" } },
         { description: { contains: query, mode: "insensitive" } },
       ]
@@ -69,13 +69,13 @@ export const getTopics = async (
   try {
     const topics = await prisma.topic.findMany({
       where: { ...where, OR: queryOptions },
-      include: { User: { select: userAllowedFields } },
+      include: { author: { select: userAllowedFields } },
       skip,
       take: take === null ? undefined : take || 5,
-      orderBy: { created_at: "desc" },
+      orderBy: { createdAt: "desc" },
     });
 
-    return topics as TopicType[];
+    return topics as Topic[];
   } catch (error: any) {
     return undefined;
   }

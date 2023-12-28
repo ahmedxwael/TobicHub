@@ -35,7 +35,7 @@ export const generateStaticParams = async () => {
   return topics.map((topic) => ({ id: topic.id }));
 };
 
-export const revalidate = 0
+export const revalidate = 0;
 
 export default async function TopicPage({ params: { id } }: TopicPageProps) {
   const topic = await getTopic(id);
@@ -44,7 +44,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
     return <NotFound message="Couldn't get your topic." />;
   }
 
-  const updatedAtDate = topic.updated_at ? new Date(topic.updated_at) : null;
+  const updatedAtDate = topic.updatedAt ? new Date(topic.updatedAt) : null;
   const date = updatedAtDate
     ? new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
         updatedAtDate
@@ -57,11 +57,11 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
       <div className="space-y-8">
         <div className="border-b pb-6 md:pb-8">
           <Link
-            href={`/profile/${topic.User.id}`}
+            href={`/profile/${topic.author.id}`}
             className="flex w-fit items-center gap-4"
           >
             <Image
-              src={topic.User.image || "/images/avatar.png"}
+              src={topic.author.image || "/images/avatar.png"}
               alt="user image"
               width={500}
               height={500}
@@ -69,7 +69,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
               className="h-14 w-14 rounded-full border object-cover"
             />
             <div className="flex flex-col">
-              <h2 className="text-sm font-medium">{topic.User.name}</h2>
+              <h2 className="text-sm font-medium">{topic.author.name}</h2>
               {!!date && (
                 <span className="inline-block text-xs text-muted-foreground">
                   {date}
@@ -82,15 +82,15 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
           {topic.title}
         </h1>
         <p className="whitespace-break-spaces leading-7">{topic.description}</p>
-        {topic.link && (
+        {topic.resource && (
           <div className="mt-4 space-y-2 border-t pt-4 text-sm">
             <h3>Recourses:</h3>
             <Link
-              href={topic.link}
+              href={topic.resource}
               className="block text-blue-500"
               target="_blank"
             >
-              {topic.link}
+              {topic.resource}
             </Link>
           </div>
         )}

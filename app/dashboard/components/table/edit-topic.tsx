@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import { editTopic } from "@/utils/topic-utils";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type EditTopicProps = {
-  topic: TopicType;
+  topic: Topic;
 };
 
 type Input = {
@@ -33,9 +33,9 @@ type Input = {
 export default function EditTopic({ topic }: EditTopicProps) {
   const router = useRouter();
 
-  const [updatedTopic, setUpdatedTopic] = useState<
-    TopicType | Partial<TopicType>
-  >(topic);
+  const [updatedTopic, setUpdatedTopic] = useState<Topic | Partial<Topic>>(
+    topic
+  );
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const {
@@ -45,12 +45,12 @@ export default function EditTopic({ topic }: EditTopicProps) {
   } = useForm<Input>();
 
   const onSubmit = async () => {
-    const body: Partial<TopicType> = {
+    const body: Partial<Topic> = {
       title: updatedTopic.title,
       description: updatedTopic.description,
-      approved: updatedTopic.approved,
-      link: updatedTopic.link,
-      userId: topic.userId,
+      isApproved: updatedTopic.isApproved,
+      resource: updatedTopic.resource,
+      authorId: topic.authorId,
     };
 
     await editTopic(topic.id, body);
@@ -149,11 +149,11 @@ export default function EditTopic({ topic }: EditTopicProps) {
               type="url"
               disabled={isSubmitting}
               {...register("link", {
-                value: topic?.link,
+                value: topic?.resource,
                 onChange: (e) =>
                   setUpdatedTopic({
                     ...topic,
-                    link: e.target.value.split(" ")[0],
+                    resource: e.target.value.split(" ")[0],
                   }),
               })}
             />
@@ -168,11 +168,11 @@ export default function EditTopic({ topic }: EditTopicProps) {
               <Checkbox
                 id="isApproved"
                 {...register("isApproved")}
-                checked={updatedTopic?.approved}
+                checked={updatedTopic?.isApproved}
                 onCheckedChange={() =>
                   setUpdatedTopic({
                     ...updatedTopic,
-                    approved: !updatedTopic?.approved,
+                    isApproved: !updatedTopic?.isApproved,
                   })
                 }
               />

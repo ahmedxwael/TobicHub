@@ -17,7 +17,7 @@ type UserCardProps = {
 };
 
 export default function UserCard({ user, userSession }: UserCardProps) {
-  const joinDate = new Date(user.created_at);
+  const joinDate = new Date(user.createdAt);
   const joinDateFormat = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
   }).format(joinDate);
@@ -37,10 +37,10 @@ export default function UserCard({ user, userSession }: UserCardProps) {
             />
           </Link>
           <CardBadge
-            isValid={user.admin}
+            isValid={user.isAdmin}
             validLabel="Admin"
             inValidLabel="User"
-            isMaster={user.owner}
+            isMaster={user.isOwner}
             masterLabel="Owner"
           />
         </div>
@@ -58,7 +58,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
             <TooltipContent>
               <div>{user?.topics?.length || 0} Topic(s)</div>
               <div>
-                {user?.topics?.filter((topic) => !topic.approved).length || 0}{" "}
+                {user?.topics?.filter((topic) => !topic.isApproved).length || 0}{" "}
                 Un approved
               </div>
             </TooltipContent>
@@ -68,7 +68,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
           Joined at: {joinDateFormat}
         </div>
       </div>
-      {userSession.admin && !user.owner && (
+      {userSession.admin && !user.isOwner && (
         <UserControlMenus user={user} className="absolute right-6 top-5" />
       )}
     </Card>

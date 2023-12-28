@@ -6,11 +6,11 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { TopicType } from "@/modules/topics/types";
+import { Topic } from "@/modules/topics/types";
 import { Eye } from "lucide-react";
 
 type ViewTopicProps = {
-  topic: TopicType;
+  topic: Topic;
 };
 
 export default function ViewTopic({ topic }: ViewTopicProps) {
@@ -28,7 +28,7 @@ export default function ViewTopic({ topic }: ViewTopicProps) {
               {topic.title}
             </div>
             <div className="text-sm text-muted-foreground">
-              {topic.updated_at.toDateString()}
+              {topic.updatedAt.toDateString()}
             </div>
           </div>
         </DialogHeader>

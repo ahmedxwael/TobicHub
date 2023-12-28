@@ -3,5 +3,5 @@ export type Contact = {
   name: string;
   email: string;
   message: string;
-  created_at: Date;
+  createdAt: Date;
 };

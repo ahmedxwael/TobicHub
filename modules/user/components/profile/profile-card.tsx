@@ -1,7 +1,5 @@
 import { authOptions } from "@/app/api/auth/options";
-import { Loader2 } from "lucide-react";
 import { getServerSession } from "next-auth";
-import { Suspense } from "react";
 import { UserSessionType, UserType } from "../../types";
 import UserImage from "./user-image";
 import UserName from "./user-name";

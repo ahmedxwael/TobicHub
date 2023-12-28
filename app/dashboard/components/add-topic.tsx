@@ -30,16 +30,16 @@ type AddTopicProps = {
 type Input = {
   title: string;
   description: string;
-  link: string;
+  resource: string;
   isApproved: boolean;
 };
 
 const initialTopic: NewTopic = {
   title: "",
   description: "",
-  link: "",
-  approved: false,
-  userId: "",
+  resource: "",
+  isApproved: false,
+  authorId: "",
 };
 
 export default function AddTopic({
@@ -63,9 +63,9 @@ export default function AddTopic({
     const body: NewTopic = {
       title: topic.title,
       description: topic.description,
-      approved: topic.approved,
-      link: topic.link,
-      userId,
+      isApproved: topic.isApproved,
+      resource: topic.resource,
+      authorId: userId,
     };
 
     await addTopic(body);
@@ -176,18 +176,18 @@ export default function AddTopic({
               placeholder="Recourses"
               type="url"
               disabled={isSubmitting}
-              {...register("link", {
-                value: topic?.link,
+              {...register("resource", {
+                value: topic?.resource,
                 onChange: (e) =>
                   setTopic({
                     ...topic,
-                    link: e.target.value.split(" ")[0],
+                    resource: e.target.value.split(" ")[0],
                   }),
               })}
             />
-            {errors.link && (
+            {errors.resource && (
               <span className="inline-block text-sm text-red-500">
-                {errors.link.message}
+                {errors.resource.message}
               </span>
             )}
           </div>
@@ -197,11 +197,11 @@ export default function AddTopic({
                 <Checkbox
                   id="isApproved"
                   {...register("isApproved")}
-                  checked={topic?.approved}
+                  checked={topic?.isApproved}
                   onCheckedChange={() =>
                     setTopic({
                       ...topic,
-                      approved: !topic?.approved,
+                      isApproved: !topic?.isApproved,
                     })
                   }
                 />

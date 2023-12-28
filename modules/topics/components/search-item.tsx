@@ -2,10 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { TopicType } from "../types";
+import { Topic } from "../types";
 
 type SearchItemProps = {
-  topic?: TopicType;
+  topic?: Topic;
 };
 
 export default function SearchItem({ topic }: SearchItemProps) {
@@ -15,19 +15,19 @@ export default function SearchItem({ topic }: SearchItemProps) {
     <Card>
       <CardContent className="space-y-3 py-4">
         <Link
-          href={`/profile/${topic?.User.id}`}
+          href={`/profile/${topic?.author.id}`}
           className="flex w-fit items-center gap-3"
         >
           <Image
             priority
-            src={topic?.User.image || "/images/avatar.png"}
+            src={topic?.author.image || "/images/avatar.png"}
             alt="user"
             width={500}
             height={500}
             className="h-8 w-8 rounded-full border-2 bg-muted object-cover"
           />
           <div className="text-sm text-muted-foreground">
-            {topic?.User.name}
+            {topic?.author.name}
           </div>
         </Link>
         <div

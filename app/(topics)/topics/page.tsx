@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 export default async function TopicsPage() {
-  const topicsPromise = getTopics({ where: { approved: true } });
+  const topicsPromise = getTopics({ where: { isApproved: true } });
 
   return (
     <section className="flex w-[800px] max-w-full flex-col gap-10 py-20">
@@ -26,7 +26,7 @@ export default async function TopicsPage() {
       <Suspense fallback={<TopicsSkeleton />}>
         <TopicsSection
           topicsPromise={topicsPromise}
-          params={{ where: { approved: true } }}
+          params={{ where: { isApproved: true } }}
         />
       </Suspense>
     </section>

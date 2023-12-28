@@ -29,7 +29,7 @@ export default function ViewTask({ task }: ViewTaskButtonProps) {
             {task.title}
           </div>
           <div className="text-sm text-muted-foreground">
-            {task.updated_at.toDateString()}
+            {task.updatedAt.toDateString()}
           </div>
         </DialogHeader>
         <DialogDescription className="max-h-[300px] overflow-auto text-justify text-base leading-normal">
