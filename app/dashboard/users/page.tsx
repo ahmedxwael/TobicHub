@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/options";
+import NoData from "@/components/no-data";
 import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
 import UserCard from "@/modules/dashboard/components/user-card";
@@ -28,9 +29,7 @@ export default async function UsersPage() {
           ))}
         </div>
       ) : (
-        <div className="px-6 py-10 text-center text-xl font-bold">
-          No users to show.
-        </div>
+        <NoData message="No users to show." />
       )}
     </section>
   );

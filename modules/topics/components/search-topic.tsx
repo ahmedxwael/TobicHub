@@ -1,6 +1,7 @@
 "use client";
 
 import { getTopicsAction } from "@/actions/actions";
+import NoData from "@/components/no-data";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -91,7 +92,7 @@ export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
                 ))}
               </div>
             ) : (
-              <div className="py-6 text-center">No topics found</div>
+              <NoData message="No topics found." />
             )}
           </ScrollArea>
         </DialogFooter>

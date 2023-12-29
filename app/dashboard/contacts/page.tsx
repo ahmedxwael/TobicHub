@@ -1,3 +1,4 @@
+import NoData from "@/components/no-data";
 import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
 import ContactCard from "@/modules/dashboard/components/contact-card";
@@ -22,9 +23,7 @@ export default async function ContactsPage() {
           ))}
         </div>
       ) : (
-        <div className="px-6 py-10 text-center text-xl font-bold">
-          No contact messages yet
-        </div>
+        <NoData message="No contact messages to show." />
       )}
     </section>
   );

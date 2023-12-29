@@ -63,7 +63,7 @@ export default function DataTable<TData, TValue>({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="h-32 text-center text-lg font-medium"
+                className="h-40 text-center text-lg font-medium"
               >
                 No results.
               </TableCell>

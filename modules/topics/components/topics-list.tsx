@@ -1,5 +1,6 @@
 "use client";
 
+import NoData from "@/components/no-data";
 import type { Session } from "next-auth";
 import { Topic } from "../types";
 import TopicCard from "./topic-card";
@@ -19,8 +20,6 @@ export default function TopicsList({ session, topicsList }: TopicsListProps) {
       ))}
     </div>
   ) : (
-    <div className="px-6 py-16 text-center text-xl font-bold">
-      No topics to show.
-    </div>
+    <NoData message="No topics to show." />
   );
 }
