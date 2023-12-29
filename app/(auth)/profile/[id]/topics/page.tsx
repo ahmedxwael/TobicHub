@@ -1,12 +1,14 @@
 import { authOptions } from "@/app/api/auth/options";
 import AddTopic from "@/app/dashboard/components/add-topic";
+import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
+import { Pagination } from "@/components/pagination";
 import TopicsSkeleton from "@/components/topics-skeleton";
 import SearchTopic from "@/modules/topics/components/search-topic";
-import TopicsSection from "@/modules/topics/components/topics-section";
+import TopicsList from "@/modules/topics/components/topics-list";
 import { getUser } from "@/modules/user/services/profile-services";
 import { UserSessionType } from "@/modules/user/types";
-import { ParamsType } from "@/shared/types";
+import { GenericObject, ParamsType } from "@/shared/types";
 import { getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -30,27 +32,52 @@ export const generateMetadata = async ({
   };
 };
 
-export default async function UserTopicsPage({ params }: ParamsType) {
-  const topicsPromise = getTopics({
-    where: { authorId: params.id, isApproved: true },
-  });
+type UserTopicsPageProps = {
+  params: {
+    id: string;
+  };
+  searchParams: GenericObject;
+};
 
+export default async function UserTopicsPage({
+  params,
+  searchParams,
+}: UserTopicsPageProps) {
+  const skip = Number(searchParams.skip) || 0;
   const session = await getServerSession(authOptions);
   const userSession = session?.user as UserSessionType | undefined;
+
+  const topics = await getTopics({
+    where: {
+      authorId: params.id,
+      isApproved: !userSession || userSession.id !== params.id,
+    },
+    skip,
+  });
+
+  if (!topics) {
+    return <NotFound message="Could not retrieve the list of topics." />;
+  }
 
   return (
     <section className="relative flex w-[800px] max-w-full flex-col">
       <div className="flex flex-col gap-12">
         <div className="flex w-full flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <PageHeading>topics</PageHeading>
+          </div>
+
           <SearchTopic userId={params.id} />
           <AddTopic userId={params.id} userSession={userSession} />
         </div>
-        <Suspense fallback={<TopicsSkeleton />}>
-          <TopicsSection
-            topicsPromise={topicsPromise}
-            params={{ where: { authorId: params.id, isApproved: true } }}
-          />
-        </Suspense>
+        <TopicsList session={session} topicsList={topics} />
+        <Pagination
+          paginationInfo={{
+            dataCount: topics.length,
+            skip,
+            limit: 5,
+          }}
+        />
       </div>
     </section>
   );

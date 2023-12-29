@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/options";
 import NotFound from "@/components/not-found";
+import PageHeading from "@/components/page-heading";
 import UserCard from "@/modules/dashboard/components/user-card";
 import { getUsers } from "@/modules/user/services/profile-services";
 import { UserSessionType } from "@/modules/user/types";
@@ -19,9 +20,7 @@ export default async function UsersPage() {
 
   return (
     <section className="w-full flex-col gap-10">
-      <h1 className="w-fit text-2xl font-bold capitalize tracking-wider">
-        Users
-      </h1>
+      <PageHeading>Users</PageHeading>
       {users.length > 0 ? (
         <div className="mt-12 grid gap-6 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {users.map((user) => (

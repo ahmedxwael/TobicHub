@@ -17,12 +17,18 @@ export const PATCH = async (
   }
 };
 
-export const DELETE = async (
+export const POST = async (
   request: NextRequest,
   { params: { id } }: ParamsType
 ) => {
   try {
+    const data = await request.json();
+
     await prisma.topic.delete({ where: { id } });
+    await prisma.user.update({
+      where: { id: data.authorId },
+      data: { totalTopics: { decrement: 1 } },
+    });
 
     return NextResponse.json(
       { message: "Deleted successfully!" },

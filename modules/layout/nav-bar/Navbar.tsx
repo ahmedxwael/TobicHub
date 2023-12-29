@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { UserSessionType } from "@/modules/user/types";
+import { URLS } from "@/shared/urls";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import NavLinks from "./nav-links";
@@ -23,7 +24,7 @@ const Navbar = async () => {
         <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
-              <Link href="/" className="text-xl font-bold text-primary">
+              <Link href={URLS.home} className="text-xl font-bold text-primary">
                 TopicHub
               </Link>
             </TooltipTrigger>

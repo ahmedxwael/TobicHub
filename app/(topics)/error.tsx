@@ -1,7 +1,7 @@
 "use client";
 
+import { URLS } from "@/shared/urls";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function Error({
   error,
@@ -10,8 +10,6 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const router = useRouter();
-
   return (
     <section className="flex flex-col items-center justify-center gap-6">
       <h2>Something went wrong!</h2>
@@ -26,7 +24,7 @@ export default function Error({
         >
           Try again
         </button>
-        <Link href="/" className="btn btn-primary">
+        <Link href={URLS.home} className="btn btn-primary">
           Back to home
         </Link>
       </div>

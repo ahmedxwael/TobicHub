@@ -1,5 +1,6 @@
 import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
+import { URLS } from "@/shared/urls";
 import { getTopic, getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -57,7 +58,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
       <div className="space-y-8">
         <div className="border-b pb-6 md:pb-8">
           <Link
-            href={`/profile/${topic.author.id}`}
+            href={URLS.profile.view(topic.authorId)}
             className="flex w-fit items-center gap-4"
           >
             <Image

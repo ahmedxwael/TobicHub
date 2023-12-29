@@ -91,7 +91,7 @@ export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
                 ))}
               </div>
             ) : (
-              <div className="py-4 text-center">There are no topics</div>
+              <div className="py-6 text-center">No topics found</div>
             )}
           </ScrollArea>
         </DialogFooter>

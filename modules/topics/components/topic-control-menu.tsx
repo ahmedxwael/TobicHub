@@ -12,6 +12,7 @@ import { EmailRequestBodyType } from "@/emails/types";
 import { Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { OWNER_EMAIL } from "@/shared/flags";
+import { URLS } from "@/shared/urls";
 import { sendEmail } from "@/utils/email";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
@@ -73,7 +74,7 @@ export default function TopicControlMenu({
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
-    await deleteTopic(topic.id);
+    await deleteTopic(topic.id, topic.authorId);
 
     toast({
       title: "Topic has been deleted.",
@@ -128,7 +129,7 @@ export default function TopicControlMenu({
                 onClick={() => {
                   setIsLoading(true);
                   setIsDropdownOpen(false);
-                  router.push(`/edit-topic/${topic.id}`);
+                  router.push(URLS.editTopic.view(topic.id));
                   setIsLoading(false);
                 }}
               >

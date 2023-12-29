@@ -20,10 +20,14 @@ export async function editTopic(
   });
 }
 
-export async function deleteTopic(id: string) {
-  await axios.delete(`/api/topics/${id}`).catch(() => {
-    throw new Error("Something went wrong.");
-  });
+export async function deleteTopic(id: string, authorId: string) {
+  await axios
+    .post(`/api/topics/${id}`, {
+      authorId,
+    })
+    .catch(() => {
+      throw new Error("Something went wrong.");
+    });
 }
 
 export const getTopic = async (

@@ -1,6 +1,7 @@
 "use client";
 
 import CardBadge from "@/components/card-badge";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -9,9 +10,11 @@ import {
 } from "@/components/ui/card";
 import { Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
+import { URLS } from "@/shared/urls";
 import type { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import TopicControlMenu from "./topic-control-menu";
 
@@ -22,6 +25,7 @@ type TopicCardProps = {
 
 export default function TopicCard({ topic, session }: TopicCardProps) {
   const userSession = session?.user as UserSessionType;
+  const pathname = usePathname();
 
   const [isApproved, setIsApproved] = useState(topic.isApproved);
 
@@ -38,7 +42,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
       <CardHeader className="relative flex flex-row items-center justify-between">
         <div className="flex w-fit flex-wrap items-center gap-4">
           <Link
-            href={`/profile/${topic.author.id}`}
+            href={URLS.profile.topics(topic.authorId)}
             className="flex items-center gap-4"
           >
             <Image
@@ -60,11 +64,12 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
               )}
             </div>
           </Link>
-          <CardBadge
-            isValid={isApproved}
-            inValidLabel="Un Approved"
-            validLabel="Approved"
-          />
+          {userSession && pathname.includes(userSession.id) && (
+            <CardBadge
+              isPrimary={isApproved}
+              label={isApproved ? "Approved" : "Not Approved"}
+            />
+          )}
         </div>
         <TopicControlMenu
           userSession={userSession}
@@ -76,7 +81,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
       </CardHeader>
       <CardContent>
         <Link
-          href={`/topics/${topic.id}`}
+          href={URLS.topics.view(topic.id)}
           className="line-clamp-1 w-fit text-xl font-semibold capitalize"
         >
           {topic.title}

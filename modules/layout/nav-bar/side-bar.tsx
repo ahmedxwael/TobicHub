@@ -13,6 +13,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { UserSessionType } from "@/modules/user/types";
+import { URLS } from "@/shared/urls";
 import { AlignJustify } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
@@ -91,7 +92,7 @@ export default function SideBar({ userSession }: SideBarProps) {
           ) : (
             <Link
               onClick={() => setIsSheetOpen(false)}
-              href="/register"
+              href={URLS.register}
               className={cn(
                 buttonVariants({ variant: "default", size: "lg" }),
                 "w-full"
@@ -101,7 +102,6 @@ export default function SideBar({ userSession }: SideBarProps) {
             </Link>
           )}
         </ul>
-        {/* <ModeToggle /> */}
       </SheetContent>
     </Sheet>
   );

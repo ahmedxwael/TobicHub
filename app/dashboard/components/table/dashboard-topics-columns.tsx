@@ -25,18 +25,18 @@ type User = {
 
 export const dashboardTopicsColumns: ColumnDef<Topic>[] = [
   {
-    accessorKey: "User",
+    accessorKey: "author",
     header: "User",
     cell: ({ row }) => {
-      const user = row.getValue("User") as User;
-      const userName = user.name;
+      const user = row.getValue("author") as User;
+      const userName = user?.name;
 
       return (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
               <Link
-                href={URLS.profile.view(user.id)}
+                href={URLS.profile.view(user?.id)}
                 className="flex min-w-[200px] items-center gap-4"
               >
                 <Image
@@ -88,10 +88,10 @@ export const dashboardTopicsColumns: ColumnDef<Topic>[] = [
     },
   },
   {
-    accessorKey: "approved",
+    accessorKey: "isApproved",
     header: "Status",
     cell: ({ row }) => {
-      const isApproved = row.getValue("approved");
+      const isApproved = row.getValue("isApproved");
       const text = isApproved ? "Approved" : "Not Approved";
 
       return (

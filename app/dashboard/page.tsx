@@ -1,13 +1,24 @@
 import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
+import { DataTablePagination } from "@/components/table/table-pagination";
 import SearchTopic from "@/modules/topics/components/search-topic";
+import { GenericObject } from "@/shared/types";
 import { getTopics } from "@/utils/topic-utils";
 import TopicsTable from "./components/table/topics-table";
 
 export const revalidate = 0;
 
-export default async function DashboardPage() {
-  const topics = await getTopics({ take: null });
+type DashboardPageProps = {
+  searchParams: GenericObject;
+};
+
+export default async function DashboardPage({
+  searchParams,
+}: DashboardPageProps) {
+  const topics = await getTopics({
+    take: 10,
+    skip: Number(searchParams.skip) || 0,
+  });
 
   if (!topics) {
     return <NotFound message="Could not retrieve the list of topics." />;
@@ -20,6 +31,12 @@ export default async function DashboardPage() {
         <SearchTopic unapproved />
       </div>
       <TopicsTable topics={topics} />
+      <DataTablePagination
+        paginationInfo={{
+          dataCount: topics.length,
+          skip: searchParams.skip || 0,
+        }}
+      />
     </section>
   );
 }

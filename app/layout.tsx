@@ -4,6 +4,7 @@ import ToTopButton from "@/modules/layout/components/to-top-button";
 import Footer from "@/modules/layout/footer/footer";
 import Navbar from "@/modules/layout/nav-bar/Navbar";
 import NexAuthSessionProvider from "@/providers/next-auth-session-provider";
+import ReduxStoreProvider from "@/providers/redux-store-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
@@ -41,13 +42,15 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
-            <main className="container mx-auto flex min-h-[calc(100vh-72px)] flex-col px-8 pb-24">
-              {children}
-            </main>
-            <Toaster />
-            <ToTopButton />
-            <Footer />
+            <ReduxStoreProvider>
+              <Navbar />
+              <main className="container mx-auto flex min-h-[calc(100vh-72px)] flex-col px-8 pb-24">
+                {children}
+              </main>
+              <Toaster />
+              <ToTopButton />
+              <Footer />
+            </ReduxStoreProvider>
           </ThemeProvider>
         </NexAuthSessionProvider>
       </body>

@@ -7,7 +7,7 @@ export const POST = async (request: NextRequest) => {
 
   try {
     await prisma.topic.create({ data });
-    prisma.user.update({
+    await prisma.user.update({
       where: { id: data.authorId },
       data: { totalTopics: { increment: 1 } },
     });

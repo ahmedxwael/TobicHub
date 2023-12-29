@@ -113,7 +113,7 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
       ) : (
         <Link
           onClick={onClose}
-          href="/register"
+          href={URLS.register}
           className={cn(
             buttonVariants({ variant: "default", size: "lg" }),
             "w-full"

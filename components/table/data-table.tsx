@@ -2,18 +2,9 @@
 
 import {
   ColumnDef,
-  ColumnFiltersState,
   Table as TableType,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import {
   Table,
   TableBody,
@@ -80,7 +71,6 @@ export default function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <DataTablePagination table={table} />
     </>
   );
 }

@@ -19,10 +19,13 @@ export const links = [
 
 export const URLS = {
   home: "/",
-  topics: "/topics",
+  topics: {
+    list: "/topics",
+    view: (id: string) => `/topics/${id}`,
+  },
   createTopic: "/create-topic",
-  "edit-topic": {
-    edit: (id: string) => `/edit-topic/${id}`,
+  editTopic: {
+    view: (id: string) => `/edit-topic/${id}`,
   },
   contactUs: "/contact-us",
   profile: {
@@ -32,5 +35,5 @@ export const URLS = {
   },
   dashboard: "/dashboard",
   register: "/register",
-  "privacy-policy": "/privacy-policy",
+  privacyPolicy: "/privacy-policy",
 };

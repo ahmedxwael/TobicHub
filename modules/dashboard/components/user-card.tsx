@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UserControlMenus from "@/modules/user/components/profile/user-control-menu";
+import { URLS } from "@/shared/urls";
 import Image from "next/image";
 import Link from "next/link";
 import { UserSessionType, UserType } from "../../user/types";
@@ -26,7 +27,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
     <Card className="relative animate-show-card border-0 p-4 sm:p-6">
       <div className="flex w-fit flex-col flex-wrap gap-4">
         <div className="flex items-center gap-3">
-          <Link href={`/profile/${user.id}`}>
+          <Link href={URLS.profile.view(user.id)}>
             <Image
               src={user.image || "/images/avatar.png"}
               alt="user image"
@@ -37,14 +38,11 @@ export default function UserCard({ user, userSession }: UserCardProps) {
             />
           </Link>
           <CardBadge
-            isValid={user.isAdmin}
-            validLabel="Admin"
-            inValidLabel="User"
-            isMaster={user.isOwner}
-            masterLabel="Owner"
+            isDestructive={user.isAdmin}
+            label={user.isAdmin ? "Admin" : "User"}
           />
         </div>
-        <Link href={`/profile/${user.id}`} className="block">
+        <Link href={URLS.profile.view(user.id)} className="block">
           <div className="font-medium">{user.name}</div>
           <div className="text-sm text-muted-foreground">{user.email}</div>
         </Link>

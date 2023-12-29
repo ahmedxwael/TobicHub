@@ -16,7 +16,7 @@ export default function RefreshButton({ className }: RefreshButtonProps) {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       className={cn(className)}
       onClick={() => {

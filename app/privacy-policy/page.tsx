@@ -1,12 +1,13 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { URLS } from "@/shared/urls";
 import Link from "next/link";
 import React from "react";
 
 export default function PrivacyPolicyPage() {
   return (
     <section className="w-full">
-      <div className="prose prose-headings:text-foreground prose-headings:mb-2 prose-p:text-muted-foreground w-screen max-w-full">
+      <div className="prose w-screen max-w-full prose-headings:mb-2 prose-headings:text-foreground prose-p:text-muted-foreground">
         <h1>Privacy Policy for TopicHub</h1>
         <h2>1. Introduction</h2>
         <p>
@@ -42,7 +43,7 @@ export default function PrivacyPolicyPage() {
           If you have any questions about this Privacy Policy or your personal
           information, please contact us at Contact us page.{" "}
           <Link
-            href="/contact-us"
+            href={URLS.contactUs}
             className={cn(buttonVariants({ variant: "link" }))}
           >
             Contact us

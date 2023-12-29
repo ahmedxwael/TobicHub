@@ -3,22 +3,19 @@
 import { Button } from "@/components/ui/button";
 import { PaginationInfo } from "@/shared/types";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, } from "next/navigation";
 
-type DataTablePaginationProps = {
+type PaginationProps = {
   paginationInfo: PaginationInfo;
 };
 
 let skip = 0;
 
-export function DataTablePagination({
-  paginationInfo,
-}: DataTablePaginationProps) {
-  const searchParams = useSearchParams();
+export function Pagination({ paginationInfo }: PaginationProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  skip = Number(searchParams.get("skip")) || 0;
+  const limit = paginationInfo.limit || 10;
 
   const handleNavigation = (value: number) => {
     skip = value;
@@ -37,8 +34,8 @@ export function DataTablePagination({
           <Button
             variant="outline"
             className="flex min-w-[120px] items-center gap-2"
-            onClick={() => handleNavigation(skip - 10)}
-            disabled={skip < 10}
+            onClick={() => handleNavigation(skip - limit)}
+            disabled={skip < limit}
             aria-label="Go to previous page"
           >
             <ChevronLeftIcon className="h-4 w-4" />
@@ -47,8 +44,8 @@ export function DataTablePagination({
           <Button
             variant="outline"
             className="flex min-w-[120px] items-center gap-2"
-            onClick={() => handleNavigation(skip + 10)}
-            disabled={paginationInfo.dataCount < 10}
+            onClick={() => handleNavigation(skip + limit)}
+            disabled={paginationInfo.dataCount < limit}
             aria-label="Go to next page"
           >
             Next

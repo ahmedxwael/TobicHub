@@ -27,7 +27,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <section className="w-full space-y-6 py-20">
+    <section className="w-full space-y-8 py-20">
       <div className="flex items-center justify-between gap-6">
         <div className="space-y-0.5">
           <PageHeading>Dashboard</PageHeading>
@@ -37,7 +37,7 @@ export default async function DashboardLayout({
         </div>
         <RefreshButton className="shrink-0" />
       </div>
-      <Separator className="my-10" />
+      <Separator />
       <section className="flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <DashboardSideNav />
         {children}

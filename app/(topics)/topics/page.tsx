@@ -1,10 +1,13 @@
+import { authOptions } from "@/app/api/auth/options";
+import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
-import TopicsSkeleton from "@/components/topics-skeleton";
+import { Pagination } from "@/components/pagination";
 import SearchTopic from "@/modules/topics/components/search-topic";
-import TopicsSection from "@/modules/topics/components/topics-section";
+import TopicsList from "@/modules/topics/components/topics-list";
+import { GenericObject } from "@/shared/types";
 import { getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
-import { Suspense } from "react";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Topics | TopicHub",
@@ -14,8 +17,21 @@ export const metadata: Metadata = {
 
 export const revalidate = 0;
 
-export default async function TopicsPage() {
-  const topicsPromise = getTopics({ where: { isApproved: true } });
+type TopicsPageProps = {
+  searchParams: GenericObject;
+};
+
+export default async function TopicsPage({ searchParams }: TopicsPageProps) {
+  const skip = Number(searchParams.skip) || 0;
+  const session = await getServerSession(authOptions);
+  const topics = await getTopics({
+    where: { isApproved: true },
+    skip,
+  });
+
+  if (!topics) {
+    return <NotFound message="Could not retrieve the list of topics." />;
+  }
 
   return (
     <section className="flex w-[800px] max-w-full flex-col gap-10 py-20">
@@ -23,12 +39,14 @@ export default async function TopicsPage() {
         <PageHeading>all topics</PageHeading>
         <SearchTopic />
       </div>
-      <Suspense fallback={<TopicsSkeleton />}>
-        <TopicsSection
-          topicsPromise={topicsPromise}
-          params={{ where: { isApproved: true } }}
-        />
-      </Suspense>
+      <TopicsList topicsList={topics} session={session} />
+      <Pagination
+        paginationInfo={{
+          dataCount: topics.length,
+          skip,
+          limit: 5,
+        }}
+      />
     </section>
   );
 }

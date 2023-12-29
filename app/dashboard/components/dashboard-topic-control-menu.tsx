@@ -55,7 +55,7 @@ export default function DashboardTopicControlMenu({
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
-    await deleteTopic(topic.id);
+    await deleteTopic(topic.id, topic.authorId);
 
     toast({
       title: "Topic has been deleted.",

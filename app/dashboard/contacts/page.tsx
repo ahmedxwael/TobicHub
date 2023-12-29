@@ -1,4 +1,5 @@
 import NotFound from "@/components/not-found";
+import PageHeading from "@/components/page-heading";
 import ContactCard from "@/modules/dashboard/components/contact-card";
 import { getContacts } from "@/utils/contact-utils";
 
@@ -13,9 +14,7 @@ export default async function ContactsPage() {
 
   return (
     <section className="w-full flex-col gap-10">
-      <h1 className="w-fit text-2xl font-bold capitalize tracking-wider">
-        Contact Users
-      </h1>
+      <PageHeading>Contact Users</PageHeading>
       {contacts.length > 0 ? (
         <div className="relative mt-12 grid gap-6 sm:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
           {contacts.map((contact) => (
@@ -24,7 +23,7 @@ export default async function ContactsPage() {
         </div>
       ) : (
         <div className="px-6 py-10 text-center text-xl font-bold">
-          There are no contact messages yet
+          No contact messages yet
         </div>
       )}
     </section>

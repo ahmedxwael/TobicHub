@@ -5,6 +5,7 @@ import AddTask from "@/modules/user/components/tasks/table/add-task";
 import TasksTable from "@/modules/user/components/tasks/table/tasks-table";
 import { getUserTasks } from "@/modules/user/services/tasks-services";
 import { Task, UserSessionType } from "@/modules/user/types";
+import { GenericObject } from "@/shared/types";
 import { URLS } from "@/shared/urls";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -13,11 +14,15 @@ type TasksPageProps = {
   params: {
     id: string;
   };
+  searchParams: GenericObject;
 };
 
 export const revalidate = 0;
 
-export default async function TasksPage({ params }: TasksPageProps) {
+export default async function TasksPage({
+  params,
+  searchParams,
+}: TasksPageProps) {
   const session = await getServerSession(authOptions);
   const userSession = session?.user as UserSessionType;
 
@@ -35,7 +40,13 @@ export default async function TasksPage({ params }: TasksPageProps) {
     <section className="flex-1">
       <div className="flex w-full flex-col gap-12">
         <div className="flex w-full flex-wrap items-center justify-between gap-6">
-          <PageHeading>Tasks</PageHeading>
+          <div className="flex flex-col gap-2">
+            <PageHeading>Tasks</PageHeading>
+            <div className="flex items-center gap-2 text-sm capitalize text-neutral-400">
+              <span className="inline-block">{tasks?.length}</span>
+              task(s)
+            </div>
+          </div>
           <AddTask userId={params.id} />
         </div>
         <TasksTable tasks={tasks} />

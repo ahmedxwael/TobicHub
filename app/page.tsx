@@ -2,9 +2,14 @@ import FeaturesList from "@/components/features/features-list";
 import SectionHeading from "@/components/section-heading";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { URLS } from "@/shared/urls";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { authOptions } from "./api/auth/options";
 
-const Home = () => {
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+
   return (
     <>
       <section className="text-center">
@@ -24,12 +29,15 @@ const Home = () => {
       <section className="mt-20 text-center">
         <h2 className="mb-6 text-xl font-bold">Ready to get started?</h2>
 
-        <Link href="/register" className={cn(buttonVariants({ size: "lg" }))}>
-          Join us now
-        </Link>
+        {session?.user && (
+          <Link
+            href={URLS.register}
+            className={cn(buttonVariants({ size: "lg" }))}
+          >
+            Join us now
+          </Link>
+        )}
       </section>
     </>
   );
-};
-
-export default Home;
+}
