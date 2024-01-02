@@ -23,10 +23,6 @@ export const URLS = {
     list: "/topics",
     view: (id: string) => `/topics/${id}`,
   },
-  createTopic: "/create-topic",
-  editTopic: {
-    view: (id: string) => `/edit-topic/${id}`,
-  },
   contactUs: "/contact-us",
   profile: {
     view: (id: string) => `/profile/${id}`,

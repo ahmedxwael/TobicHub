@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 import { UserSessionType } from "@/modules/user/types";
 import { ArrowDownIcon } from "@/shared/icons";
 import { URLS } from "@/shared/urls";
-import { Play } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,10 +36,6 @@ export const userLinks = [
   {
     label: "Tasks",
     href: URLS.profile.tasks,
-  },
-  {
-    label: "Create Topic",
-    href: URLS.createTopic,
   },
 ];
 
