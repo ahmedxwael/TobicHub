@@ -1,4 +1,4 @@
-import { Topic } from "../topics/types";
+import { Like, Topic } from "../topics/types";
 
 export type UserType = {
   id: string;
@@ -11,6 +11,10 @@ export type UserType = {
   createdAt: Date;
   updatedAt: Date;
   topics?: Topic[];
+  comments?: Comment[];
+  tasks: Task[];
+  following: UserType[];
+  followers: UserType[];
   totalTopics: number;
   totalComments: number;
   totalLikes: number;
@@ -18,6 +22,7 @@ export type UserType = {
   totalFollowers: number;
   totalFollowing: number;
   followingId: string | null;
+  likes?: Like[];
 };
 
 export type UserSessionType = {

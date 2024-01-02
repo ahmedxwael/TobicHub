@@ -4,7 +4,7 @@ import PageHeading from "@/components/page-heading";
 import AddTask from "@/modules/user/components/tasks/table/add-task";
 import TasksTable from "@/modules/user/components/tasks/table/tasks-table";
 import { getUserTasks } from "@/modules/user/services/tasks-services";
-import { Task, UserSessionType } from "@/modules/user/types";
+import { UserSessionType } from "@/modules/user/types";
 import { GenericObject } from "@/shared/types";
 import { URLS } from "@/shared/urls";
 import { getServerSession } from "next-auth";
@@ -19,10 +19,7 @@ type TasksPageProps = {
 
 export const revalidate = 0;
 
-export default async function TasksPage({
-  params,
-  searchParams,
-}: TasksPageProps) {
+export default async function TasksPage({ params }: TasksPageProps) {
   const session = await getServerSession(authOptions);
   const userSession = session?.user as UserSessionType;
 

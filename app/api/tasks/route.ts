@@ -1,6 +1,5 @@
 import { NewTask } from "@/modules/user/components/tasks/table/add-task";
 import prisma from "@/prisma";
-import { ParamsType } from "@/shared/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {

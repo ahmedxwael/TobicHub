@@ -1,9 +1,6 @@
 import { authOptions } from "@/app/api/auth/options";
 import NotFound from "@/components/not-found";
-import PageHeading from "@/components/page-heading";
-import { Separator } from "@/components/ui/separator";
 import ProfileSideNav from "@/modules/user/components/profile-sidenav";
-import ProfileCard from "@/modules/user/components/profile/profile-card";
 import { getUser, getUsers } from "@/modules/user/services/profile-services";
 import { UserSessionType } from "@/modules/user/types";
 import { getServerSession } from "next-auth";

@@ -1,5 +1,8 @@
 import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
+import { Separator } from "@/components/ui/separator";
+import CommentsSection from "@/modules/topics/components/comments/comments-section";
+import { ParamsType } from "@/shared/types";
 import { URLS } from "@/shared/urls";
 import { getTopic, getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
@@ -7,13 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-type TopicPageProps = {
-  params: { id: string };
-};
-
 export const generateMetadata = async ({
   params: { id },
-}: TopicPageProps): Promise<Metadata> => {
+}: ParamsType): Promise<Metadata> => {
   const topic = await getTopic(id);
 
   if (!topic) {
@@ -38,7 +37,7 @@ export const generateStaticParams = async () => {
 
 export const revalidate = 0;
 
-export default async function TopicPage({ params: { id } }: TopicPageProps) {
+export default async function TopicPage({ params: { id } }: ParamsType) {
   const topic = await getTopic(id);
 
   if (!topic) {
@@ -53,7 +52,7 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
     : null;
 
   return (
-    <section>
+    <section className="mx-auto my-28 max-w-[800px]">
       <BackButton />
       <div className="space-y-8">
         <div className="border-b pb-6 md:pb-8">
@@ -79,12 +78,14 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
             </div>
           </Link>
         </div>
-        <h1 className="text-2xl font-bold first-letter:uppercase md:text-3xl">
+        <h1 className="text-2xl font-bold capitalize md:text-3xl">
           {topic.title}
         </h1>
-        <p className="whitespace-break-spaces leading-7">{topic.description}</p>
+        <p className="whitespace-break-spaces leading-7 text-muted-foreground">
+          {topic.description}
+        </p>
         {topic.resource && (
-          <div className="mt-4 space-y-2 border-t pt-4 text-sm">
+          <div className="mt-4 space-y-2">
             <h3>Recourses:</h3>
             <Link
               href={topic.resource}
@@ -96,6 +97,8 @@ export default async function TopicPage({ params: { id } }: TopicPageProps) {
           </div>
         )}
       </div>
+      <Separator className="my-6" />
+      <CommentsSection topic={topic} />
     </section>
   );
 }

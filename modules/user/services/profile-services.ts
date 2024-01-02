@@ -10,7 +10,7 @@ export const getUsers = async (
       include: inDashboard ? { topics: true } : null,
     });
 
-    return users;
+    return users as UserType[];
   } catch (error) {
     return undefined;
   }
@@ -22,7 +22,7 @@ export const getUser = async (
   try {
     const user = await prisma.user.findUnique({ where: { id } });
 
-    return user;
+    return user as UserType;
   } catch (error) {
     return undefined;
   }

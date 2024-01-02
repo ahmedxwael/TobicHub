@@ -3,7 +3,7 @@
 import NoData from "@/components/no-data";
 import type { Session } from "next-auth";
 import { Topic } from "../types";
-import TopicCard from "./topic-card";
+import TopicCard from "./topic-card/topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 

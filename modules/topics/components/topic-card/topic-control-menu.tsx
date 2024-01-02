@@ -1,5 +1,6 @@
 "use client";
 
+import EditTopic from "@/app/dashboard/components/table/edit-topic";
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,12 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { EmailRequestBodyType } from "@/emails/types";
 import { Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
-import { OWNER_EMAIL } from "@/shared/flags";
-import { URLS } from "@/shared/urls";
-import { sendEmail } from "@/utils/email";
 import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -88,7 +85,7 @@ export default function TopicControlMenu({
   return (
     <>
       {hasControl && (
-        <DropdownMenu>
+        <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
           <DropdownMenuTrigger asChild className={className}>
             <Button
               onClick={() => setIsDropdownOpen(true)}
@@ -99,52 +96,38 @@ export default function TopicControlMenu({
               <MoreHorizontal size={15} />
             </Button>
           </DropdownMenuTrigger>
-          {isDropdownOpen && (
-            <DropdownMenuContent align="end" className="w-[170px]">
-              {userSession?.admin &&
-                pathname.endsWith("/dashboard") &&
-                (!isApproved ? (
-                  <Button
-                    disabled={isLoading}
-                    variant="ghost"
-                    className="w-full cursor-pointer hover:text-white"
-                    onClick={() => handleTopicApprovement(topic.id)}
-                  >
-                    Approve
-                  </Button>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    className="w-full cursor-pointer"
-                    disabled={isLoading}
-                    onClick={() => handleTopicUnApprovement(topic.id)}
-                  >
-                    Unapproved
-                  </Button>
-                ))}
-              <Button
-                variant="ghost"
-                className="w-full cursor-pointer"
-                disabled={isLoading}
-                onClick={() => {
-                  setIsLoading(true);
-                  setIsDropdownOpen(false);
-                  router.push(URLS.editTopic.view(topic.id));
-                  setIsLoading(false);
-                }}
-              >
-                Edit
-              </Button>
-              <CustomAlertDialog
-                action={handleTopicDelete}
-                title="Delete"
-                variant="ghost"
-                description="This action cannot be undone. Are you sure that you want to delete this topic?"
-                className="text-red-600 hover:bg-red-600 hover:text-white"
-                disabled={isLoading}
-              />
-            </DropdownMenuContent>
-          )}
+          <DropdownMenuContent align="end" className="w-[170px]">
+            {userSession?.admin &&
+              pathname.endsWith("/dashboard") &&
+              (!isApproved ? (
+                <Button
+                  disabled={isLoading}
+                  variant="ghost"
+                  className="w-full cursor-pointer hover:text-white"
+                  onClick={() => handleTopicApprovement(topic.id)}
+                >
+                  Approve
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  className="w-full cursor-pointer"
+                  disabled={isLoading}
+                  onClick={() => handleTopicUnApprovement(topic.id)}
+                >
+                  Unapproved
+                </Button>
+              ))}
+            <EditTopic className="w-full" topic={topic} title="Edit" />
+            <CustomAlertDialog
+              action={handleTopicDelete}
+              title="Delete"
+              variant="ghost"
+              description="This action cannot be undone. Are you sure that you want to delete this topic?"
+              className="text-red-600 hover:bg-red-600 hover:text-white"
+              disabled={isLoading}
+            />
+          </DropdownMenuContent>
         </DropdownMenu>
       )}
     </>

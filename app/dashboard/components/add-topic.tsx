@@ -12,11 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { NewTopic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import { addTopic } from "@/utils/topic-utils";
-import { Pencil, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -47,6 +48,7 @@ export default function AddTopic({
   userSession,
   className,
 }: AddTopicProps) {
+  const { toast } = useToast();
   const router = useRouter();
 
   const [topic, setTopic] = useState<NewTopic>(initialTopic);
@@ -70,6 +72,12 @@ export default function AddTopic({
 
     await addTopic(body);
 
+    toast({
+      title: "Your new topic has been submitted successfully.",
+      description:
+        "It will be reviewed by our team before it can be published. Thank you for your contribution and patience during this process.",
+      variant: "success",
+    });
     reset();
     setTopic(initialTopic);
     setIsPopupOpen(false);

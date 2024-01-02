@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { DataTablePagination } from "./table-pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

@@ -10,9 +10,20 @@ export type Topic = {
   updatedAt: Date;
   author: UserType;
   authorId: string;
-  comments: Comment[];
+  comments?: Comment[];
   totalComments: number;
+  totalApprovedComments: number;
   totalLikes: number;
+  totalRepost: number;
+  likes?: Like[];
+};
+
+export type NewComment = {
+  content: string;
+  topicId: string;
+  userId: string;
+  parentCommentId?: string;
+  isApproved?: boolean;
 };
 
 export type Comment = {
@@ -21,16 +32,24 @@ export type Comment = {
   createdAt: Date;
   updatedAt: Date;
   topicId: string;
-  Topic: Topic;
   userId: string;
-  User: UserType;
   user: UserType;
   topic: Topic;
-  isAuthorApproved: boolean;
-  isAdminApproved: boolean;
-  parentComment: Comment;
-  parentCommentId: string;
-  replies: Comment[];
+  parentComment?: Comment;
+  parentCommentId?: string;
+  replies?: Comment[];
+  totalReplies: number;
+  isApproved: string;
+};
+
+export type Like = {
+  id: string;
+  userId: string;
+  topicId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: UserType;
+  topic: Topic;
 };
 
 export type NewTopic = {

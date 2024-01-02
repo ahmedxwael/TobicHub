@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 import { Topic } from "@/modules/topics/types";
 import { editTopic } from "@/utils/topic-utils";
 import { Pencil } from "lucide-react";
@@ -21,6 +22,9 @@ import { useForm } from "react-hook-form";
 
 type EditTopicProps = {
   topic: Topic;
+  title?: string;
+  onClick?: () => void;
+  className?: string;
 };
 
 type Input = {
@@ -30,7 +34,12 @@ type Input = {
   isApproved: boolean;
 };
 
-export default function EditTopic({ topic }: EditTopicProps) {
+export default function EditTopic({
+  topic,
+  title,
+  onClick,
+  className,
+}: EditTopicProps) {
   const router = useRouter();
 
   const [updatedTopic, setUpdatedTopic] = useState<Topic | Partial<Topic>>(
@@ -64,10 +73,13 @@ export default function EditTopic({ topic }: EditTopicProps) {
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="h-fit w-fit p-2"
-          onClick={() => setIsPopupOpen(true)}
+          className={cn("h-fit w-fit p-2", className)}
+          onClick={() => {
+            onClick?.();
+            setIsPopupOpen(true);
+          }}
         >
-          <Pencil size={20} />
+          {title ? title : <Pencil size={20} />}
         </Button>
       </DialogTrigger>
       <DialogContent

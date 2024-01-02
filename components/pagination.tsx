@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { PaginationInfo } from "@/shared/types";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { usePathname, useRouter, } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type PaginationProps = {
   paginationInfo: PaginationInfo;

@@ -1,6 +1,4 @@
 import NotFound from "@/components/not-found";
-import PageHeading from "@/components/page-heading";
-import { Separator } from "@/components/ui/separator";
 import ProfileCard from "@/modules/user/components/profile/profile-card";
 import { getUser } from "@/modules/user/services/profile-services";
 import { ParamsType } from "@/shared/types";

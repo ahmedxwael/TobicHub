@@ -17,9 +17,9 @@ import { Separator } from "@/components/ui/separator";
 import { debounce } from "@/utils/utils";
 import { Search } from "lucide-react";
 import { ChangeEvent, useState } from "react";
-import SearchItemSkeleton from "../skeletons/search-item-skeleton";
 import { Topic } from "../types";
 import SearchItem from "./search-item";
+import SearchItemSkeleton from "./skeletons/search-item-skeleton";
 
 type SearchTopicProps = {
   unapproved?: boolean;

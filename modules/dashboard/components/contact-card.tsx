@@ -18,7 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { deleteContactMessage } from "@/utils/contact-utils";
 import { MoreHorizontal } from "lucide-react";
-import { ButtonHTMLAttributes, HTMLAttributes, useState } from "react";
+import { ButtonHTMLAttributes, useState } from "react";
 import { Contact } from "../types";
 
 type ContactCardProps = {

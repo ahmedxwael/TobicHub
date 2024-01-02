@@ -1,5 +1,6 @@
 import { NewTopic, Topic } from "@/modules/topics/types";
 import prisma from "@/prisma";
+import { GenericObject } from "@/shared/types";
 import { Prisma } from "@prisma/client";
 import axios from "axios";
 
@@ -13,9 +14,10 @@ export async function addTopic(newTopic: NewTopic) {
 
 export async function editTopic(
   id: string,
-  updatedTopic: Partial<Topic> | Topic
+  updatedTopic: Partial<Topic> | Topic,
+  config?: GenericObject
 ) {
-  await axios.patch(`/api/topics/${id}`, updatedTopic).catch(() => {
+  await axios.patch(`/api/topics/${id}`, updatedTopic, config).catch(() => {
     throw new Error("Something went wrong.");
   });
 }
