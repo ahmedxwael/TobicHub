@@ -2,8 +2,8 @@ import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
 import { DataTablePagination } from "@/components/table/table-pagination";
 import SearchTopic from "@/modules/topics/components/search-topic";
+import { getTopics } from "@/modules/topics/services/topics-services";
 import { GenericObject } from "@/shared/types";
-import { getTopics } from "@/utils/topic-utils";
 import TopicsTable from "./components/table/topics-table";
 
 export const revalidate = 0;

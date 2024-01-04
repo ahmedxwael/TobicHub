@@ -1,18 +1,22 @@
+"use client";
+
 import { addNewComment } from "@/actions/topics/comment-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { UserSessionType } from "@/modules/user/types";
 import { Send } from "lucide-react";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Topic } from "../../types";
 
 type AddCommentProps = {
   topic: Topic;
   userSession: UserSessionType;
-  isOpen: boolean;
-  onClose: (value: boolean) => void;
+  isOpen?: boolean;
+  onClose?: (value: boolean) => void;
+  autoFocus?: boolean;
 };
 
 export default function AddComment({
@@ -20,7 +24,9 @@ export default function AddComment({
   userSession,
   isOpen,
   onClose,
+  autoFocus,
 }: AddCommentProps) {
+  const router = useRouter();
   const { toast } = useToast();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +45,7 @@ export default function AddComment({
       content: comment,
       topicId: topic.id,
       userId: userSession.id,
+      isApproved: true,
     };
 
     await addNewComment(commentBody);
@@ -51,29 +58,22 @@ export default function AddComment({
 
     setComment("");
     setIsLoading(false);
-    onClose(false);
+    onClose?.(false);
+    router.refresh();
   };
 
   return (
-    isOpen && (
+    (isOpen === true || typeof isOpen === "undefined") && (
       <form
         onSubmit={handleAddComment}
         className="relative flex items-center gap-4"
       >
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-          <Image
-            src={userSession.image || "/images/avatar.png"}
-            alt="user image"
-            width={50}
-            height={50}
-            className="h-full w-full rounded-full border object-cover"
-          />
-        </div>
+        <UserAvatar image={userSession.image} className="h-[50px] w-[50px]" />
         <Input
           type="text"
           placeholder="Add a comment..."
           className="h-auto flex-1 border-none p-4"
-          autoFocus
+          autoFocus={autoFocus}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           disabled={isLoading}

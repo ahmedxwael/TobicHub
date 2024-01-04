@@ -5,10 +5,10 @@ import PageHeading from "@/components/page-heading";
 import { Pagination } from "@/components/pagination";
 import SearchTopic from "@/modules/topics/components/search-topic";
 import TopicsList from "@/modules/topics/components/topics-list";
+import { getTopics } from "@/modules/topics/services/topics-services";
 import { getUser } from "@/modules/user/services/profile-services";
 import { UserSessionType } from "@/modules/user/types";
 import { GenericObject, ParamsType } from "@/shared/types";
-import { getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 

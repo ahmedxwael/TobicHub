@@ -14,7 +14,7 @@ export default function TopicCardContent({ topic }: TopicCardContentProps) {
   const [isReadMore, setIsReadMore] = useState(false);
 
   return (
-    <CardContent>
+    <CardContent className="sm:px-8">
       <Link
         href={URLS.topics.view(topic.id)}
         className="line-clamp-1 block w-fit text-xl font-semibold capitalize"

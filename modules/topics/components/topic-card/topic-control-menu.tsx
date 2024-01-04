@@ -11,10 +11,10 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
-import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { deleteTopic, editTopic } from "../../services/topics-services";
 
 type TopicControlMenuProps = {
   topic: Topic;

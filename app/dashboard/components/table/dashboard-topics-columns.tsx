@@ -8,9 +8,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Topic } from "@/modules/topics/types";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { URLS } from "@/shared/urls";
 import { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
 import Link from "next/link";
 import DashboardTopicControlMenu from "../dashboard-topic-control-menu";
 import EditTopic from "./edit-topic";
@@ -39,14 +39,7 @@ export const dashboardTopicsColumns: ColumnDef<Topic>[] = [
                 href={URLS.profile.view(user?.id)}
                 className="flex min-w-[200px] items-center gap-4"
               >
-                <Image
-                  priority
-                  src={user?.image || "/images/avatar.png"}
-                  alt="user image"
-                  width={500}
-                  height={500}
-                  className="h-10 w-10 rounded-full border-2 bg-muted object-cover"
-                />
+                <UserAvatar image={user?.image || ""} />
                 <div>{userName}</div>
               </Link>
             </TooltipTrigger>

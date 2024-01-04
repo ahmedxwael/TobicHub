@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { links } from "@/shared/urls";
+import { URLS } from "@/shared/urls";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -11,7 +11,26 @@ type NavLinksProps = {
   isAdmin?: boolean;
 };
 
-const NavLinks = ({ closeMenu, isAdmin }: NavLinksProps) => {
+const links = [
+  {
+    name: "Home",
+    href: URLS.home,
+  },
+  {
+    name: "Topics",
+    href: URLS.topics.list,
+  },
+  {
+    name: "Contact Us",
+    href: URLS.contactUs,
+  },
+  {
+    name: "Dashboard",
+    href: URLS.dashboard,
+  },
+];
+
+export default function NavLinks({ closeMenu, isAdmin }: NavLinksProps) {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -23,7 +42,7 @@ const NavLinks = ({ closeMenu, isAdmin }: NavLinksProps) => {
       {links.map((link, idx) => {
         const activeLink = link.href === pathname;
 
-        if (link.href === "/dashboard" && !isAdmin) return;
+        if (link.href === URLS.dashboard && !isAdmin) return;
 
         return (
           <Link
@@ -41,6 +60,4 @@ const NavLinks = ({ closeMenu, isAdmin }: NavLinksProps) => {
       })}
     </>
   );
-};
-
-export default NavLinks;
+}

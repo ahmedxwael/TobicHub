@@ -6,9 +6,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import UserControlMenus from "@/modules/user/components/profile/user-control-menu";
 import { URLS } from "@/shared/urls";
-import Image from "next/image";
 import Link from "next/link";
 import { UserSessionType, UserType } from "../../user/types";
 
@@ -28,14 +28,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
       <div className="flex w-fit flex-col flex-wrap gap-4">
         <div className="flex items-center gap-3">
           <Link href={URLS.profile.view(user.id)}>
-            <Image
-              src={user.image || "/images/avatar.png"}
-              alt="user image"
-              width={500}
-              height={500}
-              loading="lazy"
-              className="h-10 w-10 rounded-full border object-cover"
-            />
+            <UserAvatar image={user.image || ""} />
           </Link>
           <CardBadge
             isDestructive={user.isAdmin}

@@ -1,10 +1,12 @@
 import { authOptions } from "@/app/api/auth/options";
 import NoData from "@/components/no-data";
 import NotFound from "@/components/not-found";
+import { Separator } from "@/components/ui/separator";
 import { UserSessionType } from "@/modules/user/types";
 import { getServerSession } from "next-auth";
 import { getTopicComments } from "../../services/topics-services";
 import { Comment, Topic } from "../../types";
+import AddComment from "./add-comment";
 import CommentCard from "./comment-card";
 
 type CommentsSectionProps = {
@@ -24,18 +26,24 @@ export default async function CommentsSection({ topic }: CommentsSectionProps) {
     return <NotFound message="Couldn't get topic's comments." />;
   }
 
-  return comments.length > 0 ? (
-    <div className="flex flex-col gap-6">
-      {comments.map((comment: Comment) => (
-        <CommentCard
-          key={comment.id}
-          comment={comment}
-          topic={topic}
-          userSession={userSession}
-        />
-      ))}
+  return (
+    <div>
+      <AddComment topic={topic} userSession={userSession} />
+      <Separator className="mb-8 mt-4" />
+      {comments.length > 0 ? (
+        <div className="flex max-h-[800px] flex-col gap-8 overflow-auto rounded-3xl">
+          {comments.map((comment: Comment) => (
+            <CommentCard
+              key={comment.id}
+              comment={comment}
+              topic={topic}
+              userSession={userSession}
+            />
+          ))}
+        </div>
+      ) : (
+        <NoData message="No comments yet." />
+      )}
     </div>
-  ) : (
-    <NoData message="No comments yet." />
   );
 }

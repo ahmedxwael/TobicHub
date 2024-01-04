@@ -2,9 +2,9 @@
 
 import CardBadge from "@/components/card-badge";
 import { CardHeader } from "@/components/ui/card";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { UserSessionType } from "@/modules/user/types";
 import { URLS } from "@/shared/urls";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -30,20 +30,13 @@ export default function TopicCardHeader({
   );
 
   return (
-    <CardHeader className="relative flex flex-row items-center justify-between">
+    <CardHeader className="relative flex flex-row items-center justify-between sm:px-8 sm:pt-8">
       <div className="flex w-fit flex-wrap items-center gap-4">
         <Link
           href={URLS.profile.topics(topic.authorId)}
           className="flex items-center gap-4"
         >
-          <Image
-            src={topic.author.image || "/images/avatar.png"}
-            alt="user image"
-            width={500}
-            height={500}
-            loading="lazy"
-            className="h-10 w-10 rounded-full border object-cover"
-          />
+          <UserAvatar image={topic.author?.image || ""} />
           <div className="flex flex-col">
             <h2 className="text-sm font-medium">
               {topic.author.displayName || topic.author.name}

@@ -2,13 +2,12 @@ import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
 import { Separator } from "@/components/ui/separator";
 import CommentsSection from "@/modules/topics/components/comments/comments-section";
+import { getTopic, getTopics } from "@/modules/topics/services/topics-services";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { ParamsType } from "@/shared/types";
 import { URLS } from "@/shared/urls";
-import { getTopic, getTopics } from "@/utils/topic-utils";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 export const generateMetadata = async ({
   params: { id },
@@ -60,14 +59,7 @@ export default async function TopicPage({ params: { id } }: ParamsType) {
             href={URLS.profile.view(topic.authorId)}
             className="flex w-fit items-center gap-4"
           >
-            <Image
-              src={topic.author.image || "/images/avatar.png"}
-              alt="user image"
-              width={500}
-              height={500}
-              loading="lazy"
-              className="h-14 w-14 rounded-full border object-cover"
-            />
+            <UserAvatar image={topic.author?.image || ""} />
             <div className="flex flex-col">
               <h2 className="text-sm font-medium">{topic.author.name}</h2>
               {!!date && (

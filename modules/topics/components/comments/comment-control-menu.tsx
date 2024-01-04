@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { UserSessionType } from "@/modules/user/types";
 import { MoreHorizontal } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Comment, Topic } from "../../types";
@@ -103,13 +103,7 @@ export default function CommentControlMenu({
                 <DialogHeader className="space-y-1">
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 flex-shrink-0">
-                      <Image
-                        src={comment.user.image || "/images/avatar.png"}
-                        alt="user image"
-                        width={400}
-                        height={400}
-                        className="h-full w-full rounded-full object-cover"
-                      />
+                      <UserAvatar image={comment.user.image || ""} />
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-sm">{comment.user.name}</span>

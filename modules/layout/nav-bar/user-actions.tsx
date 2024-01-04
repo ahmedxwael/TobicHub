@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { UserSessionType } from "@/modules/user/types";
 import { ArrowDownIcon } from "@/shared/icons";
 import { URLS } from "@/shared/urls";
 import { signOut } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -51,16 +51,9 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
           <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger
               onClick={() => setIsDropdownOpen(true)}
-              className="flex shrink-0 items-center gap-2 rounded-full bg-muted/80 transition-colors hover:bg-muted"
+              className="flex shrink-0 items-center gap-2 rounded-full bg-muted/50 transition-colors hover:bg-muted"
             >
-              <Image
-                priority
-                src={userSession?.image || "/images/avatar.png"}
-                alt="user"
-                width={500}
-                height={500}
-                className="h-10 w-10 rounded-full border border-muted/50 bg-muted object-cover"
-              />
+              <UserAvatar image={userSession?.image} className="h-10 w-10" />
               <ArrowDownIcon
                 className={cn(
                   "mr-3 text-muted-foreground opacity-60 transition-transform",

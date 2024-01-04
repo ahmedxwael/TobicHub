@@ -6,8 +6,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  deleteTopic,
+  editTopic,
+} from "@/modules/topics/services/topics-services";
 import { Topic } from "@/modules/topics/types";
-import { deleteTopic, editTopic } from "@/utils/topic-utils";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

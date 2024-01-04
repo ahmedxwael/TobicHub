@@ -80,7 +80,7 @@ export default function TopicInteractionButtons({
   }, [topic.id, userSession.id]);
 
   return (
-    <div className="mt-4 p-6 pt-0">
+    <div className="mt-4 p-8 pt-0">
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
         <div className="">
           <span>{topic.totalLikes} likes</span>
@@ -91,36 +91,41 @@ export default function TopicInteractionButtons({
           <span>{topic.totalRepost} repost</span>
         </div>
       </div>
-      <Separator className="mb-6 mt-4" />
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between gap-6">
-          <TopicInteractionButton
-            title={isLiked ? "Unlike" : "Like"}
-            className={isLiked ? "text-primary" : ""}
-            icon={<ThumbsUp size={20} />}
-            onClick={handleToggleLike}
-            disabled={isLoading}
-          />
-          <TopicInteractionButton
-            title="Comment"
-            icon={<MessageCircle size={20} />}
-            onClick={() => setIsAddCommentOpen(!isAddCommentOpen)}
-            disabled={isLoading}
-          />
-          <TopicInteractionButton
-            title="Repost"
-            icon={<Repeat2 size={20} />}
-            onClick={() => {}}
-            disabled
-          />
-        </div>
-        <AddComment
-          topic={topic}
-          userSession={userSession}
-          isOpen={isAddCommentOpen}
-          onClose={() => setIsAddCommentOpen(false)}
-        />
-      </div>
+      {userSession && (
+        <>
+          <Separator className="my-6" />
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between gap-6">
+              <TopicInteractionButton
+                title={isLiked ? "Unlike" : "Like"}
+                className={isLiked ? "text-primary" : ""}
+                icon={<ThumbsUp size={20} />}
+                onClick={handleToggleLike}
+                disabled={isLoading}
+              />
+              <TopicInteractionButton
+                title="Comment"
+                icon={<MessageCircle size={20} />}
+                onClick={() => setIsAddCommentOpen(!isAddCommentOpen)}
+                disabled={isLoading}
+              />
+              <TopicInteractionButton
+                title="Repost"
+                icon={<Repeat2 size={20} />}
+                onClick={() => {}}
+                disabled
+              />
+            </div>
+            <AddComment
+              topic={topic}
+              userSession={userSession}
+              autoFocus
+              isOpen={isAddCommentOpen}
+              onClose={() => setIsAddCommentOpen(false)}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

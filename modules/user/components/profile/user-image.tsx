@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { ca } from "date-fns/locale";
 import { Eye, PenSquare } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

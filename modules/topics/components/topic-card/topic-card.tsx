@@ -1,4 +1,4 @@
-import { Card, CardFooter } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Topic } from "@/modules/topics/types";
 import { UserSessionType } from "@/modules/user/types";
 import type { Session } from "next-auth";
@@ -21,9 +21,7 @@ export default function TopicCard({ topic, session }: TopicCardProps) {
     >
       <TopicCardHeader topic={topic} userSession={userSession} />
       <TopicCardContent topic={topic} />
-      {userSession && (
-        <TopicInteractionButtons topic={topic} userSession={userSession} />
-      )}
+      <TopicInteractionButtons topic={topic} userSession={userSession} />
     </Card>
   );
 }
