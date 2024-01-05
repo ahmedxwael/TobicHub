@@ -45,7 +45,7 @@ export default function AddComment({
       content: comment,
       topicId: topic.id,
       userId: userSession.id,
-      isApproved: true,
+      // isApproved: true,
     };
 
     await addNewComment(commentBody);

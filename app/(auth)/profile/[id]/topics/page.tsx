@@ -74,7 +74,9 @@ export default async function UserTopicsPage({
           </div>
 
           <SearchTopic userId={params.id} />
-          <AddTopic userId={params.id} userSession={userSession} />
+          {userSession && (
+            <AddTopic userId={params.id} userSession={userSession} />
+          )}
         </div>
         <TopicsList session={session} topicsList={topics} />
         <Pagination

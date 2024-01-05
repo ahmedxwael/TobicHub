@@ -9,9 +9,9 @@ export default function BackButton() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       onClick={router.back}
-      className="mb-14 flex w-fit items-center gap-3 text-sm"
+      className="mb-14 flex w-fit items-center gap-3 p-0 text-sm"
     >
       <MoveLeft size={20} />
       Back
