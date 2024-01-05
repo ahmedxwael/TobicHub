@@ -6,19 +6,24 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Comment } from "../../types";
 
 type UpdateCommentProps = {
   comment: Comment;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function UpdateComment({ comment }: UpdateCommentProps) {
+export default function UpdateComment({
+  comment,
+  isLoading,
+  setIsLoading,
+}: UpdateCommentProps) {
   const router = useRouter();
   const { toast } = useToast();
 
   const [content, setContent] = useState(comment.content);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateComment = async () => {
     setIsLoading(true);

@@ -39,7 +39,7 @@ export type Comment = {
   parentCommentId?: string;
   replies?: Comment[];
   totalReplies: number;
-  isApproved: string;
+  isApproved: boolean;
 };
 
 export type Like = {

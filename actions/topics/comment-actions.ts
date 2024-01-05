@@ -1,6 +1,6 @@
 "use server";
 
-import { NewComment } from "@/modules/topics/types";
+import { Comment, NewComment } from "@/modules/topics/types";
 import prisma from "@/prisma";
 
 export async function addNewComment(comment: NewComment) {
@@ -68,4 +68,26 @@ export async function deleteComment({ commentId, topicId }: DeleteComment) {
       },
     },
   });
+}
+
+type GetTopicComments = {
+  topicId: string;
+  isApproved: boolean;
+};
+
+export async function getComments({ topicId, isApproved }: GetTopicComments) {
+  const where = isApproved ? { topicId, isApproved: true } : { topicId };
+
+  try {
+    const comments = await prisma.comment.findMany({
+      where,
+      include: {
+        user: true,
+      },
+    });
+
+    return comments as Comment[];
+  } catch (error) {
+    return undefined;
+  }
 }

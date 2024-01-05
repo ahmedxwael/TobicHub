@@ -99,7 +99,14 @@ export default function CommentControlMenu({
                   Edit
                 </Button>
               </DialogTrigger>
-              <DialogContent className="flex flex-col gap-10">
+              <DialogContent
+                onInteractOutside={(e) => {
+                  if (isLoading) {
+                    e.preventDefault();
+                  }
+                }}
+                className="flex flex-col gap-10"
+              >
                 <DialogHeader className="space-y-1">
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 flex-shrink-0">
@@ -113,7 +120,11 @@ export default function CommentControlMenu({
                     </div>
                   </div>
                 </DialogHeader>
-                <UpdateComment comment={comment} />
+                <UpdateComment
+                  comment={comment}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                />
               </DialogContent>
             </Dialog>
             <CustomAlertDialog

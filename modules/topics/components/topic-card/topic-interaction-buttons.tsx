@@ -71,13 +71,13 @@ export default function TopicInteractionButtons({
 
   useEffect(() => {
     setIsLoading(true);
-    getIsLikedTopic({ topicId: topic.id, userId: userSession.id })
+    getIsLikedTopic({ topicId: topic.id, userId: userSession?.id })
       .then((isLiked) => {
         setIsLiked(isLiked);
       })
       .catch(() => setIsLiked(false))
       .finally(() => setIsLoading(false));
-  }, [topic.id, userSession.id]);
+  }, [topic.id, userSession?.id]);
 
   return (
     <div className="mt-4 p-8 pt-0">

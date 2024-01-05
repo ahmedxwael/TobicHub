@@ -28,11 +28,14 @@ export default function ViewTopic({ topic }: ViewTopicProps) {
               {topic.title}
             </div>
             <div className="text-sm text-muted-foreground">
-              {topic.updatedAt.toDateString()}
+              Updated at:{" "}
+              <span className="font-medium">
+                {topic.updatedAt.toDateString()}
+              </span>
             </div>
           </div>
         </DialogHeader>
-        <DialogDescription className="max-h-[300px] overflow-auto text-justify text-base leading-normal">
+        <DialogDescription className="max-h-[300px] overflow-auto whitespace-break-spaces text-justify text-base leading-normal">
           {topic.description}
         </DialogDescription>
       </DialogContent>

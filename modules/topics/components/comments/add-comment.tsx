@@ -63,12 +63,12 @@ export default function AddComment({
   };
 
   return (
-    (isOpen === true || typeof isOpen === "undefined") && (
+    (isOpen || typeof isOpen === "undefined") && (
       <form
         onSubmit={handleAddComment}
         className="relative flex items-center gap-4"
       >
-        <UserAvatar image={userSession.image} className="h-[50px] w-[50px]" />
+        <UserAvatar image={userSession?.image} className="h-[50px] w-[50px]" />
         <Input
           type="text"
           placeholder="Add a comment..."

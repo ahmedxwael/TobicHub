@@ -24,10 +24,9 @@ export default function TopicCardHeader({
 
   const [isApproved, setIsApproved] = useState(topic.isApproved);
 
-  const updatedAtDate = new Date(topic.updatedAt);
-  const date = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
-    updatedAtDate
-  );
+  const updatedAt = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "long",
+  }).format(topic.updatedAt);
 
   return (
     <CardHeader className="relative flex flex-row items-center justify-between sm:px-8 sm:pt-8">
@@ -38,14 +37,12 @@ export default function TopicCardHeader({
         >
           <UserAvatar image={topic.author?.image || ""} />
           <div className="flex flex-col">
-            <h2 className="text-sm font-medium">
+            <h2 className="font-medium">
               {topic.author.displayName || topic.author.name}
             </h2>
-            {!!date && (
-              <span className="inline-block text-xs text-muted-foreground">
-                {date}
-              </span>
-            )}
+            <span className="inline-block text-xs text-muted-foreground">
+              Updated at: <span className="font-medium">{updatedAt}</span>
+            </span>
           </div>
         </Link>
         {userSession && pathname.includes(userSession.id) && (
