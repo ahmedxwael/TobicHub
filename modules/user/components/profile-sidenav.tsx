@@ -43,8 +43,7 @@ export default function ProfileSideNav({
         {sidebarNavItems.map((item, index) => {
           const href =
             typeof item.href === "function" ? item.href(id) : item.href;
-          const isNotTheUser =
-            !userSession || userSession.id !== id || !userSession.admin;
+          const isNotTheUser = !userSession || userSession.id !== id;
 
           if (item.protected && isNotTheUser) {
             return null;

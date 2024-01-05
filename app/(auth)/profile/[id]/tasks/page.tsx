@@ -23,7 +23,7 @@ export default async function TasksPage({ params }: TasksPageProps) {
   const session = await getServerSession(authOptions);
   const userSession = session?.user as UserSessionType;
 
-  if (!userSession || userSession.id !== params.id || !userSession.admin) {
+  if (!userSession || userSession.id !== params.id) {
     redirect(URLS.profile.view(params.id));
   }
 
@@ -39,9 +39,9 @@ export default async function TasksPage({ params }: TasksPageProps) {
         <div className="flex w-full flex-wrap items-center justify-between gap-6">
           <div className="flex flex-col gap-2">
             <PageHeading>Tasks</PageHeading>
-            <div className="flex items-center gap-2 text-sm capitalize text-neutral-400">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="inline-block">{tasks?.length}</span>
-              task(s)
+              Task(s)
             </div>
           </div>
           <AddTask userId={params.id} />

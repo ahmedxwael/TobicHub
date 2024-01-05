@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import { Loader2, Pencil, Save, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -11,18 +12,18 @@ import { UserSessionType, UserType } from "../../types";
 
 type UserNameProps = {
   user: UserType;
-  userSession: UserSessionType;
+  userSession: UserSessionType | undefined;
 };
 
 export default function UserName({ user, userSession }: UserNameProps) {
   const router = useRouter();
+  const isUserPage = userSession && userSession.id === user.id;
+  const initialNameValue = user.displayName || user.name || "";
 
   const { toast } = useToast();
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const initialNameValue = user.displayName || user.name || "";
-
   const [newName, setNewName] = useState(initialNameValue);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -44,7 +45,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
   return isEditingName ? (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="flex max-w-[240px] gap-2"
+      className="flex max-w-[240px] gap-3"
     >
       <div className="relative flex items-center justify-center gap-2">
         <Input
@@ -81,20 +82,22 @@ export default function UserName({ user, userSession }: UserNameProps) {
       </Button>
     </form>
   ) : (
-    <div className="flex items-center gap-2">
-      <h1 className="text-center text-3xl font-bold capitalize tracking-wide">
+    <div className="relative flex items-center gap-2">
+      <h1
+        onClick={() => {
+          if (isUserPage) {
+            setIsEditingName(true);
+          }
+        }}
+        className={cn(
+          "text-center text-3xl font-bold capitalize tracking-wide",
+          isUserPage && "cursor-pointer"
+        )}
+      >
         {initialNameValue}
       </h1>
-      {userSession && userSession.id === user.id && (
-        <Button
-          onClick={() => setIsEditingName(true)}
-          variant="ghost"
-          size="icon"
-          className="text-primary hover:bg-primary hover:text-white"
-          aria-label="edit user name"
-        >
-          <Pencil size={20} />
-        </Button>
+      {isUserPage && (
+        <Pencil className="absolute -right-4 -top-4 text-primary" size={18} />
       )}
     </div>
   );

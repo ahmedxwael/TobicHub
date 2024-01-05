@@ -21,7 +21,7 @@ import { UserSessionType, UserType } from "../../types";
 
 type UserImageProps = {
   user: UserType;
-  userSession: UserSessionType;
+  userSession: UserSessionType | undefined;
 };
 
 export default function UserImage({ user, userSession }: UserImageProps) {

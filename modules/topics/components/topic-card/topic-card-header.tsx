@@ -32,7 +32,7 @@ export default function TopicCardHeader({
     <CardHeader className="relative flex flex-row items-center justify-between sm:px-8 sm:pt-8">
       <div className="flex w-fit flex-wrap items-center gap-4">
         <Link
-          href={URLS.profile.topics(topic.authorId)}
+          href={URLS.profile.view(topic.authorId)}
           className="flex items-center gap-4"
         >
           <UserAvatar image={topic.author?.image || ""} />
