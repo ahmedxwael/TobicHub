@@ -10,7 +10,7 @@ import {
   deleteTopic,
   editTopic,
 } from "@/modules/topics/services/topics-services";
-import { Topic } from "@/modules/topics/types";
+import { Topic } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export default function DashboardTopicControlMenu({
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { isApproved: true });
+    await editTopic(topicId, { approved: true });
 
     toast({
       title: "Topic has been approved successfully.",
@@ -46,7 +46,7 @@ export default function DashboardTopicControlMenu({
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { isApproved: false });
+    await editTopic(topicId, { approved: false });
 
     toast({
       title: "Topic has been unapproved.",
@@ -83,7 +83,7 @@ export default function DashboardTopicControlMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[170px]">
-          {!topic.isApproved ? (
+          {!topic.approved ? (
             <Button
               disabled={isLoading}
               variant="ghost"

@@ -4,10 +4,10 @@ import { updateComment } from "@/actions/topics/comment-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { Comment } from "@prisma/client";
 import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Comment } from "../../types";
 
 type UpdateCommentProps = {
   comment: Comment;

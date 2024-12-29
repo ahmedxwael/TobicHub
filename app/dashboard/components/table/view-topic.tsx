@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Topic } from "@/modules/topics/types";
+import { Topic } from "@prisma/client";
 import { Eye } from "lucide-react";
 
 type ViewTopicProps = {

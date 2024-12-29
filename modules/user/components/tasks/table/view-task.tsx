@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Task } from "@/modules/user/types";
+import { Task } from "@prisma/client";
 import { Eye } from "lucide-react";
 
 type ViewTaskButtonProps = {

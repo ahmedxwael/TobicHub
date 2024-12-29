@@ -4,7 +4,7 @@ import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
 import UserCard from "@/modules/dashboard/components/user-card";
 import { getUsers } from "@/modules/user/services/profile-services";
-import { UserSessionType } from "@/modules/user/types";
+import { User } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import React from "react";
 
@@ -13,7 +13,7 @@ export const revalidate = 0;
 export default async function UsersPage() {
   const users = await getUsers(true);
   const session = await getServerSession(authOptions);
-  const userSession = session?.user as UserSessionType;
+  const userSession = session?.user as User;
 
   if (!users) {
     return <NotFound message="Could not get the list of users." />;

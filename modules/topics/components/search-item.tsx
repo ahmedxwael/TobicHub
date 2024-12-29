@@ -1,12 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { urls } from "@/shared/urls";
+import { Topic, User } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Topic } from "../types";
 
 type SearchItemProps = {
-  topic: Topic;
+  topic: Topic & {
+    author: User;
+  };
 };
 
 export default function SearchItem({ topic }: SearchItemProps) {
@@ -19,7 +21,7 @@ export default function SearchItem({ topic }: SearchItemProps) {
           href={urls.profile.view(topic?.authorId)}
           className="flex w-fit items-center gap-3"
         >
-          <UserAvatar image={topic?.author.image || ""} />
+          <UserAvatar image={topic?.author.avatar || ""} />
           <div className="text-sm text-muted-foreground">
             {topic?.author.name}
           </div>

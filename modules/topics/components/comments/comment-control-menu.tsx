@@ -17,17 +17,20 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
-import { UserSessionType } from "@/modules/user/types";
+import { Comment, Topic, User } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Comment, Topic } from "../../types";
 import UpdateComment from "./update-comment";
 
 type CommentControlMenuProps = {
-  userSession: UserSessionType;
-  topic: Topic;
-  comment: Comment;
+  userSession: User;
+  topic: Topic & {
+    author: User;
+  };
+  comment: Comment & {
+    user: User;
+  };
   className?: string;
 };
 
@@ -47,7 +50,7 @@ export default function CommentControlMenu({
     userSession &&
     (userSession?.id === topic.author.id ||
       userSession.id === comment.userId ||
-      userSession?.admin);
+      userSession?.moderator);
 
   const handleCommentDelete = async () => {
     setIsLoading(true);
@@ -110,7 +113,7 @@ export default function CommentControlMenu({
                 <DialogHeader className="space-y-1">
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 flex-shrink-0">
-                      <UserAvatar image={comment.user.image || ""} />
+                      <UserAvatar image={comment.user.avatar || ""} />
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-sm">{comment.user.name}</span>

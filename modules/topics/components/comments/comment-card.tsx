@@ -1,14 +1,17 @@
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
-import { UserSessionType } from "@/modules/user/types";
 import { urls } from "@/shared/urls";
+import { Comment, Topic, User } from "@prisma/client";
 import Link from "next/link";
-import { Comment, Topic } from "../../types";
 import CommentControlMenu from "./comment-control-menu";
 
 type CommentCardProps = {
-  comment: Comment;
-  userSession: UserSessionType;
-  topic: Topic;
+  comment: Comment & {
+    user: User;
+  };
+  userSession: User;
+  topic: Topic & {
+    author: User;
+  };
 };
 
 export default function CommentCard({
@@ -23,7 +26,7 @@ export default function CommentCard({
           href={urls.profile.view(comment.userId)}
           className="flex items-center gap-4"
         >
-          <UserAvatar image={comment.user.image || ""} />
+          <UserAvatar image={comment.user.avatar || ""} />
           <div className="flex flex-col gap-1">
             <span className="text-sm">{comment.user.name}</span>
             <span className="text-xs">{comment.createdAt.toDateString()}</span>

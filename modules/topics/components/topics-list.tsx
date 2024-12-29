@@ -1,14 +1,14 @@
 "use client";
 
 import NoData from "@/components/no-data";
-import { Topic } from "@prisma/client";
+import { Topic, User } from "@prisma/client";
 import type { Session } from "next-auth";
 import TopicCard from "./topic-card/topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";
 
 type TopicsListProps = {
-  topicsList: Topic[];
+  topicsList: (Topic & { author: User })[];
   session: Session | null;
 };
 

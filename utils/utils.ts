@@ -1,4 +1,4 @@
-export function debounce(callback: () => void, wait = 500) {
+export function debounce(callback: (...args: any) => void, wait = 500) {
   let timeoutId: ReturnType<typeof setTimeout>;
 
   return function (this: any, ...args: any) {

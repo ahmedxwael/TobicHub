@@ -1,4 +1,4 @@
-import { Task } from "./types";
+import { Task } from "@prisma/client";
 
 export function getTasksCollection(tasks: Task[]) {
   const allTasks = [];
@@ -7,13 +7,13 @@ export function getTasksCollection(tasks: Task[]) {
   const importantTasks = [];
 
   for (const task of tasks) {
-    if (task.isCompleted) {
+    if (task.completed) {
       completedTasks.push(task);
     } else {
       uncompletedTasks.push(task);
     }
 
-    if (task.isImportant) {
+    if (task.important) {
       importantTasks.push(task);
     }
 

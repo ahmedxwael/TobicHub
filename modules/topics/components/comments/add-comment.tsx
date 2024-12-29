@@ -1,11 +1,14 @@
 "use client";
 
-import { addNewComment } from "@/actions/topics/comment-actions";
+import {
+  addNewComment,
+  NewCommentType,
+} from "@/actions/topics/comment-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
-import { Comment, Topic, User } from "@prisma/client";
+import { Topic, User } from "@prisma/client";
 import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -42,7 +45,7 @@ export default function AddComment({
 
     setIsLoading(true);
 
-    const commentBody: Comment = {
+    const commentBody: NewCommentType = {
       content: comment,
       userId: userSession.id,
       topicId: topic.id,

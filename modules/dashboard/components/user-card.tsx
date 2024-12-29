@@ -9,12 +9,12 @@ import {
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import UserControlMenus from "@/modules/user/components/profile/user-control-menu";
 import { urls } from "@/shared/urls";
+import { User } from "@prisma/client";
 import Link from "next/link";
-import { UserSessionType, UserType } from "../../user/types";
 
 type UserCardProps = {
-  user: UserType;
-  userSession: UserSessionType;
+  user: User;
+  userSession: User;
 };
 
 export default function UserCard({ user, userSession }: UserCardProps) {
@@ -28,11 +28,11 @@ export default function UserCard({ user, userSession }: UserCardProps) {
       <div className="flex w-fit flex-col flex-wrap gap-4">
         <div className="flex items-center gap-3">
           <Link href={urls.profile.view(user.id)}>
-            <UserAvatar image={user.image || ""} />
+            <UserAvatar image={user.avatar || ""} />
           </Link>
           <CardBadge
-            isDestructive={user.isAdmin}
-            label={user.isAdmin ? "Admin" : "User"}
+            isDestructive={user.moderator}
+            label={user.moderator ? "Admin" : "User"}
           />
         </div>
         <Link href={urls.profile.view(user.id)} className="block">
@@ -43,15 +43,9 @@ export default function UserCard({ user, userSession }: UserCardProps) {
       <div className="mt-6 flex flex-wrap items-center gap-2 text-xs">
         <TooltipProvider delayDuration={200}>
           <Tooltip>
-            <TooltipTrigger>
-              {user?.topics?.length || 0} Topic(s)
-            </TooltipTrigger>
+            <TooltipTrigger>{user?.topicsCount} Topic(s)</TooltipTrigger>
             <TooltipContent>
-              <div>{user?.topics?.length || 0} Topic(s)</div>
-              <div>
-                {user?.topics?.filter((topic) => !topic.isApproved).length || 0}{" "}
-                Un approved
-              </div>
+              <div>{user?.topicsCount} Topic(s)</div>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -59,7 +53,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
           Joined at: {joinDateFormat}
         </div>
       </div>
-      {userSession.admin && !user.isOwner && (
+      {userSession.moderator && !user.owner && (
         <UserControlMenus user={user} className="absolute right-6 top-5" />
       )}
     </Card>

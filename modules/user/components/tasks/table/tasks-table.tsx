@@ -2,6 +2,7 @@
 
 import DataTable from "@/components/table/data-table";
 import { Input } from "@/components/ui/input";
+import { Task } from "@prisma/client";
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -10,7 +11,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import { Task } from "../../../types";
 import { TaskSelectFilter } from "./task-select-filter";
 import { tasksColumns } from "./tasks-columns";
 

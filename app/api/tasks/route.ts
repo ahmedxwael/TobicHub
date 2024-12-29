@@ -20,14 +20,13 @@ export const POST = async (request: NextRequest) => {
   }
 };
 
-export const DELETE = async (request: NextRequest) => {
-  const data = await request.json();
-
-  // await prisma.task.deleteMany({
-  //   where: {
-  //     id: {
-  //       in: data.ids,
-  //     },
-  //   },
-  // });
-};
+// export const DELETE = async (request: NextRequest) => {
+//   const data = await request.json();
+//   await prisma.task.deleteMany({
+//     where: {
+//       id: {
+//         in: data.ids,
+//       },
+//     },
+//   });
+// };

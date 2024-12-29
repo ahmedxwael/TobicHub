@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { debounce } from "@/utils/utils";
-import { Topic } from "@prisma/client";
+import { Topic, User } from "@prisma/client";
 import { Search } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import SearchItem from "./search-item";
@@ -27,7 +27,7 @@ type SearchTopicProps = {
 };
 
 export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
-  const [topics, setTopics] = useState<Topic[]>([]);
+  const [topics, setTopics] = useState<(Topic & { author: User })[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);

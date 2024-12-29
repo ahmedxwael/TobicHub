@@ -1,11 +1,22 @@
 "use server";
 
 import prisma from "@/prisma";
-import { Comment } from "@prisma/client";
 
-export async function addNewComment(comment: Comment) {
+export type NewCommentType = {
+  content: string;
+  userId: string;
+  topicId: string;
+};
+
+export async function addNewComment(comment: NewCommentType) {
+  const { content, userId, topicId } = comment;
+
   const newComment = await prisma.comment.create({
-    data: comment,
+    data: {
+      content,
+      userId,
+      topicId,
+    },
   });
 
   await prisma.topic.update({

@@ -14,7 +14,9 @@ import { ButtonHTMLAttributes, useEffect, useState } from "react";
 import AddComment from "../comments/add-comment";
 
 type TopicsInteractionButtonsProps = {
-  topic: Topic;
+  topic: Topic & {
+    author: User;
+  };
   userSession: User;
 };
 

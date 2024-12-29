@@ -8,14 +8,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
+import { User } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteUser, updateUser } from "../../services/profile-services";
-import { UserType } from "../../types";
 
 type UserControlMenusProps = {
-  user: UserType;
+  user: User;
   className?: string;
 };
 
@@ -27,7 +27,7 @@ export default function UserControlMenus({
 
   const { toast } = useToast();
 
-  const isAdmin = user?.isAdmin;
+  const isAdmin = user?.moderator;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function UserControlMenus({
   async function updateUserRole() {
     setIsLoading(true);
 
-    await updateUser(user.id, { isAdmin: isAdmin ? false : true });
+    await updateUser(user.id, { moderator: isAdmin ? false : true });
 
     router.refresh();
     setIsLoading(false);

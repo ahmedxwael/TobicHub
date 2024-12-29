@@ -7,9 +7,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Topic } from "@/modules/topics/types";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { urls } from "@/shared/urls";
+import { Topic } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import DashboardTopicControlMenu from "../dashboard-topic-control-menu";

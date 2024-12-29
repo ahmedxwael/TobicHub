@@ -2,13 +2,7 @@
 
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { deleteTask, updateTask } from "@/modules/user/services/tasks-services";
-import { Task } from "@/modules/user/types";
+import { Task } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, useState } from "react";
@@ -74,18 +68,18 @@ export default function TaskControlMenu({
             variant="ghost"
             className="w-full cursor-pointer"
             disabled={isLoading}
-            onClick={() => handleEditTask({ isImportant: !task.isImportant })}
+            onClick={() => handleEditTask({ important: !task.important })}
           >
-            {task.isImportant ? "Unimportant" : "Important"}
+            {task.important ? "Unimportant" : "Important"}
           </Button>
           <Separator />
           <Button
             variant="ghost"
             className="w-full cursor-pointer"
             disabled={isLoading}
-            onClick={() => handleEditTask({ isCompleted: !task.isCompleted })}
+            onClick={() => handleEditTask({ completed: !task.completed })}
           >
-            {task.isCompleted ? "Not completed" : "Completed"}
+            {task.completed ? "Not completed" : "Completed"}
           </Button>
           <Separator />
           <CustomAlertDialog

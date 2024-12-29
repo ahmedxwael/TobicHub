@@ -37,17 +37,15 @@ export async function deleteTopic(id: string, authorId: string) {
     });
 }
 
-export async function getTopic(id: string, edit?: boolean) {
+export async function getTopic(id: string) {
   try {
     const topic = await prisma.topic.findUnique({
       where: { id },
-      include: edit
-        ? {}
-        : {
-            author: {
-              select: userAllowedFields,
-            },
-          },
+      include: {
+        author: {
+          select: userAllowedFields,
+        },
+      },
     });
 
     console.log("topic", topic);

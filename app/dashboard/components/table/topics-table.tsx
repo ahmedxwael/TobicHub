@@ -3,7 +3,7 @@
 import DataTable from "@/components/table/data-table";
 import { SelectFilter } from "@/components/table/select-filter";
 import { Input } from "@/components/ui/input";
-import { Topic } from "@/modules/topics/types";
+import { Topic } from "@prisma/client";
 import {
   ColumnFiltersState,
   getCoreRowModel,

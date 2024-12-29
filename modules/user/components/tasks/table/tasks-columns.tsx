@@ -1,9 +1,9 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Task } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoveDown, MoveUp } from "lucide-react";
-import { Task } from "../../../types";
 import EditTask from "./edit-task";
 import TaskControlMenu from "./task-control-menu";
 import ViewTask from "./view-task";
@@ -50,7 +50,7 @@ export const tasksColumns: ColumnDef<Task>[] = [
     header: "Priority",
     cell: ({ row }) => {
       const task = row.original;
-      const value = task.isImportant ? "important" : "not-important";
+      const value = task.important ? "important" : "not-important";
 
       return value === "important" ? (
         <Badge

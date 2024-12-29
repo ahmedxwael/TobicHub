@@ -3,8 +3,11 @@ import NotFound from "@/components/not-found";
 import { Separator } from "@/components/ui/separator";
 import CommentsSection from "@/modules/topics/components/comments/comments-section";
 import { getTopic, getTopics } from "@/modules/topics/services/topics-services";
+import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { ParamsType } from "@/shared/types";
+import { urls } from "@/shared/urls";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const generateMetadata = async ({
   params: { id },
@@ -50,13 +53,13 @@ export default async function TopicPage({ params: { id } }: ParamsType) {
   return (
     <section className="mx-auto my-20 max-w-[800px]">
       <BackButton />
-      {/* <div className="space-y-8">
+      <div className="space-y-8">
         <div className="border-b pb-6 md:pb-8">
           <Link
-            href={URLS.profile.view(topic.authorId)}
+            href={urls.profile.view(topic.authorId)}
             className="flex w-fit items-center gap-4"
           >
-            <UserAvatar image={topic. || ""} />
+            <UserAvatar image={topic.author.avatar || ""} />
             <div className="flex flex-col">
               <h2 className="text-sm font-medium">{topic.author.name}</h2>
               {!!date && (
@@ -73,19 +76,19 @@ export default async function TopicPage({ params: { id } }: ParamsType) {
         <p className="whitespace-break-spaces leading-7 text-muted-foreground">
           {topic.description}
         </p>
-        {topic.resource && (
-          <div className="mt-4 space-y-2">
+        {topic.resources.map((resource, index) => (
+          <div key={index} className="mt-4 space-y-2">
             <h3>Resources:</h3>
             <Link
-              href={topic.resource}
+              href={resource}
               className="block text-blue-500"
               target="_blank"
             >
-              {topic.resource}
+              {resource}
             </Link>
           </div>
-        )}
-      </div> */}
+        ))}
+      </div>
       <Separator className="my-6" />
       <CommentsSection topic={topic} />
     </section>

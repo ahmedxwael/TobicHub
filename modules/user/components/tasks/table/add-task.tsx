@@ -12,12 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Task } from "@prisma/client";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { createTask } from "../../../services/tasks-services";
-import { Task, UserSessionType } from "../../../types";
 
 type Input = {
   title: string;
@@ -157,9 +157,9 @@ export default function AddTask({ userId }: AddTaskProps) {
               <Checkbox
                 id="isCompleted"
                 {...register("isCompleted")}
-                checked={task?.isCompleted}
+                checked={task?.completed}
                 onCheckedChange={() =>
-                  setTask({ ...task, isCompleted: !task?.isCompleted })
+                  setTask({ ...task, completed: !task?.completed })
                 }
               />
               <Label htmlFor="isCompleted" className="shrink-0 cursor-pointer">
@@ -170,9 +170,9 @@ export default function AddTask({ userId }: AddTaskProps) {
               <Checkbox
                 id="isImportant"
                 {...register("isImportant")}
-                checked={task?.isImportant}
+                checked={task?.important}
                 onCheckedChange={() =>
-                  setTask({ ...task, isImportant: !task?.isImportant })
+                  setTask({ ...task, important: !task?.important })
                 }
               />
               <Label htmlFor="isImportant" className="shrink-0 cursor-pointer">

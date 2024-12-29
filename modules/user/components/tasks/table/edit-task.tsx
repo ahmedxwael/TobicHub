@@ -12,12 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Task } from "@prisma/client";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { updateTask } from "../../../services/tasks-services";
-import { Task } from "../../../types";
 
 type EditTaskProps = {
   task: Task;
@@ -46,8 +46,8 @@ export default function EditTask({ task }: EditTaskProps) {
     const body = {
       title: updatedTask.title,
       description: updatedTask.description,
-      isCompleted: updatedTask.isCompleted,
-      isImportant: updatedTask.isImportant,
+      isCompleted: updatedTask.completed,
+      isImportant: updatedTask.important,
       userId: task.userId,
     };
 
@@ -139,11 +139,11 @@ export default function EditTask({ task }: EditTaskProps) {
                 <Checkbox
                   id="isCompleted"
                   {...register("isCompleted")}
-                  checked={updatedTask?.isCompleted}
+                  checked={updatedTask?.completed}
                   onCheckedChange={() =>
                     setUpdatedTask({
                       ...updatedTask,
-                      isCompleted: !updatedTask?.isCompleted,
+                      completed: !updatedTask?.completed,
                     })
                   }
                 />
@@ -158,11 +158,11 @@ export default function EditTask({ task }: EditTaskProps) {
                 <Checkbox
                   id="isImportant"
                   {...register("isImportant")}
-                  checked={updatedTask?.isImportant}
+                  checked={updatedTask?.important}
                   onCheckedChange={() =>
                     setUpdatedTask({
                       ...updatedTask,
-                      isImportant: !updatedTask?.isImportant,
+                      important: !updatedTask?.important,
                     })
                   }
                 />
