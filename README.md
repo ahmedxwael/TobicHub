@@ -26,9 +26,6 @@ Users should be able to:
 
 ![Design preview](/public/images/tobic-hub.png)
 
-## links
-
-- Live site URL: [Demo](https://topic-hub.vercel.app)
 
 ### Technologies
 
