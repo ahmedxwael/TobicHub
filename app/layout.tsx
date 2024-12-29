@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
-import Navbar from "@/modules/layout/nav-bar/navbar";
+import Navbar from "@/modules/layout/nav-bar/Navbar";
 import "./globals.css";
 
 type RootLayoutProps = {
