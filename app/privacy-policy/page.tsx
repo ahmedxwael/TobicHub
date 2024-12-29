@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 import React from "react";
 
@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
           If you have any questions about this Privacy Policy or your personal
           information, please contact us at Contact us page.{" "}
           <Link
-            href={URLS.contactUs}
+            href={urls.contactUs}
             className={cn(buttonVariants({ variant: "link" }))}
           >
             Contact us

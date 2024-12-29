@@ -1,6 +1,6 @@
 "use client";
 
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 
 export default function Error({
@@ -24,7 +24,7 @@ export default function Error({
         >
           Try again
         </button>
-        <Link href={URLS.home} className="btn btn-primary">
+        <Link href={urls.home} className="btn btn-primary">
           Back to home
         </Link>
       </div>

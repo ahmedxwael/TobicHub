@@ -4,21 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import { User } from "@prisma/client";
 import { Loader2, Pencil, Save, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { updateUser } from "../../services/profile-services";
-import { UserSessionType, UserType } from "../../types";
 
 type UserNameProps = {
-  user: UserType;
-  userSession: UserSessionType | undefined;
+  user: User;
+  userSession?: User;
 };
 
 export default function UserName({ user, userSession }: UserNameProps) {
   const router = useRouter();
   const isUserPage = userSession && userSession.id === user.id;
-  const initialNameValue = user.displayName || user.name || "";
+  const initialNameValue = user.name;
 
   const { toast } = useToast();
 
@@ -30,7 +30,7 @@ export default function UserName({ user, userSession }: UserNameProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    await updateUser(user.id, { displayName: newName });
+    await updateUser(user.id, { name: newName });
 
     toast({
       title: "Your name has been updated successfully.",

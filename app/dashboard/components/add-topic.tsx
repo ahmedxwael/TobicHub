@@ -1,5 +1,6 @@
 "use client";
 
+import { addTopicAction } from "@/actions/topics/add-topic-action";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -14,17 +15,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import { addTopic } from "@/modules/topics/services/topics-services";
-import { NewTopic } from "@/modules/topics/types";
-import { UserSessionType } from "@/modules/user/types";
-import { Plus } from "lucide-react";
+import { validateURL } from "@/utils/utils";
+import { Topic, User } from "@prisma/client";
+import { CheckIcon, Plus, XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 type AddTopicProps = {
   userId: string;
-  userSession?: UserSessionType;
+  userSession?: User;
   className?: string;
 };
 
@@ -32,15 +32,12 @@ type Input = {
   title: string;
   description: string;
   resource: string;
-  isApproved: boolean;
+  approved: boolean;
 };
 
-const initialTopic: NewTopic = {
-  title: "",
-  description: "",
-  resource: "",
-  isApproved: false,
-  authorId: "",
+export type Resource = {
+  resource: string;
+  approved: boolean;
 };
 
 export default function AddTopic({
@@ -50,8 +47,10 @@ export default function AddTopic({
 }: AddTopicProps) {
   const { toast } = useToast();
   const router = useRouter();
+  const resourcesRef = useRef<HTMLFormElement>(null);
 
-  const [topic, setTopic] = useState<NewTopic>(initialTopic);
+  const [topicObject, setTopicObject] = useState<Partial<Topic>>({});
+  const [resources, setResources] = useState<Resource[]>([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const {
@@ -62,15 +61,37 @@ export default function AddTopic({
   } = useForm<Input>();
 
   const onSubmit = async () => {
-    const body: NewTopic = {
-      title: topic.title,
-      description: topic.description,
-      isApproved: topic.isApproved,
-      resource: topic.resource,
-      authorId: userId,
+    if (
+      resources.some(
+        (resource) =>
+          resource.resource.trim() === "" || !validateURL(resource.resource)
+      )
+    ) {
+      toast({
+        title: "Something went wrong.",
+        description: "Please check your resources and try again.",
+        variant: "destructive",
+      });
+
+      return;
+    }
+
+    if (resources.some((resource) => !resource.approved)) {
+      toast({
+        title: "Warning!",
+        description: "Make sure all resources are approved.",
+        variant: "info",
+      });
+      return;
+    }
+
+    const body = {
+      resources: resources.map((resource) => resource.resource),
+      author: userSession,
+      ...topicObject,
     };
 
-    await addTopic(body);
+    await addTopicAction(body);
 
     toast({
       title: "Your new topic has been submitted successfully.",
@@ -78,8 +99,9 @@ export default function AddTopic({
         "It will be reviewed by our team before it can be published. Thank you for your contribution and patience during this process.",
       variant: "success",
     });
+
     reset();
-    setTopic(initialTopic);
+    setTopicObject({});
     setIsPopupOpen(false);
     router.refresh();
   };
@@ -88,14 +110,50 @@ export default function AddTopic({
     return null;
   }
 
+  const handleResourcesValidation = () => {
+    if (resources.length >= 5) {
+      toast({
+        title: "Something went wrong.",
+        description: "You can only add a maximum of 5 resources.",
+        variant: "destructive",
+      });
+
+      return false;
+    } else if (
+      resources.some(
+        (resource) =>
+          resource.resource.trim() === "" || !validateURL(resource.resource)
+      )
+    ) {
+      toast({
+        title: "Something went wrong.",
+        description: "Please check your resources and try again.",
+        variant: "destructive",
+      });
+
+      return false;
+    } else if (resources.some((resource) => !resource.approved)) {
+      toast({
+        title: "Warning!",
+        description: "Make sure all resources are approved.",
+        variant: "info",
+      });
+
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <Dialog
       open={isPopupOpen}
       onOpenChange={(open) => {
         if (!open) {
-          setTopic(initialTopic);
+          setTopicObject({});
           reset();
         }
+        setResources([]);
         setIsPopupOpen(open);
       }}
     >
@@ -118,10 +176,7 @@ export default function AddTopic({
         <DialogHeader>
           <DialogTitle>New Topic</DialogTitle>
         </DialogHeader>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-4 flex w-full flex-col gap-6"
-        >
+        <form className="mt-4 flex w-full flex-col gap-6">
           <div className="flex flex-col gap-3">
             <Label htmlFor="title" className="cursor-pointer">
               Title
@@ -132,11 +187,12 @@ export default function AddTopic({
               id="title"
               placeholder="What is the topic?"
               disabled={isSubmitting}
-              defaultValue={topic.title}
+              defaultValue={topicObject.title}
               {...register("title", {
                 required: "Title is required.",
-                value: topic.title,
-                onChange: (e) => setTopic({ ...topic, title: e.target.value }),
+                value: topicObject.title,
+                onChange: (e) =>
+                  setTopicObject({ ...topicObject, title: e.target.value }),
               })}
             />
             {errors.title && (
@@ -154,17 +210,17 @@ export default function AddTopic({
               placeholder="What is this topic about...?"
               rows={10}
               disabled={isSubmitting}
-              defaultValue={topic.description}
+              defaultValue={topicObject.description}
               {...register("description", {
                 required: "Topic description is required.",
                 minLength: {
                   value: 1,
                   message: "Content must be at least 1 character.",
                 },
-                value: topic.description,
+                value: topicObject.description,
                 onChange: (e) =>
-                  setTopic({
-                    ...topic,
+                  setTopicObject({
+                    ...topicObject,
                     description: e.target.value,
                   }),
               })}
@@ -175,45 +231,121 @@ export default function AddTopic({
               </span>
             )}
           </div>
-          <div className="flex flex-col gap-3">
-            <Label htmlFor="link" className="cursor-pointer">
-              Recourses
-            </Label>
-            <Input
-              id="link"
-              placeholder="Recourses"
-              type="url"
-              disabled={isSubmitting}
-              {...register("resource", {
-                value: topic?.resource,
-                onChange: (e) =>
-                  setTopic({
-                    ...topic,
-                    resource: e.target.value.split(" ")[0],
-                  }),
-              })}
-            />
-            {errors.resource && (
-              <span className="inline-block text-sm text-red-500">
-                {errors.resource.message}
-              </span>
-            )}
-          </div>
-          {userSession?.admin && (
+        </form>
+        <div className="flex flex-col gap-3">
+          <Label
+            htmlFor="link"
+            className="flex cursor-pointer items-center gap-2"
+          >
+            Resources
+            <span className="ml-2 text-xs text-muted-foreground">
+              (optional)
+            </span>
+          </Label>
+          <form
+            ref={resourcesRef}
+            className="flex max-h-[180px] flex-col gap-2 overflow-y-auto p-2"
+          >
+            {resources.map((resource, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <Input
+                  type="url"
+                  placeholder="https://example.com"
+                  required
+                  value={resource.resource}
+                  onChange={(e) => {
+                    const updatedResources = [...resources];
+                    updatedResources[index] = {
+                      resource: e.target.value,
+                      approved: false,
+                    };
+                    setResources(updatedResources);
+                  }}
+                />
+                {!resource.approved && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const isValidUrl = validateURL(resource.resource);
+
+                      if (!isValidUrl || !resource.resource.trim()) {
+                        toast({
+                          title: "Something went wrong.",
+                          description: "Invalid URL.",
+                          variant: "destructive",
+                        });
+
+                        return;
+                      }
+
+                      resource.approved = true;
+                      setResources([...resources]);
+                    }}
+                  >
+                    <CheckIcon />
+                  </Button>
+                )}
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => {
+                    const updatedResources = [...resources];
+                    updatedResources.splice(index, 1);
+                    setResources(updatedResources);
+                  }}
+                >
+                  <XIcon />
+                </Button>
+              </div>
+            ))}
+          </form>
+          {errors.resource && (
+            <span className="inline-block text-sm text-red-500">
+              {errors.resource.message}
+            </span>
+          )}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-fit capitalize"
+            onClick={() => {
+              const isValidFields = handleResourcesValidation();
+
+              if (!isValidFields) {
+                return;
+              }
+
+              setResources([...resources, { resource: "", approved: false }]);
+              setTimeout(() => {
+                resourcesRef.current?.scrollTo({
+                  behavior: "smooth",
+                  top: resourcesRef.current?.scrollHeight,
+                });
+              });
+            }}
+          >
+            add resource
+          </Button>
+        </div>
+        <div className="mt-2 flex flex-col gap-2">
+          {userSession?.moderator && (
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center gap-2">
                 <Checkbox
-                  id="isApproved"
-                  {...register("isApproved")}
-                  checked={topic?.isApproved}
+                  id="approved"
+                  {...register("approved")}
+                  checked={topicObject?.approved}
                   onCheckedChange={() =>
-                    setTopic({
-                      ...topic,
-                      isApproved: !topic?.isApproved,
+                    setTopicObject({
+                      ...topicObject,
+                      approved: !topicObject?.approved,
                     })
                   }
                 />
-                <Label htmlFor="isApproved" className="shrink-0 cursor-pointer">
+                <Label htmlFor="approved" className="shrink-0 cursor-pointer">
                   Approved
                 </Label>
               </div>
@@ -225,15 +357,22 @@ export default function AddTopic({
               type="button"
               variant="outline"
               size="lg"
-              onClick={() => setIsPopupOpen(false)}
+              onClick={() => {
+                setIsPopupOpen(false);
+              }}
             >
               Cancel
             </Button>
-            <Button disabled={isSubmitting} size="lg" className="capitalize">
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              disabled={isSubmitting}
+              size="lg"
+              className="capitalize"
+            >
               {isSubmitting ? "Creating..." : "Create"}
             </Button>
           </div>
-        </form>
+        </div>
       </DialogContent>
     </Dialog>
   );

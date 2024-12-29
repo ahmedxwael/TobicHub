@@ -46,7 +46,7 @@ export async function toggleLikeAction({ topicId, userId }: LikeAction) {
         id: topicId,
       },
       data: {
-        totalLikes: {
+        likesCount: {
           decrement: 1,
         },
       },
@@ -54,7 +54,7 @@ export async function toggleLikeAction({ topicId, userId }: LikeAction) {
   } else {
     await prisma.like.create({
       data: {
-        topicId,
+        targetId: topicId,
         userId,
       },
     });
@@ -64,7 +64,7 @@ export async function toggleLikeAction({ topicId, userId }: LikeAction) {
         id: topicId,
       },
       data: {
-        totalLikes: {
+        likesCount: {
           increment: 1,
         },
       },

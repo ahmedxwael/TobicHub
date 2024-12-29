@@ -1,34 +1,32 @@
-import { UserType } from "@/modules/user/types";
 import prisma from "@/prisma";
+import { User } from "@prisma/client";
 import axios from "axios";
 
 export const getUsers = async (
   inDashboard?: boolean
-): Promise<UserType[] | undefined> => {
+): Promise<User[] | undefined> => {
   try {
     const users = await prisma.user.findMany({
       include: inDashboard ? { topics: true } : null,
     });
 
-    return users as UserType[];
+    return users;
   } catch (error) {
     return undefined;
   }
 };
 
-export const getUser = async (
-  id: string
-): Promise<UserType | null | undefined> => {
+export const getUser = async (id: string): Promise<User | null | undefined> => {
   try {
     const user = await prisma.user.findUnique({ where: { id } });
 
-    return user as UserType;
+    return user as User;
   } catch (error) {
     return undefined;
   }
 };
 
-export const updateUser = async (id: string, data: Partial<UserType>) => {
+export const updateUser = async (id: string, data: Partial<User>) => {
   await axios.patch(`/api/users/${id}`, data).catch(() => {
     throw new Error("Something went wrong.");
   });

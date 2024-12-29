@@ -1,36 +1,37 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
+import { User } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 type NavLinksProps = {
   closeMenu?: () => void;
-  isAdmin?: boolean;
+  userSession?: User;
 };
 
 const links = [
   {
     name: "Home",
-    href: URLS.home,
+    href: urls.home,
   },
   {
     name: "Topics",
-    href: URLS.topics.list,
+    href: urls.topics.list,
   },
   {
     name: "Contact Us",
-    href: URLS.contactUs,
+    href: urls.contactUs,
   },
   {
     name: "Dashboard",
-    href: URLS.dashboard,
+    href: urls.dashboard,
   },
 ];
 
-export default function NavLinks({ closeMenu, isAdmin }: NavLinksProps) {
+export default function NavLinks({ closeMenu, userSession }: NavLinksProps) {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function NavLinks({ closeMenu, isAdmin }: NavLinksProps) {
       {links.map((link, idx) => {
         const activeLink = link.href === pathname;
 
-        if (link.href === URLS.dashboard && !isAdmin) return;
+        if (link.href === urls.dashboard && !userSession?.moderator) return;
 
         return (
           <Link

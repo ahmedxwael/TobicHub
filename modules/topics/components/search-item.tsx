@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Topic } from "../types";
@@ -16,7 +16,7 @@ export default function SearchItem({ topic }: SearchItemProps) {
     <Card>
       <CardContent className="space-y-3 py-4">
         <Link
-          href={URLS.profile.view(topic?.authorId)}
+          href={urls.profile.view(topic?.authorId)}
           className="flex w-fit items-center gap-3"
         >
           <UserAvatar image={topic?.author.image || ""} />
@@ -25,7 +25,7 @@ export default function SearchItem({ topic }: SearchItemProps) {
           </div>
         </Link>
         <div
-          onClick={() => router.push(URLS.topics.view(topic?.id))}
+          onClick={() => router.push(urls.topics.view(topic?.id))}
           className="cursor-pointer space-y-1"
         >
           <div className="line-clamp-1 font-semibold">{topic?.title}</div>

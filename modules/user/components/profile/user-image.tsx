@@ -12,16 +12,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { User } from "@prisma/client";
 import axios from "axios";
 import { Eye, PenSquare } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { UserSessionType, UserType } from "../../types";
 
 type UserImageProps = {
-  user: UserType;
-  userSession: UserSessionType | undefined;
+  user: User;
+  userSession?: User;
 };
 
 export default function UserImage({ user, userSession }: UserImageProps) {
@@ -72,7 +72,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
     <div className="relative h-[150px] w-[150px] rounded-full bg-white/10">
       <div className="group h-full w-full">
         <Image
-          src={user.image || "/images/avatar.png"}
+          src={user.avatar || "/images/avatar.png"}
           alt="User Profile image"
           width={500}
           height={500}
@@ -93,7 +93,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
           <DialogContent>
             <DialogTitle>{user.name}&lsquo;s image</DialogTitle>
             <Image
-              src={user.image || "/images/avatar.png"}
+              src={user.avatar || "/images/avatar.png"}
               alt="User Profile image"
               width={500}
               height={500}
@@ -104,7 +104,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
         </Dialog>
       </div>
 
-      {userSession?.admin && userSession?.id === user?.id && (
+      {userSession?.moderator && userSession?.id === user?.id && (
         <Dialog>
           <DialogTrigger asChild onClick={() => setIsPopupOpen(true)}>
             <Button

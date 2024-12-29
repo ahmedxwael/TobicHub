@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 
 export default function Footer() {
@@ -26,7 +26,7 @@ export default function Footer() {
         React & Next.js (App Router), TypeScript, Prisma, Tailwind CSS and
         Vercel hosting.{" "}
         <Link
-          href={URLS.privacyPolicy}
+          href={urls.privacyPolicy}
           className="font-semibold transition-colors hover:text-white"
         >
           Privacy Policy

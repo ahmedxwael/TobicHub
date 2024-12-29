@@ -3,17 +3,16 @@
 import CardBadge from "@/components/card-badge";
 import { CardHeader } from "@/components/ui/card";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
-import { UserSessionType } from "@/modules/user/types";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
+import { Topic, User } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Topic } from "../../types";
 import TopicControlMenu from "./topic-control-menu";
 
 type TopicCardHeaderProps = {
-  topic: Topic;
-  userSession: UserSessionType;
+  topic: Topic & { author: User };
+  userSession: User;
 };
 
 export default function TopicCardHeader({
@@ -22,7 +21,7 @@ export default function TopicCardHeader({
 }: TopicCardHeaderProps) {
   const pathname = usePathname();
 
-  const [isApproved, setIsApproved] = useState(topic.isApproved);
+  const [isApproved, setIsApproved] = useState(topic.approved);
 
   const updatedAt = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
@@ -32,14 +31,12 @@ export default function TopicCardHeader({
     <CardHeader className="relative flex flex-row items-center justify-between sm:px-8 sm:pt-8">
       <div className="flex w-fit flex-wrap items-center gap-4">
         <Link
-          href={URLS.profile.view(topic.authorId)}
+          href={urls.profile.view(topic.authorId)}
           className="flex items-center gap-4"
         >
-          <UserAvatar image={topic.author?.image || ""} />
+          <UserAvatar image={topic.author?.avatar || ""} />
           <div className="flex flex-col">
-            <h2 className="font-medium">
-              {topic.author.displayName || topic.author.name}
-            </h2>
+            <h2 className="font-medium">{topic.author.name}</h2>
             <span className="inline-block text-xs text-muted-foreground">
               Updated at: <span className="font-medium">{updatedAt}</span>
             </span>

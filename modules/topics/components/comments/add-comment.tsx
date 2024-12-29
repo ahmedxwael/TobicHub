@@ -5,15 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
-import { UserSessionType } from "@/modules/user/types";
+import { Comment, Topic, User } from "@prisma/client";
 import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { Topic } from "../../types";
 
 type AddCommentProps = {
-  topic: Topic;
-  userSession: UserSessionType;
+  topic: Topic & {
+    author: User;
+  };
+  userSession: User;
   isOpen?: boolean;
   onClose?: (value: boolean) => void;
   autoFocus?: boolean;
@@ -41,11 +42,10 @@ export default function AddComment({
 
     setIsLoading(true);
 
-    const commentBody = {
+    const commentBody: Comment = {
       content: comment,
-      topicId: topic.id,
       userId: userSession.id,
-      // isApproved: true,
+      topicId: topic.id,
     };
 
     await addNewComment(commentBody);
@@ -68,7 +68,10 @@ export default function AddComment({
         onSubmit={handleAddComment}
         className="relative flex items-center gap-4"
       >
-        <UserAvatar image={userSession?.image} className="h-[50px] w-[50px]" />
+        <UserAvatar
+          image={userSession?.avatar || ""}
+          className="h-[50px] w-[50px]"
+        />
         <Input
           type="text"
           placeholder="Add a comment..."

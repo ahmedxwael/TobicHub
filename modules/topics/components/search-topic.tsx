@@ -15,9 +15,9 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { debounce } from "@/utils/utils";
+import { Topic } from "@prisma/client";
 import { Search } from "lucide-react";
 import { ChangeEvent, useState } from "react";
-import { Topic } from "../types";
 import SearchItem from "./search-item";
 import SearchItemSkeleton from "./skeletons/search-item-skeleton";
 
@@ -44,7 +44,7 @@ export default function SearchTopic({ unapproved, userId }: SearchTopicProps) {
       setIsLoading(true);
       const topicsList = await getTopicsAction({
         query: searchValue,
-        where: { isApproved: unapproved ? undefined : true, authorId: userId },
+        where: { approved: unapproved ? undefined : true, authorId: userId },
       });
 
       setTopics(topicsList || []);

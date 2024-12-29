@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import UserControlMenus from "@/modules/user/components/profile/user-control-menu";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 import { UserSessionType, UserType } from "../../user/types";
 
@@ -27,7 +27,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
     <Card className="relative animate-show-card border-0 p-4 sm:p-6">
       <div className="flex w-fit flex-col flex-wrap gap-4">
         <div className="flex items-center gap-3">
-          <Link href={URLS.profile.view(user.id)}>
+          <Link href={urls.profile.view(user.id)}>
             <UserAvatar image={user.image || ""} />
           </Link>
           <CardBadge
@@ -35,7 +35,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
             label={user.isAdmin ? "Admin" : "User"}
           />
         </div>
-        <Link href={URLS.profile.view(user.id)} className="block">
+        <Link href={urls.profile.view(user.id)} className="block">
           <div className="font-medium">{user.name}</div>
           <div className="text-sm text-muted-foreground">{user.email}</div>
         </Link>

@@ -7,8 +7,8 @@ import SearchTopic from "@/modules/topics/components/search-topic";
 import TopicsList from "@/modules/topics/components/topics-list";
 import { getTopics } from "@/modules/topics/services/topics-services";
 import { getUser } from "@/modules/user/services/profile-services";
-import { UserSessionType } from "@/modules/user/types";
 import { GenericObject, ParamsType } from "@/shared/types";
+import { Prisma, User } from "@prisma/client";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
@@ -44,16 +44,17 @@ export default async function UserTopicsPage({
   const skip = Number(searchParams.skip) || 0;
 
   const session = await getServerSession(authOptions);
-  const userSession = session?.user as UserSessionType | undefined;
+  const userSession = session?.user as User | undefined;
 
-  const isTheLoggedInUser = !userSession || userSession.id !== params.id;
-  const where = isTheLoggedInUser
+  const notTheOwner = !userSession || userSession.id !== params.id;
+
+  const where: Prisma.TopicWhereInput = notTheOwner
     ? {
         authorId: params.id,
+        approved: true,
       }
     : {
         authorId: params.id,
-        isApproved: true,
       };
 
   const topics = await getTopics({
@@ -90,5 +91,3 @@ export default async function UserTopicsPage({
     </section>
   );
 }
-
-UserTopicsPage;

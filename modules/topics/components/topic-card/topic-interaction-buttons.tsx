@@ -7,16 +7,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { UserSessionType } from "@/modules/user/types";
+import { Topic, User } from "@prisma/client";
 import { MessageCircle, Repeat2, ThumbsUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, useEffect, useState } from "react";
-import { Topic } from "../../types";
 import AddComment from "../comments/add-comment";
 
 type TopicsInteractionButtonsProps = {
   topic: Topic;
-  userSession: UserSessionType;
+  userSession: User;
 };
 
 type TopicInteractionButtonProps = {
@@ -83,12 +82,11 @@ export default function TopicInteractionButtons({
     <div className="mt-4 p-8 pt-0">
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
         <div className="">
-          <span>{topic.totalLikes} likes</span>
+          <span>{topic.likesCount} likes</span>
         </div>
         <div className="ml-auto flex items-center gap-2 capitalize">
-          <span>{topic.totalApprovedComments} comments</span>
+          <span>{topic.commentCount} comments</span>
           <Separator orientation="vertical" className="h-4" />
-          <span>{topic.totalRepost} repost</span>
         </div>
       </div>
       {userSession && (

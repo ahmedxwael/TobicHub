@@ -1,4 +1,5 @@
 import prisma from "@/prisma";
+import { getSlugFromName } from "@/utils/utils";
 import type { AuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -20,10 +21,9 @@ export const authOptions: AuthOptions = {
         where: { email: session?.user?.email },
       });
 
-      session.user.image = user?.image || session?.user?.image;
-      session.user.id = user?.id.toString();
-      session.user.admin = user?.isAdmin || false;
-      session.user.owner = user?.isOwner || false;
+      if (user) {
+        session.user = user;
+      }
 
       return session;
     },
@@ -33,12 +33,13 @@ export const authOptions: AuthOptions = {
           where: { email: user?.email },
         });
 
-        if (!storedUser) {
+        if (!storedUser && user) {
           await prisma.user.create({
             data: {
-              email: user?.email,
-              name: user?.name,
-              image: user?.image,
+              email: user.email,
+              slug: getSlugFromName(user.name),
+              name: user.name,
+              avatar: user.image,
             },
           });
         }

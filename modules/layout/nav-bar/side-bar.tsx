@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import { UserSessionType } from "@/modules/user/types";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
+import { User } from "@prisma/client";
 import { AlignJustify } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
@@ -22,7 +22,7 @@ import NavLinks from "./nav-links";
 import { userLinks } from "./user-actions";
 
 type SideBarProps = {
-  userSession: UserSessionType | undefined;
+  userSession?: User;
 };
 
 export default function SideBar({ userSession }: SideBarProps) {
@@ -51,10 +51,7 @@ export default function SideBar({ userSession }: SideBarProps) {
           <SheetTitle className="text-primary">TopicHub</SheetTitle>
         </SheetHeader>
         <div className="mt-6 flex flex-col gap-4 text-muted-foreground">
-          <NavLinks
-            closeMenu={handleSheetToggle}
-            isAdmin={userSession?.admin}
-          />
+          <NavLinks closeMenu={handleSheetToggle} userSession={userSession} />
         </div>
         <ul className="mt-auto flex flex-col gap-1 border-t-2 pt-6">
           {userSession ? (
@@ -92,7 +89,7 @@ export default function SideBar({ userSession }: SideBarProps) {
           ) : (
             <Link
               onClick={() => setIsSheetOpen(false)}
-              href={URLS.register}
+              href={urls.register}
               className={cn(
                 buttonVariants({ variant: "default", size: "lg" }),
                 "w-full"

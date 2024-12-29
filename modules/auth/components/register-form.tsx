@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { GithubIcon, GoogleIcon } from "@/shared/icons";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import { BuiltInProviderType } from "next-auth/providers/index";
 import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
 import Link from "next/link";
@@ -63,7 +63,7 @@ export function RegisterForm({ providers }: RegisterFormProps) {
             By signing in to our website, you confirm that you have read and
             agree to our{" "}
             <Link
-              href={URLS.privacyPolicy}
+              href={urls.privacyPolicy}
               className="font-medium underline transition-colors hover:text-primary"
             >
               Privacy Policy

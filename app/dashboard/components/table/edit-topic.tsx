@@ -1,5 +1,6 @@
 "use client";
 
+import { editTopicAction } from "@/actions/topics/edit-topic-action";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -12,13 +13,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import { editTopic } from "@/modules/topics/services/topics-services";
-import { Topic } from "@/modules/topics/types";
+import TopicResourceField from "@/modules/topics/components/form/topic-resource-field";
+import { validateURL } from "@/utils/utils";
+import { Topic } from "@prisma/client";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Resource } from "../add-topic";
 
 type EditTopicProps = {
   topic: Topic;
@@ -30,8 +34,8 @@ type EditTopicProps = {
 type Input = {
   title: string;
   description: string;
-  link: string;
-  isApproved: boolean;
+  resource: string;
+  approved: boolean;
 };
 
 export default function EditTopic({
@@ -41,7 +45,15 @@ export default function EditTopic({
   className,
 }: EditTopicProps) {
   const router = useRouter();
+  const resourcesRef = useRef<HTMLFormElement>(null);
+  const { toast } = useToast();
 
+  const [resources, setResources] = useState<Resource[]>(
+    topic.resources.map((resource) => ({
+      resource,
+      approved: true,
+    }))
+  );
   const [updatedTopic, setUpdatedTopic] = useState<Topic | Partial<Topic>>(
     topic
   );
@@ -50,26 +62,81 @@ export default function EditTopic({
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<Input>();
 
   const onSubmit = async () => {
+    const isValidFields = handleResourcesValidation();
+
+    if (!isValidFields) return;
+
     const body: Partial<Topic> = {
       title: updatedTopic.title,
       description: updatedTopic.description,
-      isApproved: updatedTopic.isApproved,
-      resource: updatedTopic.resource,
+      approved: updatedTopic.approved,
+      resources: [...resources.map((resource) => resource.resource)],
       authorId: topic.authorId,
     };
 
-    await editTopic(topic.id, body);
+    await editTopicAction(topic.id, body);
 
     setIsPopupOpen(false);
     router.refresh();
   };
 
+  const handleResourcesValidation = () => {
+    if (resources.length >= 5) {
+      toast({
+        title: "Something went wrong.",
+        description: "You can only add a maximum of 5 resources.",
+        variant: "destructive",
+      });
+
+      return false;
+    } else if (
+      resources.some(
+        (resource) =>
+          resource.resource.trim() === "" || !validateURL(resource.resource)
+      )
+    ) {
+      toast({
+        title: "Something went wrong.",
+        description: "Please check your resources and try again.",
+        variant: "destructive",
+      });
+
+      return false;
+    } else if (resources.some((resource) => !resource.approved)) {
+      toast({
+        title: "Warning!",
+        description: "Make sure all resources are approved.",
+        variant: "info",
+      });
+
+      return false;
+    }
+
+    return true;
+  };
+
   return (
-    <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>
+    <Dialog
+      open={isPopupOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setUpdatedTopic({});
+          reset();
+        }
+        setResources(
+          topic.resources.map((resource) => ({
+            resource,
+            approved: true,
+          }))
+        );
+        setIsPopupOpen(open);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           variant="ghost"
@@ -152,43 +219,77 @@ export default function EditTopic({
             )}
           </div>
           <div className="flex flex-col gap-3">
-            <Label htmlFor="link" className="cursor-pointer">
-              Recourses
+            <Label
+              htmlFor="link"
+              className="flex cursor-pointer items-center gap-2"
+            >
+              Resources
+              <span className="ml-2 text-xs text-muted-foreground">
+                (optional)
+              </span>
             </Label>
-            <Input
-              id="link"
-              placeholder="Recourses"
-              type="url"
-              disabled={isSubmitting}
-              {...register("link", {
-                value: topic?.resource,
-                onChange: (e) =>
-                  setUpdatedTopic({
-                    ...topic,
-                    resource: e.target.value.split(" ")[0],
-                  }),
-              })}
-            />
-            {errors.link && (
+            <form
+              ref={resourcesRef}
+              className="flex max-h-[180px] flex-col gap-2 overflow-y-auto p-2"
+            >
+              {resources.map((resource, index) => (
+                <TopicResourceField
+                  key={index}
+                  index={index}
+                  resource={resource}
+                  resources={resources}
+                  setResources={setResources}
+                  onChange={(e) => {
+                    const updatedResources: Resource[] = [...resources];
+                    updatedResources[index] = {
+                      resource: e.target.value,
+                      approved: false,
+                    };
+                    setResources(updatedResources);
+                  }}
+                />
+              ))}
+            </form>
+            {errors.resource && (
               <span className="inline-block text-sm text-red-500">
-                {errors.link.message}
+                {errors.resource.message}
               </span>
             )}
+            <Button
+              type="button"
+              variant="outline"
+              className="w-fit capitalize"
+              onClick={() => {
+                const isValidFields = handleResourcesValidation();
+
+                if (!isValidFields) return;
+
+                setResources([...resources, { resource: "", approved: false }]);
+                setTimeout(() => {
+                  resourcesRef.current?.scrollTo({
+                    behavior: "smooth",
+                    top: resourcesRef.current?.scrollHeight,
+                  });
+                });
+              }}
+            >
+              add resource
+            </Button>
           </div>
           <div className="flex flex-wrap items-center gap-6">
             <div className="flex items-center gap-2">
               <Checkbox
-                id="isApproved"
-                {...register("isApproved")}
-                checked={updatedTopic?.isApproved}
+                id="approved"
+                {...register("approved")}
+                checked={updatedTopic?.approved}
                 onCheckedChange={() =>
                   setUpdatedTopic({
                     ...updatedTopic,
-                    isApproved: !updatedTopic?.isApproved,
+                    approved: !updatedTopic?.approved,
                   })
                 }
               />
-              <Label htmlFor="isApproved" className="shrink-0 cursor-pointer">
+              <Label htmlFor="approved" className="shrink-0 cursor-pointer">
                 Approved
               </Label>
             </div>

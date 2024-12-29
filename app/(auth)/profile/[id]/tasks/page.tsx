@@ -6,7 +6,7 @@ import TasksTable from "@/modules/user/components/tasks/table/tasks-table";
 import { getUserTasks } from "@/modules/user/services/tasks-services";
 import { UserSessionType } from "@/modules/user/types";
 import { GenericObject } from "@/shared/types";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -24,7 +24,7 @@ export default async function TasksPage({ params }: TasksPageProps) {
   const userSession = session?.user as UserSessionType;
 
   if (!userSession || userSession.id !== params.id) {
-    redirect(URLS.profile.view(params.id));
+    redirect(urls.profile.view(params.id));
   }
 
   const tasks = await getUserTasks(params.id);
@@ -34,7 +34,7 @@ export default async function TasksPage({ params }: TasksPageProps) {
   }
 
   return (
-    <section className="flex-1">
+    <section className="w-full flex-1">
       <div className="flex w-full flex-col gap-12">
         <div className="flex w-full flex-wrap items-center justify-between gap-6">
           <div className="flex flex-col gap-2">

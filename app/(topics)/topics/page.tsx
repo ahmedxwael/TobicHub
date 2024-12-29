@@ -25,7 +25,7 @@ export default async function TopicsPage({ searchParams }: TopicsPageProps) {
   const skip = Number(searchParams.skip) || 0;
   const session = await getServerSession(authOptions);
   const topics = await getTopics({
-    where: { isApproved: true },
+    where: { approved: true },
     skip,
   });
 

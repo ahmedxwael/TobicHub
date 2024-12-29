@@ -1,4 +1,4 @@
-export const URLS = {
+export const urls = {
   home: "/",
   topics: {
     list: "/topics",

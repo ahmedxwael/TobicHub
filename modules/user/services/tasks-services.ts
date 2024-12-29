@@ -1,6 +1,6 @@
 import prisma from "@/prisma";
+import { Task } from "@prisma/client";
 import axios from "axios";
-import { Task } from "../types";
 
 export async function getUserTasks(
   userId: string

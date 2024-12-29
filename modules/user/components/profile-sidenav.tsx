@@ -2,7 +2,7 @@
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -16,15 +16,15 @@ type ProfileSideNavProps = {
 const sidebarNavItems = [
   {
     title: "Profile",
-    href: URLS.profile.view,
+    href: urls.profile.view,
   },
   {
     title: "Topics",
-    href: URLS.profile.topics,
+    href: urls.profile.topics,
   },
   {
     title: "Tasks",
-    href: URLS.profile.tasks,
+    href: urls.profile.tasks,
     protected: true,
   },
 ];

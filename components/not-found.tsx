@@ -1,4 +1,4 @@
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 
 type NotFoundProps = {
@@ -11,7 +11,7 @@ export default function NotFound({ message }: NotFoundProps) {
       <h2 className="text-xl font-bold lg:text-2xl">Something happened.</h2>
       <p className="text-muted-foreground">{message}</p>
       <div className="flex gap-4">
-        <Link href={URLS.home} className="btn btn-primary">
+        <Link href={urls.home} className="btn btn-primary">
           Back to home
         </Link>
       </div>

@@ -9,17 +9,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { Topic } from "@/modules/topics/types";
-import { UserSessionType } from "@/modules/user/types";
+import { Topic, User } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteTopic, editTopic } from "../../services/topics-services";
 
 type TopicControlMenuProps = {
-  topic: Topic;
+  topic: Topic & {
+    author: User;
+  };
   className?: string;
-  userSession: UserSessionType;
+  userSession: User;
   toggleApproved: () => void;
   isApproved: boolean;
 };
@@ -40,11 +41,12 @@ export default function TopicControlMenu({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const hasControl =
-    userSession && (userSession?.id === topic.author.id || userSession?.admin);
+    userSession &&
+    (userSession?.id === topic.author.id || userSession?.moderator);
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { isApproved: true });
+    await editTopic(topicId, { approved: true });
 
     toggleApproved();
     toast({
@@ -58,7 +60,7 @@ export default function TopicControlMenu({
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { isApproved: false });
+    await editTopic(topicId, { approved: false });
 
     toggleApproved();
     toast({
@@ -97,7 +99,7 @@ export default function TopicControlMenu({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[170px]">
-            {userSession?.admin &&
+            {userSession?.moderator &&
               pathname.endsWith("/dashboard") &&
               (!isApproved ? (
                 <Button

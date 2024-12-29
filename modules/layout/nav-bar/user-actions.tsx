@@ -1,7 +1,7 @@
 "use client";
 
 import CustomAlertDialog from "@/components/custom-alert-dialog";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,30 +12,31 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
-import { UserSessionType } from "@/modules/user/types";
 import { ArrowDownIcon } from "@/shared/icons";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
+import { User } from "@prisma/client";
+import { Bell } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
 type UserButtonsProps = {
   onClose?: () => void;
-  userSession: UserSessionType | undefined;
+  userSession?: User;
 };
 
 export const userLinks = [
   {
     label: "Profile",
-    href: URLS.profile.view,
+    href: urls.profile.view,
   },
   {
     label: "My Topics",
-    href: URLS.profile.topics,
+    href: urls.profile.topics,
   },
   {
     label: "Tasks",
-    href: URLS.profile.tasks,
+    href: urls.profile.tasks,
   },
 ];
 
@@ -53,7 +54,10 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
               onClick={() => setIsDropdownOpen(true)}
               className="flex shrink-0 items-center gap-2 rounded-full bg-muted/50 transition-colors hover:bg-muted"
             >
-              <UserAvatar image={userSession?.image} className="h-10 w-10" />
+              <UserAvatar
+                image={userSession?.avatar || ""}
+                className="h-10 w-10"
+              />
               <ArrowDownIcon
                 className={cn(
                   "mr-3 text-muted-foreground opacity-60 transition-transform",
@@ -97,11 +101,14 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
               </ul>
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button variant="ghost" className="rounded-full p-2">
+            <Bell />
+          </Button>
         </div>
       ) : (
         <Link
           onClick={onClose}
-          href={URLS.register}
+          href={urls.register}
           className={cn(
             buttonVariants({ variant: "default", size: "lg" }),
             "w-full"

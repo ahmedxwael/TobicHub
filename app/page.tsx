@@ -2,7 +2,7 @@ import FeaturesList from "@/components/features/features-list";
 import SectionHeading from "@/components/section-heading";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "./api/auth/options";
@@ -31,7 +31,7 @@ export default async function HomePage() {
 
         {session?.user && (
           <Link
-            href={URLS.register}
+            href={urls.register}
             className={cn(buttonVariants({ size: "lg" }))}
           >
             Join us now

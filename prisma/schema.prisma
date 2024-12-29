@@ -11,45 +11,90 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  email          String?   @unique
-  name           String?
-  displayName    String?   @default("")
-  image          String?
-  isAdmin        Boolean   @default(false)
-  isOwner        Boolean   @default(false)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  topics         Topic[]   @relation("userTopics")
-  tasks          Task[]
-  comments       Comment[]
-  following      User?     @relation("userFollowers", fields: [followingId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  followingId    String?   @db.ObjectId
-  followers      User[]    @relation("userFollowers")
-  totalTopics    Int       @default(0)
-  totalComments  Int       @default(0)
-  totalTasks     Int       @default(0)
-  totalFollowers Int       @default(0)
-  totalFollowing Int       @default(0)
-  likes          Like[]
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  slug             String
+  email            String         @unique
+  name             String
+  avatar           String?
+  bio              String?
+  jobTitle         String?
+  owner            Boolean        @default(false)
+  moderator        Boolean        @default(false)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  topics           Topic[]        @relation("userTopics")
+  topicsCount      Int            @default(0)
+  savedTopics      SavedTopic[]   @relation("userSavedTopics")
+  savedTopicsCount Int            @default(0)
+  tasks            Task[]
+  tasksCount       Int            @default(0)
+  comments         Comment[]
+  commentsCount    Int            @default(0)
+  likes            Like[]
+  likesCount       Int            @default(0)
+  following        Follow[]       @relation("userFollowing")
+  followingCount   Int            @default(0)
+  followers        Follow[]       @relation("userFollowers")
+  followersCount   Int            @default(0)
+  notifications    Notification[]
+}
+
+model Follow {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  followerId  String @db.ObjectId
+  followingId String @db.ObjectId
+  follower    User   @relation("userFollowers", fields: [followerId], references: [id])
+  following   User   @relation("userFollowing", fields: [followingId], references: [id])
+}
+
+model Notification {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  type         String // e.g., 'comment', 'like', 'follow', etc.
+  message      String // Notification message content
+  read         Boolean  @default(false) // Whether the user has read the notification
+  createdAt    DateTime @default(now())
+  notifiedBy   User     @relation(fields: [notifiedById], references: [id])
+  notifiedById String   @db.ObjectId
 }
 
 model Topic {
-  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
-  title                 String
-  description           String
-  resource              String?
-  isApproved            Boolean   @default(false)
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-  author                User      @relation("userTopics", fields: [authorId], references: [id])
-  authorId              String    @db.ObjectId
-  comments              Comment[]
-  totalComments         Int       @default(0)
-  totalApprovedComments Int       @default(0)
-  totalLikes            Int       @default(0)
-  totalRepost           Int       @default(0)
-  likes                 Like[]
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
+  resources    String[]
+  approved     Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  author       User         @relation("userTopics", fields: [authorId], references: [id])
+  authorId     String       @db.ObjectId
+  comments     Comment[]
+  commentCount Int          @default(0)
+  likes        Like[]
+  likesCount   Int          @default(0)
+  savedBy      SavedTopic[] @relation("userSavedTopics")
+  categories   Category[]   @relation(fields: [categoryIds], references: [id])
+  categoryIds  String[]     @db.ObjectId
+}
+
+model SavedTopic {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String   @db.ObjectId
+  topicId String   @db.ObjectId
+  user    User     @relation("userSavedTopics", fields: [userId], references: [id])
+  topic   Topic    @relation("userSavedTopics", fields: [topicId], references: [id])
+  savedAt DateTime @default(now())
+}
+
+model Category {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String
+  description String
+  topics      Topic[]  @relation(fields: [topicIds], references: [id])
+  topicIds    String[] @db.ObjectId
+  topicsCount Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Comment {
@@ -61,30 +106,35 @@ model Comment {
   userId          String    @db.ObjectId
   topic           Topic?    @relation(fields: [topicId], references: [id])
   topicId         String    @db.ObjectId
-  isApproved      Boolean   @default(false)
+  approved        Boolean   @default(false)
   parentComment   Comment?  @relation("commentReplies", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   parentCommentId String?   @db.ObjectId
   replies         Comment[] @relation("commentReplies")
-  totalReplies    Int       @default(0)
+  repliesCount    Int       @default(0)
+  likes           Like[]
 }
 
 model Like {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String   @db.ObjectId
-  topic     Topic    @relation(fields: [topicId], references: [id])
-  topicId   String   @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
+  targetType String   @default("topic")
+  topic      Topic?   @relation(fields: [topicId], references: [id])
+  topicId    String?  @db.ObjectId
+  comment    Comment? @relation(fields: [commentId], references: [id])
+  commentId  String?  @db.ObjectId
+  targetId   String   @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Task {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  lable       String?
-  isCompleted Boolean
-  isImportant Boolean
+  label       String?
+  completed   Boolean
+  important   Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   userId      String   @db.ObjectId

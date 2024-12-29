@@ -1,6 +1,6 @@
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { UserSessionType } from "@/modules/user/types";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
 import Link from "next/link";
 import { Comment, Topic } from "../../types";
 import CommentControlMenu from "./comment-control-menu";
@@ -20,7 +20,7 @@ export default function CommentCard({
     <div className="rounded-3xl bg-muted p-6 text-foreground dark:bg-muted/40">
       <div className="flex items-center justify-between gap-4">
         <Link
-          href={URLS.profile.view(comment.userId)}
+          href={urls.profile.view(comment.userId)}
           className="flex items-center gap-4"
         >
           <UserAvatar image={comment.user.image || ""} />

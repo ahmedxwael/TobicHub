@@ -6,17 +6,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { UserSessionType } from "@/modules/user/types";
-import { URLS } from "@/shared/urls";
+import { urls } from "@/shared/urls";
+import { User } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import SideBar from "./side-bar";
 import UserActions from "./user-actions";
 
-const Navbar = async () => {
+export default async function Navbar() {
   const session = await getServerSession(authOptions);
-  const userSession = session?.user as UserSessionType | undefined;
+  const userSession = session?.user as User;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/60 backdrop-blur-lg">
@@ -24,7 +24,7 @@ const Navbar = async () => {
         <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
-              <Link href={URLS.home} className="text-xl font-bold text-primary">
+              <Link href={urls.home} className="text-xl font-bold text-primary">
                 TopicHub
               </Link>
             </TooltipTrigger>
@@ -34,7 +34,7 @@ const Navbar = async () => {
           </Tooltip>
         </TooltipProvider>
         <div className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
-          <NavLinks isAdmin={userSession?.admin} />
+          <NavLinks userSession={userSession} />
         </div>
         <div className="ml-auto hidden shrink-0 items-center gap-4 md:flex">
           <ModeToggle />
@@ -45,6 +45,4 @@ const Navbar = async () => {
       </nav>
     </header>
   );
-};
-
-export default Navbar;
+}

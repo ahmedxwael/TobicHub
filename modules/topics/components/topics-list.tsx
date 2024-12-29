@@ -1,8 +1,8 @@
 "use client";
 
 import NoData from "@/components/no-data";
+import { Topic } from "@prisma/client";
 import type { Session } from "next-auth";
-import { Topic } from "../types";
 import TopicCard from "./topic-card/topic-card";
 
 export type TopicsTypeType = "approved" | "search" | "user" | "admin";

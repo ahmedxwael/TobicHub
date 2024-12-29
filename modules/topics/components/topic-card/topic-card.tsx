@@ -1,18 +1,17 @@
 import { Card } from "@/components/ui/card";
-import { Topic } from "@/modules/topics/types";
-import { UserSessionType } from "@/modules/user/types";
+import { Topic, User } from "@prisma/client";
 import type { Session } from "next-auth";
 import TopicCardContent from "./topic-card-content";
 import TopicCardHeader from "./topic-card-header";
 import TopicInteractionButtons from "./topic-interaction-buttons";
 
 type TopicCardProps = {
-  topic: Topic;
+  topic: Topic & { author: User };
   session: Session | null;
 };
 
 export default function TopicCard({ topic, session }: TopicCardProps) {
-  const userSession = session?.user as UserSessionType;
+  const userSession = session?.user as User;
 
   return (
     <Card

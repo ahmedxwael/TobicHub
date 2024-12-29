@@ -27,7 +27,7 @@ export const POST = async (
     await prisma.topic.delete({ where: { id } });
     await prisma.user.update({
       where: { id: data.authorId },
-      data: { totalTopics: { decrement: 1 } },
+      data: { topicsCount: { decrement: 1 } },
     });
 
     return NextResponse.json(

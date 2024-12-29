@@ -1,15 +1,20 @@
-import { NewTopic, Topic } from "@/modules/topics/types";
 import prisma from "@/prisma";
 import { GenericObject } from "@/shared/types";
-import { Prisma } from "@prisma/client";
+import { Prisma, Topic } from "@prisma/client";
 import axios from "axios";
 
-const userAllowedFields = { isAdmin: true, id: true, name: true, image: true };
+const userAllowedFields: Prisma.UserSelect = {
+  id: true,
+  name: true,
+  avatar: true,
+};
 
-export async function addTopic(newTopic: NewTopic) {
-  await axios.post("/api/topics", newTopic).catch(() => {
-    throw new Error("Something went wrong.");
-  });
+export async function addTopic(newTopic: Partial<Topic>) {
+  try {
+    await axios.post("/api/topics", newTopic).catch(() => {});
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function editTopic(
@@ -32,22 +37,24 @@ export async function deleteTopic(id: string, authorId: string) {
     });
 }
 
-export async function getTopic(
-  id: string,
-  isEditing?: boolean
-): Promise<Topic | undefined | null> {
+export async function getTopic(id: string, edit?: boolean) {
   try {
     const topic = await prisma.topic.findUnique({
       where: { id },
-      include: isEditing
+      include: edit
         ? {}
         : {
-            author: { select: userAllowedFields },
+            author: {
+              select: userAllowedFields,
+            },
           },
     });
 
-    return topic as Topic;
+    console.log("topic", topic);
+
+    return topic;
   } catch (error: any) {
+    console.log("error", error);
     return undefined;
   }
 }
@@ -59,9 +66,7 @@ export type GetTopicsOptions = {
   query?: string;
 };
 
-export async function getTopics(
-  options: GetTopicsOptions = {}
-): Promise<Topic[] | undefined> {
+export async function getTopics(options: GetTopicsOptions = {}) {
   const { where, query, skip, take } = options;
 
   const queryOptions: Prisma.TopicWhereInput[] | undefined = query
@@ -81,7 +86,7 @@ export async function getTopics(
       orderBy: { createdAt: "desc" },
     });
 
-    return topics as Topic[];
+    return topics;
   } catch (error: any) {
     return undefined;
   }

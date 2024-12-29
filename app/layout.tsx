@@ -2,13 +2,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import ToTopButton from "@/modules/layout/components/to-top-button";
 import Footer from "@/modules/layout/footer/footer";
-import Navbar from "@/modules/layout/nav-bar/Navbar";
 import NexAuthSessionProvider from "@/providers/next-auth-session-provider";
 import ReduxStoreProvider from "@/providers/redux-store-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+import Navbar from "@/modules/layout/nav-bar/Navbar";
 import "./globals.css";
 
 type RootLayoutProps = {

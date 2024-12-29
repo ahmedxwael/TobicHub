@@ -48,7 +48,7 @@ export const POST = async (request: NextRequest) => {
 
   await prisma.user.update({
     where: { id: userId! },
-    data: { image: signedUrlData.data.signedUrl },
+    data: { avatar: signedUrlData.data.signedUrl },
   });
 
   return NextResponse.json({ message: "Success" }, { status: 200 });

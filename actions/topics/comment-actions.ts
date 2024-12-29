@@ -1,9 +1,9 @@
 "use server";
 
-import { Comment, NewComment } from "@/modules/topics/types";
 import prisma from "@/prisma";
+import { Comment } from "@prisma/client";
 
-export async function addNewComment(comment: NewComment) {
+export async function addNewComment(comment: Comment) {
   const newComment = await prisma.comment.create({
     data: comment,
   });
@@ -18,7 +18,7 @@ export async function addNewComment(comment: NewComment) {
           id: newComment.id,
         },
       },
-      totalComments: {
+      commentCount: {
         increment: 1,
       },
     },
@@ -63,7 +63,7 @@ export async function deleteComment({ commentId, topicId }: DeleteComment) {
           id: commentId,
         },
       },
-      totalComments: {
+      commentCount: {
         decrement: 1,
       },
     },
@@ -86,7 +86,7 @@ export async function getComments({ topicId, isApproved }: GetTopicComments) {
       },
     });
 
-    return comments as Comment[];
+    return comments;
   } catch (error) {
     return undefined;
   }
