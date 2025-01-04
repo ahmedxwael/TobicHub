@@ -1,8 +1,9 @@
+import { getTopicsAction } from "@/actions/actions";
+import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
 import { DataTablePagination } from "@/components/table/table-pagination";
 import SearchTopic from "@/modules/topics/components/search-topic";
 import { GenericObject } from "@/shared/types";
-import { Topic } from "@prisma/client";
 import TopicsTable from "./components/table/topics-table";
 
 export const revalidate = 0;
@@ -14,15 +15,15 @@ type DashboardPageProps = {
 export default async function DashboardPage({
   searchParams,
 }: DashboardPageProps) {
-  const topics: Topic[] = [];
-  // const topics = await getTopics({
-  //   take: 10,
-  //   skip: Number(searchParams.skip) || 0,
-  // });
+  // const topics: Topic[] = [];
+  const topics = await getTopicsAction({
+    take: 10,
+    skip: Number(searchParams.skip) || 0,
+  });
 
-  // if (!topics) {
-  //   return <NotFound message="Could not retrieve the list of topics." />;
-  // }
+  if (!topics) {
+    return <NotFound message="Could not retrieve the list of topics." />;
+  }
 
   return (
     <section className="flex w-full flex-1 flex-col gap-10">

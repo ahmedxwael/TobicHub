@@ -1,5 +1,7 @@
 "use client";
 
+import { deleteTopicAction } from "@/actions/topics/topic-actions/delete-topic";
+import { editTopicAction } from "@/actions/topics/topic-actions/edit-topic";
 import EditTopic from "@/app/dashboard/components/table/edit-topic";
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -13,7 +15,6 @@ import { Topic, User } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { deleteTopic, editTopic } from "../../services/topics-services";
 
 type TopicControlMenuProps = {
   topic: Topic & {
@@ -45,43 +46,77 @@ export default function TopicControlMenu({
     (userSession?.id === topic.author.id || userSession?.moderator);
 
   async function handleTopicApprovement(topicId: string) {
-    setIsLoading(true);
-    await editTopic(topicId, { approved: true });
+    try {
+      setIsLoading(true);
+      await editTopicAction(topicId, { approved: true });
 
-    toggleApproved();
-    toast({
-      title: "Topic has been approved successfully.",
-      variant: "success",
-    });
+      toggleApproved();
+      toast({
+        title: "Topic has been approved successfully.",
+        variant: "success",
+      });
 
-    router.refresh();
-    setIsLoading(false);
+      router.refresh();
+    } catch (error) {
+      toast({
+        title: "Failed to approve topic",
+        description: "Please try again later",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   async function handleTopicUnApprovement(topicId: string) {
-    setIsLoading(true);
-    await editTopic(topicId, { approved: false });
+    try {
+      setIsLoading(true);
+      await editTopicAction(topicId, { approved: false });
 
-    toggleApproved();
-    toast({
-      title: "Topic has been unapproved.",
-    });
+      toggleApproved();
+      toast({
+        title: "Topic has been unapproved.",
+        variant: "success",
+      });
 
-    router.refresh();
-    setIsLoading(false);
+      router.refresh();
+    } catch (error) {
+      toast({
+        title: "Failed to unapprove topic",
+        description: "Please try again later",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const handleTopicDelete = async () => {
-    setIsLoading(true);
-    await deleteTopic(topic.id, topic.authorId);
+    try {
+      setIsLoading(true);
 
-    toast({
-      title: "Topic has been deleted.",
-    });
+      const { id, authorId } = topic;
+      await deleteTopicAction({
+        topicId: id,
+        authorId,
+      });
 
-    setIsLoading(false);
-    setIsDropdownOpen(false);
-    router.refresh();
+      toast({
+        title: "Topic has been deleted successfully.",
+        variant: "success",
+      });
+
+      router.refresh();
+      setIsDropdownOpen(false);
+    } catch (error) {
+      toast({
+        title: "Failed to delete topic",
+        description: "Please try again later",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -120,7 +155,12 @@ export default function TopicControlMenu({
                   Unapproved
                 </Button>
               ))}
-            <EditTopic className="w-full" topic={topic} title="Edit" />
+            <EditTopic
+              user={userSession}
+              className="w-full"
+              topic={topic}
+              title="Edit"
+            />
             <CustomAlertDialog
               action={handleTopicDelete}
               title="Delete"

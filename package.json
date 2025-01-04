@@ -10,6 +10,7 @@
     "format": "npx prettier --write ./**/*.{js,jsx,ts,tsx,css,scss,md,json} --config ./.prettierrc.json",
     "lint": "next lint",
     "postinstall": "prisma generate",
+    "db:push": "prisma db push",
     "prepare": "husky install"
   },
   "dependencies": {

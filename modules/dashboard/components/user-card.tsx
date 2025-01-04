@@ -45,7 +45,11 @@ export default function UserCard({ user, userSession }: UserCardProps) {
           <Tooltip>
             <TooltipTrigger>{user?.topicsCount} Topic(s)</TooltipTrigger>
             <TooltipContent>
-              <div>{user?.topicsCount} Topic(s)</div>
+              <div>{user?.approvedTopicsCount} Approved topic(s)</div>
+              <div>
+                {user?.topicsCount - user.approvedTopicsCount} Unapproved
+                topic(s)
+              </div>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
