@@ -1,7 +1,6 @@
 import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
 import { Separator } from "@/components/ui/separator";
-import CommentsSection from "@/modules/topics/components/comments/comments-section";
 import { getTopic, getTopics } from "@/modules/topics/services/topics-services";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { ParamsType } from "@/shared/types";
@@ -51,7 +50,7 @@ export default async function TopicPage({ params: { id } }: ParamsType) {
     : null;
 
   return (
-    <section className="mx-auto my-20 max-w-[800px]">
+    <section className="mx-auto my-20 w-[800px] max-w-full">
       <BackButton />
       <div className="space-y-8">
         <div className="border-b pb-6 md:pb-8">
@@ -90,7 +89,7 @@ export default async function TopicPage({ params: { id } }: ParamsType) {
         ))}
       </div>
       <Separator className="my-6" />
-      <CommentsSection topic={topic} />
+      {/* <CommentsSection topic={topic} /> */}
     </section>
   );
 }

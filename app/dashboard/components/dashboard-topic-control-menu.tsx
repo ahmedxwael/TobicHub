@@ -1,3 +1,5 @@
+import { deleteTopicAction } from "@/actions/topics/topic-actions/delete-topic";
+import { editTopicAction } from "@/actions/topics/topic-actions/edit-topic";
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -6,10 +8,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  deleteTopic,
-  editTopic,
-} from "@/modules/topics/services/topics-services";
 import { Topic } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -33,7 +31,7 @@ export default function DashboardTopicControlMenu({
 
   async function handleTopicApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { approved: true });
+    await editTopicAction(topicId, { approved: true });
 
     toast({
       title: "Topic has been approved successfully.",
@@ -46,7 +44,7 @@ export default function DashboardTopicControlMenu({
 
   async function handleTopicUnApprovement(topicId: string) {
     setIsLoading(true);
-    await editTopic(topicId, { approved: false });
+    await editTopicAction(topicId, { approved: false });
 
     toast({
       title: "Topic has been unapproved.",
@@ -58,7 +56,10 @@ export default function DashboardTopicControlMenu({
 
   const handleTopicDelete = async () => {
     setIsLoading(true);
-    await deleteTopic(topic.id, topic.authorId);
+    await deleteTopicAction({
+      topicId: topic.id,
+      authorId: topic.authorId,
+    });
 
     toast({
       title: "Topic has been deleted.",

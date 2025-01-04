@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Topic, User } from "@prisma/client";
-import { MessageCircle, Repeat2, ThumbsUp } from "lucide-react";
+import { MessageCircle, ThumbsUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, useEffect, useState } from "react";
 import AddComment from "../comments/add-comment";
@@ -108,12 +108,6 @@ export default function TopicInteractionButtons({
                 icon={<MessageCircle size={20} />}
                 onClick={() => setIsAddCommentOpen(!isAddCommentOpen)}
                 disabled={isLoading}
-              />
-              <TopicInteractionButton
-                title="Repost"
-                icon={<Repeat2 size={20} />}
-                onClick={() => {}}
-                disabled
               />
             </div>
             <AddComment

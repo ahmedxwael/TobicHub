@@ -1,6 +1,6 @@
 "use client";
 
-import { editTopicAction } from "@/actions/topics/edit-topic-action";
+import { editTopicAction } from "@/actions/topics/topic-actions/edit-topic";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -17,7 +17,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import TopicResourceField from "@/modules/topics/components/form/topic-resource-field";
 import { validateURL } from "@/utils/utils";
-import { Topic } from "@prisma/client";
+import { Topic, User } from "@prisma/client";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -29,6 +29,7 @@ type EditTopicProps = {
   title?: string;
   onClick?: () => void;
   className?: string;
+  user?: User;
 };
 
 type Input = {
@@ -43,6 +44,7 @@ export default function EditTopic({
   title,
   onClick,
   className,
+  user,
 }: EditTopicProps) {
   const router = useRouter();
   const resourcesRef = useRef<HTMLFormElement>(null);
@@ -71,15 +73,28 @@ export default function EditTopic({
 
     if (!isValidFields) return;
 
-    const body: Partial<Topic> = {
-      title: updatedTopic.title,
-      description: updatedTopic.description,
-      approved: updatedTopic.approved,
-      resources: [...resources.map((resource) => resource.resource)],
-      authorId: topic.authorId,
-    };
+    try {
+      const body: Partial<Topic> = {
+        title: updatedTopic.title,
+        description: updatedTopic.description,
+        approved: updatedTopic.approved,
+        resources: [...resources.map((resource) => resource.resource)],
+        authorId: topic.authorId,
+      };
 
-    await editTopicAction(topic.id, body);
+      await editTopicAction(topic.id, body);
+
+      toast({
+        title: "Topic updated successfully",
+        variant: "success",
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to update topic",
+        description: `${error}, please try again.`,
+        variant: "destructive",
+      });
+    }
 
     setIsPopupOpen(false);
     router.refresh();
@@ -239,14 +254,6 @@ export default function EditTopic({
                   resource={resource}
                   resources={resources}
                   setResources={setResources}
-                  onChange={(e) => {
-                    const updatedResources: Resource[] = [...resources];
-                    updatedResources[index] = {
-                      resource: e.target.value,
-                      approved: false,
-                    };
-                    setResources(updatedResources);
-                  }}
                 />
               ))}
             </form>
@@ -276,7 +283,7 @@ export default function EditTopic({
               add resource
             </Button>
           </div>
-          <div className="flex flex-wrap items-center gap-6">
+          {user && user.moderator && (
             <div className="flex items-center gap-2">
               <Checkbox
                 id="approved"
@@ -293,7 +300,7 @@ export default function EditTopic({
                 Approved
               </Label>
             </div>
-          </div>
+          )}
           <div className="ml-auto flex gap-4">
             <Button
               disabled={isSubmitting}

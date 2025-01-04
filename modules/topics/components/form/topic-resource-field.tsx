@@ -3,7 +3,7 @@ import { Resource } from "@/app/dashboard/components/add-topic";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { validateURL } from "@/utils/utils";
+import { getShortenURL, validateURL } from "@/utils/utils";
 import { CheckIcon, XIcon } from "lucide-react";
 import { ChangeEvent } from "react";
 
@@ -19,7 +19,6 @@ export default function TopicResourceField({
   resource,
   resources,
   setResources,
-  onChange,
   index,
 }: TopicResourceFieldProps) {
   const { toast } = useToast();
@@ -31,14 +30,21 @@ export default function TopicResourceField({
         placeholder="https://example.com"
         required
         value={resource.resource}
-        onChange={onChange}
+        onChange={(e) => {
+          const updatedResources: Resource[] = [...resources];
+          updatedResources[index] = {
+            resource: e.target.value,
+            approved: false,
+          };
+          setResources(updatedResources);
+        }}
       />
       {!resource.approved && (
         <Button
           type="button"
           variant="outline"
           size="sm"
-          onClick={() => {
+          onClick={async () => {
             const isValidUrl = validateURL(resource.resource);
 
             if (!isValidUrl || !resource.resource.trim()) {
@@ -51,8 +57,16 @@ export default function TopicResourceField({
               return;
             }
 
-            resource.approved = true;
-            setResources([...resources]);
+            const shortenedResourceObj = {
+              resource: await getShortenURL(resource.resource),
+              approved: true,
+            };
+
+            const storedResources = resources.filter(
+              (storedResource) => storedResource.resource !== resource.resource
+            );
+
+            setResources([...storedResources, shortenedResourceObj]);
           }}
         >
           <CheckIcon />

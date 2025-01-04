@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteComment } from "@/actions/topics/comment-actions";
+import { deleteComment } from "@/actions/topics/comment-actions/comment";
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
 import {

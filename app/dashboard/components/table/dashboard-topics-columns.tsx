@@ -9,19 +9,12 @@ import {
 } from "@/components/ui/tooltip";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { urls } from "@/shared/urls";
-import { Topic } from "@prisma/client";
+import { Topic, User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import DashboardTopicControlMenu from "../dashboard-topic-control-menu";
 import EditTopic from "./edit-topic";
 import ViewTopic from "./view-topic";
-
-type User = {
-  id: string;
-  name: string;
-  image: string;
-  admin: boolean;
-};
 
 export const dashboardTopicsColumns: ColumnDef<Topic>[] = [
   {
@@ -39,7 +32,7 @@ export const dashboardTopicsColumns: ColumnDef<Topic>[] = [
                 href={urls.profile.view(user?.id)}
                 className="flex min-w-[200px] items-center gap-4"
               >
-                <UserAvatar image={user?.image || ""} />
+                <UserAvatar image={user?.avatar || ""} className="h-10 w-10" />
                 <div>{userName}</div>
               </Link>
             </TooltipTrigger>

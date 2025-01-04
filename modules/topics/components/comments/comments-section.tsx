@@ -1,4 +1,4 @@
-import { getComments } from "@/actions/topics/comment-actions";
+import { getComments } from "@/actions/topics/comment-actions/comment";
 import { authOptions } from "@/app/api/auth/options";
 import NoData from "@/components/no-data";
 import NotFound from "@/components/not-found";

@@ -1,6 +1,6 @@
 "use client";
 
-import { addTopicAction } from "@/actions/topics/add-topic-action";
+import { addTopicAction } from "@/actions/topics/topic-actions/add-topic";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -15,9 +15,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import TopicResourceField from "@/modules/topics/components/form/topic-resource-field";
 import { validateURL } from "@/utils/utils";
 import { Topic, User } from "@prisma/client";
-import { CheckIcon, Plus, XIcon } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -247,59 +248,13 @@ export default function AddTopic({
             className="flex max-h-[180px] flex-col gap-2 overflow-y-auto p-2"
           >
             {resources.map((resource, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <Input
-                  type="url"
-                  placeholder="https://example.com"
-                  required
-                  value={resource.resource}
-                  onChange={(e) => {
-                    const updatedResources = [...resources];
-                    updatedResources[index] = {
-                      resource: e.target.value,
-                      approved: false,
-                    };
-                    setResources(updatedResources);
-                  }}
-                />
-                {!resource.approved && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      const isValidUrl = validateURL(resource.resource);
-
-                      if (!isValidUrl || !resource.resource.trim()) {
-                        toast({
-                          title: "Something went wrong.",
-                          description: "Invalid URL.",
-                          variant: "destructive",
-                        });
-
-                        return;
-                      }
-
-                      resource.approved = true;
-                      setResources([...resources]);
-                    }}
-                  >
-                    <CheckIcon />
-                  </Button>
-                )}
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => {
-                    const updatedResources = [...resources];
-                    updatedResources.splice(index, 1);
-                    setResources(updatedResources);
-                  }}
-                >
-                  <XIcon />
-                </Button>
-              </div>
+              <TopicResourceField
+                index={index}
+                resource={resource}
+                resources={resources}
+                setResources={setResources}
+                key={index}
+              />
             ))}
           </form>
           {errors.resource && (

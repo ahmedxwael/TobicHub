@@ -1,41 +1,11 @@
 import prisma from "@/prisma";
-import { GenericObject } from "@/shared/types";
-import { Prisma, Topic } from "@prisma/client";
-import axios from "axios";
+import { Prisma } from "@prisma/client";
 
-const userAllowedFields: Prisma.UserSelect = {
+export const userAllowedFields: Prisma.UserSelect = {
   id: true,
   name: true,
   avatar: true,
 };
-
-export async function addTopic(newTopic: Partial<Topic>) {
-  try {
-    await axios.post("/api/topics", newTopic).catch(() => {});
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function editTopic(
-  id: string,
-  updatedTopic: Partial<Topic> | Topic,
-  config?: GenericObject
-) {
-  await axios.patch(`/api/topics/${id}`, updatedTopic, config).catch(() => {
-    throw new Error("Something went wrong.");
-  });
-}
-
-export async function deleteTopic(id: string, authorId: string) {
-  await axios
-    .post(`/api/topics/${id}`, {
-      authorId,
-    })
-    .catch(() => {
-      throw new Error("Something went wrong.");
-    });
-}
 
 export async function getTopic(id: string) {
   try {
@@ -48,11 +18,13 @@ export async function getTopic(id: string) {
       },
     });
 
-    console.log("topic", topic);
+    if (!topic) {
+      throw new Error("Topic not found");
+    }
 
     return topic;
   } catch (error: any) {
-    console.log("error", error);
+    console.error("Error fetching topic:", error);
     return undefined;
   }
 }
@@ -78,14 +50,21 @@ export async function getTopics(options: GetTopicsOptions = {}) {
   try {
     const topics = await prisma.topic.findMany({
       where: { ...where, OR: queryOptions },
-      include: { author: { select: userAllowedFields } },
+      include: {
+        author: { select: userAllowedFields },
+      },
       skip,
       take: take === null ? undefined : take || 5,
       orderBy: { createdAt: "desc" },
     });
 
+    if (!topics) {
+      throw new Error("No topics found");
+    }
+
     return topics;
   } catch (error: any) {
+    console.error("Error fetching topics:", error);
     return undefined;
   }
 }
