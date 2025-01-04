@@ -26,7 +26,6 @@ Users should be able to:
 
 ![Design preview](/public/images/tobic-hub.png)
 
-
 ### Technologies
 
 - [Next.js](https://nextjs.org/)
