@@ -1,8 +1,7 @@
-/* eslint-disable prettier/prettier */
 "use server";
 
 import prisma from "@/prisma";
-import { getTopicAction } from "./get-topic";
+import { getTopicForActions } from "./utils";
 
 type DeleteTopicProps = {
   topicId: string;
@@ -15,7 +14,7 @@ export async function deleteTopicAction({
 }: DeleteTopicProps) {
   try {
     // First verify the topic exists and belongs to the user
-    const topic = await getTopicAction(topicId);
+    const topic = await getTopicForActions(topicId);
 
     if (!topic) {
       throw new Error("Topic not found");
@@ -48,6 +47,7 @@ export async function deleteTopicAction({
       });
     });
   } catch (error: any) {
+    console.log("error", error);
     throw new Error(error.message);
   }
 }

@@ -1,7 +1,11 @@
 import BackButton from "@/components/back-button";
 import NotFound from "@/components/not-found";
 import { Separator } from "@/components/ui/separator";
-import { getTopic, getTopics } from "@/modules/topics/services/topics-services";
+import {
+  getTopic,
+  getTopics,
+  userAllowedFields,
+} from "@/modules/topics/services/topics-services";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
 import { ParamsType } from "@/shared/types";
 import { urls } from "@/shared/urls";
@@ -11,7 +15,11 @@ import Link from "next/link";
 export const generateMetadata = async ({
   params: { id },
 }: ParamsType): Promise<Metadata> => {
-  const topic = await getTopic(id);
+  const topic = await getTopic(id, {
+    author: {
+      select: userAllowedFields,
+    },
+  });
 
   if (!topic) {
     return { title: "Undefined | TopicHub", description: "" };

@@ -1,7 +1,7 @@
 import prisma from "@/prisma";
 import { Prisma } from "@prisma/client";
 
-const userAllowedFields: Prisma.UserSelect = {
+export const userAllowedFields: Prisma.UserSelect = {
   id: true,
   name: true,
   avatar: true,

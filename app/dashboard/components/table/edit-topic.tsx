@@ -73,15 +73,28 @@ export default function EditTopic({
 
     if (!isValidFields) return;
 
-    const body: Partial<Topic> = {
-      title: updatedTopic.title,
-      description: updatedTopic.description,
-      approved: updatedTopic.approved,
-      resources: [...resources.map((resource) => resource.resource)],
-      authorId: topic.authorId,
-    };
+    try {
+      const body: Partial<Topic> = {
+        title: updatedTopic.title,
+        description: updatedTopic.description,
+        approved: updatedTopic.approved,
+        resources: [...resources.map((resource) => resource.resource)],
+        authorId: topic.authorId,
+      };
 
-    await editTopicAction(topic.id, body);
+      await editTopicAction(topic.id, body);
+
+      toast({
+        title: "Topic updated successfully",
+        variant: "success",
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to update topic",
+        description: `${error}, please try again.`,
+        variant: "destructive",
+      });
+    }
 
     setIsPopupOpen(false);
     router.refresh();
