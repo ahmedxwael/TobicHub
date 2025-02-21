@@ -32,7 +32,7 @@ export const dashboardTopicsColumns: ColumnDef<Topic>[] = [
                 href={urls.profile.view(user?.id)}
                 className="flex min-w-[200px] items-center gap-4"
               >
-                <UserAvatar image={user?.avatar || ""} className="h-10 w-10" />
+                <UserAvatar src={user?.avatar || ""} className="h-10 w-10" />
                 <div>{userName}</div>
               </Link>
             </TooltipTrigger>

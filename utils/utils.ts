@@ -22,6 +22,12 @@ export function validateURL(url: string): boolean {
   return rfcRegex.test(url);
 }
 
+export function validString(value: string) {
+  if (!value || !value.trim()) return false;
+
+  return true;
+}
+
 // Function to shorten urls using TinyURL API
 export async function getShortenURL(url: string): Promise<string> {
   const validUrl = validateURL(url);

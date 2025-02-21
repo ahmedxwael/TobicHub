@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  addNewComment,
-  NewCommentType,
-} from "@/actions/topics/comment-actions/comment";
+import { addNewComment, NewCommentType } from "@/actions/topics/topic-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import UserAvatar from "@/modules/user/components/profile/user-avatar";
+import { validString } from "@/utils/utils";
 import { Topic, User } from "@prisma/client";
 import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -39,7 +37,15 @@ export default function AddComment({
   const handleAddComment = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!comment.trim()) {
+    const validComment = validString(comment);
+
+    if (!validComment) {
+      toast({
+        title: "Not valid comment",
+        description: "Your comment is not valid. Please try again.",
+        variant: "destructive",
+      });
+
       return;
     }
 
@@ -72,7 +78,7 @@ export default function AddComment({
         className="relative flex items-center gap-4"
       >
         <UserAvatar
-          image={userSession?.avatar || ""}
+          src={userSession?.avatar || ""}
           className="h-[50px] w-[50px]"
         />
         <Input

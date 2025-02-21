@@ -52,6 +52,7 @@ export async function getTopics(options: GetTopicsOptions = {}) {
       where: { ...where, OR: queryOptions },
       include: {
         author: { select: userAllowedFields },
+        likes: {},
       },
       skip,
       take: take === null ? undefined : take || 5,

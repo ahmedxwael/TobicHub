@@ -1,9 +1,10 @@
 "use client";
 
-import { updateComment } from "@/actions/topics/comment-actions/comment";
+import { updateComment } from "@/actions/topics/topic-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { validString } from "@/utils/utils";
 import { Comment } from "@prisma/client";
 import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -23,14 +24,26 @@ export default function UpdateComment({
   const router = useRouter();
   const { toast } = useToast();
 
-  const [content, setContent] = useState(comment.content);
+  const [commentContent, setContent] = useState(comment.content);
 
   const handleUpdateComment = async () => {
     setIsLoading(true);
 
+    const validComment = validString(commentContent);
+
+    if (!validComment) {
+      toast({
+        title: "Not valid comment",
+        description: "Your comment is not valid. Please try again.",
+        variant: "destructive",
+      });
+
+      return;
+    }
+
     await updateComment({
       commentId: comment.id,
-      content,
+      content: commentContent,
     });
 
     toast({
@@ -53,7 +66,7 @@ export default function UpdateComment({
         placeholder="Add a comment..."
         className="h-auto flex-1 border-none p-4"
         autoFocus
-        value={content}
+        value={commentContent}
         onChange={(e) => setContent(e.target.value)}
         disabled={isLoading}
       />

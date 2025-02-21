@@ -16,16 +16,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import TopicResourceField from "@/modules/topics/components/form/topic-resource-field";
+import { UserSessionType } from "@/modules/user/types";
+import { urls } from "@/shared/urls";
 import { validateURL } from "@/utils/utils";
-import { Topic, User } from "@prisma/client";
+import { Topic } from "@prisma/client";
 import { Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 type AddTopicProps = {
   userId: string;
-  userSession?: User;
+  userSession?: UserSessionType;
   className?: string;
 };
 
@@ -48,6 +50,7 @@ export default function AddTopic({
 }: AddTopicProps) {
   const { toast } = useToast();
   const router = useRouter();
+  const pathname = usePathname();
   const resourcesRef = useRef<HTMLFormElement>(null);
 
   const [topicObject, setTopicObject] = useState<Partial<Topic>>({});
@@ -104,7 +107,11 @@ export default function AddTopic({
     reset();
     setTopicObject({});
     setIsPopupOpen(false);
-    router.refresh();
+    if (pathname === urls.topics.list) {
+      router.push(urls.profile.topics(userId));
+    } else {
+      router.refresh();
+    }
   };
 
   if (userSession && userSession.id !== userId) {

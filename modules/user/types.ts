@@ -1,10 +1,11 @@
-export type UserSessionType = {
-  name: string;
-  email: string;
-  image: string;
+import { User } from "@prisma/client";
+
+export type UserSessionType = User;
+
+export type PublicUser = {
   id: string;
-  admin: boolean;
-  owner?: boolean;
+  name: string;
+  avatar: string;
 };
 
 // export type Task = {

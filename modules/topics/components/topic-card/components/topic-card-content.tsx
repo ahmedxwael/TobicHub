@@ -11,7 +11,7 @@ type TopicCardContentProps = {
 };
 
 export default function TopicCardContent({ topic }: TopicCardContentProps) {
-  const [isReadMore, setIsReadMore] = useState(false);
+  const [readMore, setReadMore] = useState(false);
 
   return (
     <CardContent className="sm:px-8">
@@ -26,18 +26,18 @@ export default function TopicCardContent({ topic }: TopicCardContentProps) {
           <CardDescription
             className={cn(
               "mt-2 line-clamp-5 whitespace-break-spaces leading-6",
-              isReadMore && "line-clamp-none"
+              readMore && "line-clamp-none"
             )}
           >
             {topic.description}
           </CardDescription>
         </Link>
         <Button
-          onClick={() => setIsReadMore(!isReadMore)}
+          onClick={() => setReadMore(!readMore)}
           variant="link"
           className="w-fit p-0"
         >
-          {isReadMore ? "Read Less" : "Read More"}
+          {readMore ? "Read Less" : "Read More"}
         </Button>
       </div>
       {topic.resources && (

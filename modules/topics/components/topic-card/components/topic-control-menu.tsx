@@ -1,7 +1,6 @@
 "use client";
 
 import { deleteTopicAction } from "@/actions/topics/topic-actions/delete-topic";
-import { editTopicAction } from "@/actions/topics/topic-actions/edit-topic";
 import EditTopic from "@/app/dashboard/components/table/edit-topic";
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Topic, User } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type TopicControlMenuProps = {
@@ -23,18 +22,16 @@ type TopicControlMenuProps = {
   className?: string;
   userSession: User;
   toggleApproved: () => void;
-  isApproved: boolean;
+  approved: boolean;
 };
 
 export default function TopicControlMenu({
   topic,
   userSession,
   className,
-  toggleApproved,
-  isApproved,
 }: TopicControlMenuProps) {
   const router = useRouter();
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   const { toast } = useToast();
 
@@ -45,51 +42,51 @@ export default function TopicControlMenu({
     userSession &&
     (userSession?.id === topic.author.id || userSession?.moderator);
 
-  async function handleTopicApprovement(topicId: string) {
-    try {
-      setIsLoading(true);
-      await editTopicAction(topicId, { approved: true });
+  // async function handleTopicApprovement(topicId: string) {
+  //   try {
+  //     setIsLoading(true);
+  //     await editTopicAction(topicId, { approved: true });
 
-      toggleApproved();
-      toast({
-        title: "Topic has been approved successfully.",
-        variant: "success",
-      });
+  //     toggleApproved();
+  //     toast({
+  //       title: "Topic has been approved successfully.",
+  //       variant: "success",
+  //     });
 
-      router.refresh();
-    } catch (error) {
-      toast({
-        title: "Failed to approve topic",
-        description: "Please try again later",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  //     router.refresh();
+  //   } catch (error) {
+  //     toast({
+  //       title: "Failed to approve topic",
+  //       description: "Please try again later",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
 
-  async function handleTopicUnApprovement(topicId: string) {
-    try {
-      setIsLoading(true);
-      await editTopicAction(topicId, { approved: false });
+  // async function handleTopicUnApprovement(topicId: string) {
+  //   try {
+  //     setIsLoading(true);
+  //     await editTopicAction(topicId, { approved: false });
 
-      toggleApproved();
-      toast({
-        title: "Topic has been unapproved.",
-        variant: "success",
-      });
+  //     toggleApproved();
+  //     toast({
+  //       title: "Topic has been unapproved.",
+  //       variant: "success",
+  //     });
 
-      router.refresh();
-    } catch (error) {
-      toast({
-        title: "Failed to unapprove topic",
-        description: "Please try again later",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  //     router.refresh();
+  //   } catch (error) {
+  //     toast({
+  //       title: "Failed to unapprove topic",
+  //       description: "Please try again later",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
 
   const handleTopicDelete = async () => {
     try {
@@ -134,9 +131,9 @@ export default function TopicControlMenu({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[170px]">
-            {userSession?.moderator &&
+            {/* {userSession?.moderator &&
               pathname.endsWith("/dashboard") &&
-              (!isApproved ? (
+              (!approved ? (
                 <Button
                   disabled={isLoading}
                   variant="ghost"
@@ -154,7 +151,7 @@ export default function TopicControlMenu({
                 >
                   Unapproved
                 </Button>
-              ))}
+              ))}*/}
             <EditTopic
               user={userSession}
               className="w-full"

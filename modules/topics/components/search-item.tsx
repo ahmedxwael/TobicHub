@@ -21,7 +21,7 @@ export default function SearchItem({ topic }: SearchItemProps) {
           href={urls.profile.view(topic?.authorId)}
           className="flex w-fit items-center gap-3"
         >
-          <UserAvatar image={topic?.author.avatar || ""} />
+          <UserAvatar src={topic?.author.avatar || ""} />
           <div className="text-sm text-muted-foreground">
             {topic?.author.name}
           </div>

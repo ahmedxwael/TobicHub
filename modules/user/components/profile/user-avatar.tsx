@@ -2,21 +2,23 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 type UserAvatarProps = {
-  image: string;
+  src: string;
   className?: string;
+  alt?: string;
 };
 
 export default function UserAvatar({
-  image,
+  src,
   className,
+  alt,
   ...props
 }: UserAvatarProps) {
   return (
     <Image
-      {...props}
+      {...(props as any)}
       priority
-      src={image || "/images/avatar.png"}
-      alt="user"
+      src={src || "/images/avatar.png"}
+      alt={alt || "user"}
       width={500}
       height={500}
       className={cn(

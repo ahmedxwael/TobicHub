@@ -28,7 +28,7 @@ export default function UserCard({ user, userSession }: UserCardProps) {
       <div className="flex w-fit flex-col flex-wrap gap-4">
         <div className="flex items-center gap-3">
           <Link href={urls.profile.view(user.id)}>
-            <UserAvatar image={user.avatar || ""} />
+            <UserAvatar src={user.avatar || ""} />
           </Link>
           <CardBadge
             isDestructive={user.moderator}

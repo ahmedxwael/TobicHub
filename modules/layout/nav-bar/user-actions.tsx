@@ -55,7 +55,7 @@ const UserActions = ({ userSession, onClose }: UserButtonsProps) => {
               className="flex shrink-0 items-center gap-2 rounded-full bg-muted/50 transition-colors hover:bg-muted"
             >
               <UserAvatar
-                image={userSession?.avatar || ""}
+                src={userSession?.avatar || ""}
                 className="h-10 w-10"
               />
               <ArrowDownIcon

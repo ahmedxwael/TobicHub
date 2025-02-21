@@ -1,4 +1,4 @@
-import { getComments } from "@/actions/topics/comment-actions/comment";
+import { getComments } from "@/actions/topics/topic-actions";
 import { authOptions } from "@/app/api/auth/options";
 import NoData from "@/components/no-data";
 import NotFound from "@/components/not-found";
@@ -20,7 +20,7 @@ export default async function CommentsSection({ topic }: CommentsSectionProps) {
 
   const comments = await getComments({
     topicId: topic.id,
-    isApproved: true,
+    approved: true,
   });
 
   if (!comments) {
@@ -28,15 +28,15 @@ export default async function CommentsSection({ topic }: CommentsSectionProps) {
   }
 
   return (
-    <div>
+    <div id="comments-sections" className="">
       {userSession && (
-        <>
+        <div>
           <AddComment topic={topic} userSession={userSession} />
-          <Separator className="mb-8 mt-4" />
-        </>
+          <Separator className="mt-4" />
+        </div>
       )}
       {comments.length > 0 ? (
-        <div className="flex max-h-[800px] flex-col gap-8 overflow-auto rounded-3xl">
+        <div className="flex max-h-[800px] flex-col gap-4 overflow-auto bg-muted/40 p-4">
           {comments.map((comment) => (
             <CommentCard
               key={comment.id}

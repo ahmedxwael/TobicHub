@@ -1,10 +1,12 @@
 import { authOptions } from "@/app/api/auth/options";
+import AddTopic from "@/app/dashboard/components/add-topic";
 import NotFound from "@/components/not-found";
 import PageHeading from "@/components/page-heading";
 import { Pagination } from "@/components/pagination";
 import SearchTopic from "@/modules/topics/components/search-topic";
 import TopicsList from "@/modules/topics/components/topics-list";
 import { getTopics } from "@/modules/topics/services/topics-services";
+import { UserSessionType } from "@/modules/user/types";
 import { GenericObject } from "@/shared/types";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -24,6 +26,7 @@ type TopicsPageProps = {
 export default async function TopicsPage({ searchParams }: TopicsPageProps) {
   const skip = Number(searchParams.skip) || 0;
   const session = await getServerSession(authOptions);
+  const sessionUser = session?.user as UserSessionType;
   const topics = await getTopics({
     where: { approved: true },
     skip,
@@ -38,6 +41,9 @@ export default async function TopicsPage({ searchParams }: TopicsPageProps) {
       <div className="flex w-full flex-wrap items-center justify-between gap-6">
         <PageHeading shadow>all topics</PageHeading>
         <SearchTopic />
+        {sessionUser && (
+          <AddTopic userId={sessionUser.id} userSession={sessionUser} />
+        )}
       </div>
       <TopicsList topicsList={topics} session={session} />
       <Pagination

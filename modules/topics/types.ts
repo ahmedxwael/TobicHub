@@ -17,6 +17,9 @@
 //   categoryId: string;
 // };
 
+import { Topic } from "@prisma/client";
+import { PublicUser } from "../user/types";
+
 // export type Category = {
 //   id: string;
 //   name: string;
@@ -36,32 +39,28 @@
 //   isApproved?: boolean;
 // };
 
-// export type Comment = {
-//   id: string;
-//   content: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   user: UserType;
-//   userId: string;
-//   topic: Topic;
-//   topicId: string;
-//   approved: boolean;
-//   parentComment: Comment | null;
-//   parentCommentId: string | null;
-//   replies: Comment[];
-//   repliesCount: number;
-//   likes: Like[];
-// };
+export type Comment = {
+  id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: PublicUser;
+  userId: string;
+  topic: Topic;
+  topicId: string;
+  approved: boolean;
+  repliesCount: number;
+};
 
-// export type Like = {
-//   id: string;
-//   userId: string;
-//   topicId: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   user: UserType;
-//   topic: Topic;
-// };
+export type Like = {
+  id: string;
+  user: PublicUser;
+  userId: string;
+  topic: Topic;
+  topicId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // export type NewTopic = {
 //   title: string;

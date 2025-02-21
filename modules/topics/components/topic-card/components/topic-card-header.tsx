@@ -20,8 +20,7 @@ export default function TopicCardHeader({
   userSession,
 }: TopicCardHeaderProps) {
   const pathname = usePathname();
-
-  const [isApproved, setIsApproved] = useState(topic.approved);
+  const [approved, setApproved] = useState(topic.approved);
 
   const updatedAt = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
@@ -34,7 +33,7 @@ export default function TopicCardHeader({
           href={urls.profile.view(topic.authorId)}
           className="flex items-center gap-4"
         >
-          <UserAvatar image={topic.author?.avatar || ""} />
+          <UserAvatar src={topic.author?.avatar || ""} />
           <div className="flex flex-col">
             <h2 className="font-medium">{topic.author.name}</h2>
             <span className="inline-block text-xs text-muted-foreground">
@@ -44,16 +43,16 @@ export default function TopicCardHeader({
         </Link>
         {userSession && pathname.includes(userSession.id) && (
           <CardBadge
-            isPrimary={isApproved}
-            label={isApproved ? "Approved" : "Not Approved"}
+            isPrimary={approved}
+            label={approved ? "Approved" : "Not Approved"}
           />
         )}
       </div>
       <TopicControlMenu
         userSession={userSession}
         topic={topic}
-        toggleApproved={() => setIsApproved(!isApproved)}
-        isApproved={isApproved}
+        toggleApproved={() => setApproved(!approved)}
+        approved={approved}
         className="absolute right-6 top-5"
       />
     </CardHeader>

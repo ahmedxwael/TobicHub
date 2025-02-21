@@ -1,5 +1,7 @@
 "use server";
 
+import { userAllowedFields } from "@/modules/topics/services/topics-services";
+import { Comment } from "@/modules/topics/types";
 import prisma from "@/prisma";
 
 export type NewCommentType = {
@@ -83,11 +85,11 @@ export async function deleteComment({ commentId, topicId }: DeleteComment) {
 
 type GetTopicComments = {
   topicId: string;
-  isApproved: boolean;
+  approved: boolean;
 };
 
-export async function getComments({ topicId, isApproved }: GetTopicComments) {
-  const where = isApproved ? { topicId, isApproved: true } : { topicId };
+export async function getComments({ topicId, approved }: GetTopicComments) {
+  const where = { topicId };
 
   try {
     const comments = await prisma.comment.findMany({
@@ -97,8 +99,30 @@ export async function getComments({ topicId, isApproved }: GetTopicComments) {
       },
     });
 
+    console.log(comments);
+
     return comments;
   } catch (error) {
+    console.log(error);
+
     return undefined;
   }
+}
+
+export async function getTopicComments(
+  topicId: string
+): Promise<{ comments: Comment[] }> {
+  const comments = (await prisma.comment.findMany({
+    where: {
+      topicId,
+    },
+    include: {
+      user: {
+        select: userAllowedFields,
+      },
+      topic: true,
+    },
+  })) as Comment[];
+
+  return { comments };
 }

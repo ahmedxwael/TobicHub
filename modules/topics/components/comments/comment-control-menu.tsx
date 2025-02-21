@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteComment } from "@/actions/topics/comment-actions/comment";
+import { deleteComment } from "@/actions/topics/topic-actions";
 import CustomAlertDialog from "@/components/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -113,7 +113,7 @@ export default function CommentControlMenu({
                 <DialogHeader className="space-y-1">
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 flex-shrink-0">
-                      <UserAvatar image={comment.user.avatar || ""} />
+                      <UserAvatar src={comment.user.avatar || ""} />
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-sm">{comment.user.name}</span>
