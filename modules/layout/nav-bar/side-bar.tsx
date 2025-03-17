@@ -53,7 +53,7 @@ export default function SideBar({ userSession }: SideBarProps) {
         <div className="mt-6 flex flex-col gap-4 text-muted-foreground">
           <NavLinks closeMenu={handleSheetToggle} userSession={userSession} />
         </div>
-        <ul className="mt-auto flex flex-col gap-1 border-t-2 pt-6">
+        <ul className="mt-auto flex flex-col gap-2 border-t-2 pt-4">
           {userSession ? (
             <>
               {userLinks.map((link, index) => {
@@ -66,7 +66,7 @@ export default function SideBar({ userSession }: SideBarProps) {
                   <Link
                     key={index}
                     href={href}
-                    className="rounded-md p-2 text-sm leading-normal text-muted-foreground hover:text-primary"
+                    className="p-2 text-sm leading-normal text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
                     onClick={() => setIsSheetOpen(false)}
                   >
                     {link.label}
@@ -83,7 +83,7 @@ export default function SideBar({ userSession }: SideBarProps) {
                 variant="ghost"
                 title="Sign out"
                 description="Are you sure that you want to sign out?"
-                className="justify-start p-2 text-destructive hover:bg-destructive hover:text-white"
+                className="justify-center bg-destructive p-2 text-white hover:bg-destructive/80"
               />
             </>
           ) : (

@@ -3,7 +3,7 @@ import { Feature, keyFeatures } from "../utils/data";
 
 export function KeyFeaturesSection() {
   return (
-    <section className="w-full rounded-[30px] bg-muted/20 py-10">
+    <section className="w-full max-w-[1500px] rounded-[30px] bg-muted/20 py-10">
       <div className="container mx-auto">
         <SectionHeading className="text-primary md:text-3xl">
           Key Features

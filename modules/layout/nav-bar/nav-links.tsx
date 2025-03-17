@@ -25,10 +25,6 @@ const links = [
     name: "Contact Us",
     href: urls.contactUs,
   },
-  {
-    name: "Dashboard",
-    href: urls.dashboard,
-  },
 ];
 
 export default function NavLinks({ closeMenu, userSession }: NavLinksProps) {

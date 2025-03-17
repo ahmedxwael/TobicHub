@@ -11,7 +11,7 @@ type HeroSectionProps = {
 
 export function HeroSection({ user }: HeroSectionProps) {
   return (
-    <section className="relative flex h-[calc(100vh-70px)] w-full items-center justify-center bg-background">
+    <section className="relative flex min-h-[587px] w-full max-w-[1500px] items-center justify-center bg-background sm:min-h-[675px]">
       <span className="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 to-muted/20"></span>
       <Image
         src="/images/hero-unsplash.jpg"
@@ -20,11 +20,11 @@ export function HeroSection({ user }: HeroSectionProps) {
         objectFit="cover"
         className="absolute z-0"
       />
-      <div className="relative z-20 text-center text-white">
-        <h1 className="mb-4 text-5xl font-bold leading-tight sm:text-7xl">
+      <div className="container relative z-20 text-center text-white">
+        <h1 className="mb-4 text-3xl font-bold leading-tight sm:text-6xl">
           Welcome to TopicHub
         </h1>
-        <p className="mb-8 text-xl sm:text-2xl">
+        <p className="mb-8 text-lg sm:text-2xl">
           Empower Your Ideas with Engaging Topics
         </p>
         <Link

@@ -37,7 +37,7 @@ export default async function ProfileLayout({
   }
 
   return (
-    <section className="relative w-full space-y-6 py-20">
+    <section className="container relative w-full space-y-6 py-20">
       <section className="flex w-full flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <ProfileSideNav
           id={params.id}

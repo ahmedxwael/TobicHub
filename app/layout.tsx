@@ -42,7 +42,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <Navbar />
-            <main className="container mx-auto flex min-h-[calc(100vh-72px)] flex-col px-8 pb-24">
+            <main className="flex min-h-[calc(100vh-72px)] flex-col pb-24">
               {children}
             </main>
             <Toaster />
