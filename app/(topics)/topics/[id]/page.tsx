@@ -58,7 +58,7 @@ export default async function TopicPage({ params: { id } }: ParamsType) {
     : null;
 
   return (
-    <section className="mx-auto my-20 w-[800px] max-w-full">
+    <section className="container mx-auto my-20 w-[800px] max-w-full">
       <BackButton />
       <div className="space-y-8">
         <div className="flex items-center justify-between border-b pb-6 md:pb-8">
