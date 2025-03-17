@@ -37,7 +37,7 @@ export default async function TopicsPage({ searchParams }: TopicsPageProps) {
   }
 
   return (
-    <section className="flex w-[800px] max-w-full flex-col gap-10 py-20">
+    <section className="container flex w-[800px] max-w-full flex-col gap-10 py-20">
       <div className="flex w-full flex-wrap items-center justify-between gap-6">
         <PageHeading shadow>all topics</PageHeading>
         <SearchTopic />
