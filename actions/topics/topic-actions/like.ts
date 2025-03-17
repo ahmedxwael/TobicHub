@@ -39,8 +39,6 @@ export async function getTopicLikes(
 }
 
 export async function toggleLikeAction({ topicId, userId }: LikeAction) {
-  console.log(`topicId: ${topicId}, userId: ${userId}`);
-
   const storedLike = await prisma.like.findFirst({
     where: {
       topicId,
@@ -48,11 +46,7 @@ export async function toggleLikeAction({ topicId, userId }: LikeAction) {
     },
   });
 
-  console.log(storedLike);
-
   if (!storedLike) {
-    console.log("not liked topic");
-
     await prisma.$transaction([
       // Create a new like
       prisma.like.create({

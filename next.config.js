@@ -5,7 +5,7 @@ const nextConfig = {
       { hostname: "upload.wikimedia.org" },
       { hostname: "lh3.googleusercontent.com" },
       { hostname: "topic-hub" },
-      { hostname: "sswtxosnnuquunvksddq.supabase.co" },
+      { hostname: "icqmaqkxwqjelhtxcamo.supabase.co" },
     ],
   },
 };

@@ -32,7 +32,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const [image, setImage] = useState<File>();
+  const [image, setImage] = useState<File | null>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,6 +53,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
         variant: "success",
       });
 
+      setImage(null);
       router.refresh();
       setIsPopupOpen(false);
     } catch (error: any) {
@@ -139,7 +140,7 @@ export default function UserImage({ user, userSession }: UserImageProps) {
                   name="image"
                   accept=".png, .jpg, .jpeg"
                   className="cursor-pointer"
-                  onChange={(e) => setImage(e.target.files?.[0])}
+                  onChange={(e) => setImage(e.target.files?.[0] || null)}
                 />
                 <Button disabled={isLoading} className="ml-auto">
                   {isLoading ? "Saving..." : "Save changes"}

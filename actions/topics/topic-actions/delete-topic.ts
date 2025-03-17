@@ -47,7 +47,6 @@ export async function deleteTopicAction({
       });
     });
   } catch (error: any) {
-    console.log("error", error);
     throw new Error(error.message);
   }
 }

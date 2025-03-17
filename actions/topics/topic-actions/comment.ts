@@ -99,12 +99,8 @@ export async function getComments({ topicId, approved }: GetTopicComments) {
       },
     });
 
-    console.log(comments);
-
     return comments;
   } catch (error) {
-    console.log(error);
-
     return undefined;
   }
 }

@@ -5,11 +5,9 @@ import axios from "axios";
 export async function sendEmail(body: EmailRequestBodyType, awaited = false) {
   awaited
     ? await axios.post("/api/send", body).catch((error) => {
-        console.log(error);
         toast({ variant: "destructive", title: "Couldn't send email" });
       })
     : axios.post("/api/send", body).catch((error) => {
-        console.log(error);
         toast({ variant: "destructive", title: "Couldn't send email" });
       });
 }
